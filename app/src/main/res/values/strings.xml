@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">BrickxWMS2020</string>
+
+    <!--    Login-->
+    <string name="login_authentication_textfield_hint">Log in met uw medewerkersnummer</string>
+    <string name="login_header_textview">Log in bij Brickx</string>
+    <string name="log_in">Log in</string>
+
+    <!--    Main Menu-->
+    <string name="brickx_wms">Brickx WMS</string>
+    <string name="gebruiker">Gebruiker</string>
+    <string name="werkzaamheden">Werkzaamheden</string>
 </resources>

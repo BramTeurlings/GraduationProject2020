@@ -1,18 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/loginConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/TestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/TextAppearance.AppTheme.h4"
+        android:id="@+id/materialTextView"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginStart="@dimen/grid_2"
+        android:layout_marginTop="@dimen/grid_2"
+        android:layout_marginEnd="@dimen/grid_2"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="2sp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/login_header_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        style="@style/WhiteMaterialCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_2"
+        android:layout_marginTop="@dimen/grid_2"
+        android:layout_marginEnd="@dimen/grid_2"
+        app:cardCornerRadius="@dimen/radius_card_corner"
+        app:cardElevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_3"
+                android:layout_marginTop="@dimen/grid_3"
+                android:layout_marginEnd="@dimen/grid_3"
+                android:hint="@string/login_authentication_textfield_hint"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/LoginButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_3"
+                android:layout_marginTop="@dimen/grid_0_5"
+                android:layout_marginEnd="@dimen/grid_3"
+                android:layout_marginBottom="@dimen/grid_3"
+                android:onClick="onLogin"
+                android:text="@string/log_in"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/grid_5"
+        android:layout_marginEnd="@dimen/grid_5"
+        android:layout_marginBottom="@dimen/grid_1"
+        android:adjustViewBounds="true"
+        android:alpha="0.5"
+        android:src="@drawable/brickx_logo_big"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
