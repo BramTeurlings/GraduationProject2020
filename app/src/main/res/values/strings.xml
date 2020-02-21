@@ -10,4 +10,6 @@
     <string name="brickx_wms">Brickx WMS</string>
     <string name="gebruiker">Gebruiker</string>
     <string name="werkzaamheden">Werkzaamheden</string>
+    <string name="informatie">Informatie</string>
+    <string name="onderhoud">Onderhoud</string>
 </resources>

@@ -81,7 +81,8 @@
             </View>
 
             <TextView
-                android:id="@+id/main_menu_info_text"
+                android:id="@+id/main_menu_activities_text"
+                android:textStyle="bold"
                 style="@style/TextAppearance.AppTheme.body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,6 +91,32 @@
                 android:text="@string/werkzaamheden"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/main_menu_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activitiesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:layout_marginEnd="@dimen/grid_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_menu_activities_text"
+                tools:listitem="@layout/main_menu_recycler_item">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+            android:id="@+id/main_menu_info_text"
+            android:textStyle="bold"
+            style="@style/TextAppearance.AppTheme.body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/grid_2"
+            android:layout_marginTop="@dimen/grid_2"
+            android:text="@string/informatie"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activitiesRecyclerView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/infoRecyclerView"
@@ -101,6 +128,32 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/main_menu_info_text"
+                tools:listitem="@layout/main_menu_recycler_item">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/main_menu_maintenance_text"
+                android:textStyle="bold"
+                style="@style/TextAppearance.AppTheme.body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_2"
+                android:text="@string/onderhoud"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/infoRecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/maintenanceRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:layout_marginEnd="@dimen/grid_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_menu_maintenance_text"
                 tools:listitem="@layout/main_menu_recycler_item">
 
             </androidx.recyclerview.widget.RecyclerView>
