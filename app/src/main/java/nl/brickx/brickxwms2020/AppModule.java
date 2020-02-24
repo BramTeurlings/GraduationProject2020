@@ -11,10 +11,17 @@ import dagger.Binds;
 import dagger.BindsInstance;
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.DaggerApplication;
 import nl.brickx.data.dagger.DataContext;
 
 @Module(includes = {AppModule.Bindings.class})
-public class AppModule {
+class AppModule {
+
+    Application application;
+
+    public AppModule(Application application){
+        this.application = application;
+    }
 
     @Provides
     Gson provideGson(){
@@ -23,8 +30,8 @@ public class AppModule {
 
     @Provides
     @DataContext
-    Context provideDataContext(Application application){
-        return application.getApplicationContext();
+    Context provideDataContext(BaseApplication application){
+        return application;
     }
 
     @Module

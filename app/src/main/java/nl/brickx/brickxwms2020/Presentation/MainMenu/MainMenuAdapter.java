@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import nl.brickx.domain.Models.MainMenuRecyclerModel;
 import java.util.List;
 
 import nl.brickx.brickxwms2020.R;

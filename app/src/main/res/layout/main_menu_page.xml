@@ -94,6 +94,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/activitiesRecyclerView"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/grid_2"
@@ -120,6 +121,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/infoRecyclerView"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/grid_2"
@@ -146,6 +148,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/maintenanceRecyclerView"
+                android:overScrollMode="never"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/grid_2"

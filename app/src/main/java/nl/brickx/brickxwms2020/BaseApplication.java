@@ -11,7 +11,7 @@ public class BaseApplication extends DaggerApplication {
     }
 
     @Override
-    public AndroidInjector<DaggerApplication> applicationInjector(){
-        return DaggerAppComponent.builder().build();
+    public AndroidInjector<BaseApplication> applicationInjector(){
+        return DaggerAppComponent.builder().appModule(new AppModule(this)).create(this);
     }
 }

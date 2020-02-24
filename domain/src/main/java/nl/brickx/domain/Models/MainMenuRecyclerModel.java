@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.MainMenu;
+package nl.brickx.domain.Models;
 
 import android.graphics.drawable.Drawable;
 
