@@ -6,17 +6,29 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.card.MaterialCardView;
+
 import nl.brickx.domain.Models.MainMenuRecyclerModel;
+import nl.brickx.domain.Models.MenuItemIdentifier;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import nl.brickx.brickxwms2020.R;
 
 public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRecyclerViewholder> {
-    private List<MainMenuRecyclerModel> data;
 
-    public MainMenuAdapter(List<MainMenuRecyclerModel> items) {
+    MainMenuContract.Navigator navigator;
+
+    private List<MainMenuRecyclerModel> data;
+    private RecyclerView recyclerView;
+
+    public MainMenuAdapter(List<MainMenuRecyclerModel> items, MainMenuContract.Navigator navigator) {
         data = items;
+        this.navigator = navigator;
     }
 
     @Override
@@ -27,11 +39,30 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
     }
 
     @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        this.recyclerView = recyclerView;
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull InfoRecyclerViewholder holder, int position) {
         //Todo: Make a good catch and multiple tries.
         try{
             holder.textView.setText(data.get(position).getTitle());
             holder.imageView.setImageDrawable(data.get(position).getImage());
+            holder.primaryCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("CLICK! - " + position);
+                    if(data.get(position).getIdentifier() == MenuItemIdentifier.PRODUCT_INFO_ITEM){
+                        //Todo: Fix injection.
+                        navigator.navigateToProductInfo();
+                    }else if(true){
+
+                    }
+                }
+            });
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -46,11 +77,13 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
         // each data item is just a string in this case
         TextView textView;
         ImageView imageView;
+        MaterialCardView primaryCard;
 
         InfoRecyclerViewholder(final View infoView) {
             super(infoView);
             textView = infoView.findViewById(R.id.main_menu_item_text);
             imageView = infoView.findViewById(R.id.main_menu_item_image);
+            primaryCard = infoView.findViewById(R.id.main_menu_item_card);
         }
     }
 }

@@ -1,5 +1,8 @@
 package nl.brickx.brickxwms2020.Presentation.MainMenu;
 
+import android.app.Activity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -18,6 +21,12 @@ public interface MainMenuActivityModule {
     interface Bindings {
 
         @Binds
+        Activity bindMainMenuActivity(MainMenuActivity mainMenuActivity);
+
+        @Binds
         MainMenuContract.Presenter bindPresenter(MainMenuPresenter mainMenuPresenter);
+
+        @Binds
+        MainMenuContract.Navigator bindNavigator(MainMenuNavigator mainMenuNavigator);
     }
 }

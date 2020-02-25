@@ -23,6 +23,9 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
     @Inject
     MainMenuContract.Presenter presenter;
 
+    @Inject
+    MainMenuContract.Navigator navigator;
+
     RecyclerView activityFeatureRecyclerView;
     RecyclerView infoFeatureRecyclerView;
     RecyclerView maintenanceFeatureRecyclerView;
@@ -42,18 +45,6 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
     }
 
     private void initRecyclerViews(){
-//        //Todo: Mock code
-//        List<MainMenuRecyclerModel> mockData = new ArrayList<>();
-//        mockData.add(new MainMenuRecyclerModel("Order Picken", getDrawable(R.drawable.orderpick_transparent)));
-//        mockData.add(new MainMenuRecyclerModel("Colli Inpakken", getDrawable(R.drawable.inpakken_coli_transparent)));
-//        mockData.add(new MainMenuRecyclerModel("Voorraad Transfer", getDrawable(R.drawable.transfer_transparent)));
-//        mockData.add(new MainMenuRecyclerModel("Batch Orderpick", getDrawable(R.drawable.pack_transparant)));
-//        mockData.add(new MainMenuRecyclerModel("Product Informatie", getDrawable(R.drawable.productscan_transparent)));
-//        mockData.add(new MainMenuRecyclerModel("Replenishment", getDrawable(R.drawable.replenish_transparent)));
-//        mockData.add(new MainMenuRecyclerModel("Product Locatie", getDrawable(R.drawable.scanlocation_transparent)));
-//        mockData.add(new MainMenuRecyclerModel("Voorraad Mutaties", getDrawable(R.drawable.stockmutation_transparent)));
-//        mockData.add(new MainMenuRecyclerModel("Voorraad", getDrawable(R.drawable.voorraad_transparent)));
-
         //Todo: Mock premissions
         List<Permission> permissions = new ArrayList<>();
         permissions.add(Permission.BATCH_PICK);
@@ -69,9 +60,9 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
         permissions.add(Permission.STOCK_TRANSFER);
 
         //Todo: Get data from domain layer and data layer and bind to the correct adapter.
-        activityAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(permissions, MenuCategory.ACTIVITIES));
-        infoAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(permissions, MenuCategory.INFO));
-        maintenanceAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(permissions, MenuCategory.MAINTENANCE));
+        activityAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(permissions, MenuCategory.ACTIVITIES), navigator);
+        infoAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(permissions, MenuCategory.INFO), navigator);
+        maintenanceAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(permissions, MenuCategory.MAINTENANCE), navigator);
 
         activityFeatureRecyclerView.setAdapter(activityAdapter);
         activityFeatureRecyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -14,7 +14,8 @@ public class MainMenuPresenter implements MainMenuContract.Presenter {
 
     private GetMenuItemsByPermissionsAndCategory getMenuItemsByPermissionsAndCategory;
 
-    @Inject MainMenuPresenter(GetMenuItemsByPermissionsAndCategory getMenuItemsByPermissionsAndCategory){
+    @Inject
+    MainMenuPresenter(GetMenuItemsByPermissionsAndCategory getMenuItemsByPermissionsAndCategory){
         this.getMenuItemsByPermissionsAndCategory = getMenuItemsByPermissionsAndCategory;
     }
 

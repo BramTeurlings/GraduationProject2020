@@ -15,6 +15,6 @@ public interface MainMenuContract {
 
     interface Navigator {
 
-        //Todo: Navigate to screens.
+        void navigateToProductInfo();
     }
 }

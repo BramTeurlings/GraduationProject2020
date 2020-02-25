@@ -12,4 +12,16 @@
     <string name="werkzaamheden">Werkzaamheden</string>
     <string name="informatie">Informatie</string>
     <string name="onderhoud">Onderhoud</string>
+
+    <!--    Product Info-->
+    <string name="empty">-</string>
+    <string name="login_screen_product_name">Name</string>
+    <string name="product_info_product_location">Locatie</string>
+    <string name="product_info_product_stock">Voorraad</string>
+    <string name="product_info_input_hint">Vul een productnummer in</string>
+    <string name="product_info_details_title">Details:</string>
+    <string name="product_info_ean_text">EAN</string>
+    <string name="product_info_custom_barcode_title">Eigen Barcode</string>
+    <string name="product_info_upc_title">UPC</string>
+
 </resources>

@@ -12,12 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-    <activity
+        <activity
             android:name=".Presentation.MainMenu.MainMenuActivity"
             android:parentActivityName=".Presentation.Login.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Presentation.Login.LoginActivity"/>
+        </activity>
+        <activity
+            android:name=".Presentation.ProductInfo.ProductInfoActivity"
+            android:parentActivityName=".Presentation.ProductInfo.ProductInfoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.MainMenu.MainMenuActivity"/>
         </activity>
         <activity android:name=".Presentation.Login.LoginActivity">
             <intent-filter>

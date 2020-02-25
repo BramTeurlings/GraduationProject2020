@@ -6,15 +6,17 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import nl.brickx.brickxwms2020.Presentation.Login.LoginActivityModule;
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivityModule;
+import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModule;
 
 
 @Singleton
 @Component(
         modules = {
-            AppModule.class,
-            AndroidSupportInjectionModule.class,
-            MainMenuActivityModule.class,
-            LoginActivityModule.class
+                AppModule.class,
+                AndroidSupportInjectionModule.class,
+                MainMenuActivityModule.class,
+                LoginActivityModule.class,
+                ProductInfoActivityModule.class
         }
 )
 interface AppComponent extends AndroidInjector<BaseApplication> {
