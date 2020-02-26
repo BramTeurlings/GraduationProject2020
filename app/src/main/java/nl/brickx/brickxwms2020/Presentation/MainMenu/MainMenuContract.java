@@ -16,5 +16,6 @@ public interface MainMenuContract {
     interface Navigator {
 
         void navigateToProductInfo();
+        void navigateToLocationInfo();
     }
 }

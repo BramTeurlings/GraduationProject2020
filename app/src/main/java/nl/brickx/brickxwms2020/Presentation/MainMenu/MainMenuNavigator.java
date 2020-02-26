@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 
 import javax.inject.Inject;
+
+import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoActivity;
 import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivity;
 import nl.brickx.data.dagger.DataContext;
 
@@ -21,5 +23,10 @@ public class MainMenuNavigator implements MainMenuContract.Navigator {
     @Override
     public void navigateToProductInfo() {
         activity.startActivity(ProductInfoActivity.createIntent(context));
+    }
+
+    @Override
+    public void navigateToLocationInfo() {
+        activity.startActivity(LocationInfoActivity.createIntent(context));
     }
 }

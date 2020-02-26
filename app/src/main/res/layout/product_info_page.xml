@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_2"
+        android:layout_marginTop="@dimen/grid_1"
         android:layout_marginEnd="@dimen/grid_2"
         android:hint="@string/product_info_input_hint"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_2"
+        android:layout_marginTop="@dimen/grid_1"
         android:layout_marginEnd="@dimen/grid_2"
         android:background="@color/colorViewElement"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
 
     <TextView
         android:id="@+id/product_name_text"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/TextAppearance.AppTheme.h6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
@@ -62,7 +62,7 @@
 
     <TextView
         android:id="@+id/product_location_text"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/TextAppearance.AppTheme.h6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
@@ -83,7 +83,7 @@
 
     <TextView
         android:id="@+id/product_stock_text"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/TextAppearance.AppTheme.h6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
@@ -108,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_2"
+        android:layout_marginTop="@dimen/grid_1"
         android:layout_marginEnd="@dimen/grid_2"
         android:background="@color/colorViewElement"
         app:layout_constraintEnd_toEndOf="parent"
@@ -120,7 +120,7 @@
 
     <TextView
         android:id="@+id/product_details_title"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
+        style="@style/TextAppearance.AppTheme.h6.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
@@ -131,8 +131,7 @@
 
     <TextView
         android:id="@+id/product_ean_text"
-        android:textStyle="bold"
-        style="@style/TextAppearance.AppTheme.body1"
+        style="@style/TextAppearance.AppTheme.h6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
@@ -154,8 +153,7 @@
 
     <TextView
         android:id="@+id/product_upc_text"
-        android:textStyle="bold"
-        style="@style/TextAppearance.AppTheme.body1"
+        style="@style/TextAppearance.AppTheme.h6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
@@ -177,8 +175,7 @@
 
     <TextView
         android:id="@+id/product_custom_barcode_text"
-        android:textStyle="bold"
-        style="@style/TextAppearance.AppTheme.body1"
+        style="@style/TextAppearance.AppTheme.h6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"

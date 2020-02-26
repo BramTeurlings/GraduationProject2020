@@ -20,6 +20,6 @@ public interface ProductInfoActivityModule {
     interface Bindings {
 
         @Binds
-        Activity bindMainMenuActivity(ProductInfoActivity productInfoActivity);
+        Activity bindProductInfoActivity(ProductInfoActivity productInfoActivity);
     }
 }

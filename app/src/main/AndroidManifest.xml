@@ -26,6 +26,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Presentation.MainMenu.MainMenuActivity"/>
         </activity>
+        <activity
+            android:name=".Presentation.LocationInfo.LocationInfoActivity"
+            android:parentActivityName=".Presentation.LocationInfo.LocationInfoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.MainMenu.MainMenuActivity"/>
+        </activity>
         <activity android:name=".Presentation.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

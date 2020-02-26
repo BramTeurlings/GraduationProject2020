@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
+import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoActivityModule;
 import nl.brickx.brickxwms2020.Presentation.Login.LoginActivityModule;
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivityModule;
 import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModule;
@@ -16,7 +17,8 @@ import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModul
                 AndroidSupportInjectionModule.class,
                 MainMenuActivityModule.class,
                 LoginActivityModule.class,
-                ProductInfoActivityModule.class
+                ProductInfoActivityModule.class,
+                LocationInfoActivityModule.class
         }
 )
 interface AppComponent extends AndroidInjector<BaseApplication> {

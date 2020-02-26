@@ -58,8 +58,8 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
                     if(data.get(position).getIdentifier() == MenuItemIdentifier.PRODUCT_INFO_ITEM){
                         //Todo: Fix injection.
                         navigator.navigateToProductInfo();
-                    }else if(true){
-
+                    }else if(data.get(position).getIdentifier() == MenuItemIdentifier.LOCATION_INFO_ITEM){
+                        navigator.navigateToLocationInfo();
                     }
                 }
             });
@@ -74,7 +74,6 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
     }
 
     static class InfoRecyclerViewholder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         TextView textView;
         ImageView imageView;
         MaterialCardView primaryCard;
