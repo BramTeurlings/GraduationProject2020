@@ -41,7 +41,7 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
         try{
             holder.codeTextView.setText(data.get(position).getProductCode());
             holder.descriptionTextView.setText(data.get(position).getProductName());
-            holder.stockAmountTextView.setText(data.get(position).getProductStock());
+            holder.stockAmountTextView.setText(data.get(position).getProductStock().toString());
             holder.locationNameTextView.setText(warehouseLocationName);
         }catch (Exception e){
             e.printStackTrace();

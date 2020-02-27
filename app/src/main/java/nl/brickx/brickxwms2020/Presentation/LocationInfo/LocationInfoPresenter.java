@@ -22,7 +22,7 @@ public class LocationInfoPresenter implements LocationInfoContract.Presenter {
         locationData.add(new LocationInfoRecyclerModel( "A21UAS23325B", "Thermish Blok", 256));
         locationData.add(new LocationInfoRecyclerModel( "A21HDRT36845", "Verwarming", 114));
         locationData.add(new LocationInfoRecyclerModel( "A212U3V1245B", "Zonnepaneel", 56));
-        locationData.add(new LocationInfoRecyclerModel( "A214521EDS43", "Schroeven M3", 127483961));
+        locationData.add(new LocationInfoRecyclerModel( "A214521EDS43", "Schroeven M3", 1274839761));
 
         return locationData;
     }

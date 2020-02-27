@@ -77,7 +77,7 @@
                 android:id="@+id/main_menu_item_image_card"
                 style="@style/WhiteMaterialCardView"
                 app:cardBackgroundColor="@color/colorViewElement"
-                android:layout_width="80dp"
+                android:layout_width="75dp"
                 android:layout_height="50dp"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="2dp"

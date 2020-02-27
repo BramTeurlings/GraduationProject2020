@@ -27,7 +27,7 @@
     <!--    Location Info-->
     <string name="location_info_input_hint">Vul een locatienummer in</string>
     <string name="location_info_aantal">Aantal</string>
-    <string name="location_info_stock_default_amount">100000</string>
+    <string name="location_info_stock_default_amount">-</string>
     <string name="location_info_code_title">Code:</string>
     <string name="location_info_name_title">Naam:</string>
     <string name="location_info_location_name">Locatie:</string>
