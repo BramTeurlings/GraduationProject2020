@@ -55,7 +55,4 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$reactive_x_version_java"
     implementation "io.reactivex.rxjava2:rxkotlin:$reactive_x_version_kotlin"
     implementation "io.reactivex.rxjava2:rxandroid:$reactive_x_version_android"
-
-    //Dependencies
-    implementation project(path: ':data')
 }

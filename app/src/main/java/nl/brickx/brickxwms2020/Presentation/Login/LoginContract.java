@@ -1,17 +1,14 @@
 package nl.brickx.brickxwms2020.Presentation.Login;
 
-import java.util.List;
-
-import nl.brickx.domain.Models.MainMenuRecyclerModel;
-import nl.brickx.domain.Models.MenuCategory;
-import nl.brickx.domain.Models.Permission;
+import nl.brickx.brickxwms2020.Presentation.Models.AuthenticationResult;
+import nl.brickx.domain.Models.User;
 
 public interface LoginContract {
 
     interface Presenter {
 
         //Todo: Presenter code.
-        boolean testMethod();
+        AuthenticationResult authenticateUser(User user);
     }
 
     interface Navigator {

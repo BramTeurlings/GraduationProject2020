@@ -5,14 +5,12 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 
-import javax.inject.Inject;
-
 import dagger.Binds;
-import dagger.BindsInstance;
 import dagger.Module;
 import dagger.Provides;
-import dagger.android.DaggerApplication;
-import nl.brickx.data.dagger.DataContext;
+import nl.brickx.data.Authentication.LocalAuthenticationRepository;
+import nl.brickx.data.Dagger.DataContext;
+import nl.brickx.domain.Users.Data.AuthenticationRepository;
 
 @Module(includes = {AppModule.Bindings.class})
 class AppModule {
@@ -39,6 +37,9 @@ class AppModule {
 
         @Binds
         Application bindApplication(BaseApplication baseApplication);
+
+        @Binds
+        AuthenticationRepository bindAuthenticationRepository(LocalAuthenticationRepository localAuthenticationRepository);
 
     }
 }

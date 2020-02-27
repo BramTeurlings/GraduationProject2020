@@ -1,4 +1,4 @@
-package nl.brickx.data.dagger
+package nl.brickx.data.Dagger
 
 import android.content.Context
 import javax.inject.Qualifier
