@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="nl.brickx.brickxwms2020">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"

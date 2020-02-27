@@ -8,12 +8,23 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.data.R;
+import nl.brickx.domain.Models.Gson.Authentication;
 import nl.brickx.domain.Models.MainMenuRecyclerModel;
 import nl.brickx.domain.Models.MenuCategory;
 import nl.brickx.domain.Models.MenuItemIdentifier;
 import nl.brickx.domain.Models.Permission;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LocalAuthenticationRepository implements nl.brickx.domain.Users.Data.AuthenticationRepository {
 
@@ -27,7 +38,19 @@ public class LocalAuthenticationRepository implements nl.brickx.domain.Users.Dat
     @Override
     public Boolean authenticateUser(String apiKey) {
 
-        //Todo: Async RXJava API call.
+        //Todo: Async RXJava API call. How Tf does this work?
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.themoviedb.org/3/")
+        .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
+        final CompositeDisposable compositeDisposable = new CompositeDisposable();
+
+        LocalAuthenticationRepositoryService localAuthenticationRepositoryService = retrofit.create(LocalAuthenticationRepositoryService.class);
+        final Single<Authentication> validateApiKeyResult = localAuthenticationRepositoryService.validateApiKey(apiKey).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
         return true;
     }
 
