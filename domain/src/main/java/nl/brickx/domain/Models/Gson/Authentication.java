@@ -6,21 +6,21 @@ import com.google.gson.annotations.SerializedName;
 public class Authentication {
 
     @Expose
-    @SerializedName("title")
-    private String title;
+    @SerializedName("CheckApiKeyResult")
+    private Boolean apiKey;
 
     public Authentication() {
     }
 
-    public Authentication(String title) {
-        this.title = title;
+    public Authentication(Boolean apiKey) {
+        this.apiKey = apiKey;
     }
 
-    public String getTitle() {
-        return title;
+    public Boolean getApiKey() {
+        return apiKey;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setApiKey(Boolean apiKey) {
+        this.apiKey = apiKey;
     }
 }

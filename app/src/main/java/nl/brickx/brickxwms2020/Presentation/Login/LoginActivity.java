@@ -15,7 +15,6 @@ import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivity;
 import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.brickxwms2020.R;
-import nl.brickx.domain.Models.Gson.Authentication;
 import nl.brickx.domain.Models.Permission;
 import nl.brickx.domain.Models.User;
 

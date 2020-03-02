@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import nl.brickx.domain.Models.Gson.Authentication;
+import nl.brickx.domain.Models.Gson.TestAuthentication;
 import nl.brickx.domain.Models.MainMenuRecyclerModel;
 import nl.brickx.domain.Models.MenuCategory;
 import nl.brickx.domain.Models.Permission;

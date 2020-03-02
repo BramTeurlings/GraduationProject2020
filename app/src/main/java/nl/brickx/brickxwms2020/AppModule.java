@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import dagger.Binds;
 import dagger.Module;
@@ -23,7 +24,9 @@ class AppModule {
 
     @Provides
     Gson provideGson(){
-        return new Gson();
+        return new GsonBuilder()
+                .setLenient()
+                .create();
     }
 
     @Provides

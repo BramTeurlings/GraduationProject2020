@@ -5,6 +5,7 @@
     <string name="login_authentication_textfield_hint">Log in met uw medewerkersnummer</string>
     <string name="login_header_textview">Log in bij Brickx</string>
     <string name="log_in">Log in</string>
+    <string name="api_key_default">7737d6b3-21fe-4f7d-88e3-0c887365f2aa</string>
 
     <!--    Main Menu-->
     <string name="brickx_wms">Brickx WMS</string>
