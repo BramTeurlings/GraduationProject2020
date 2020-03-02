@@ -1,13 +1,20 @@
 package nl.brickx.data.Authentication;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Flowable;
+import io.reactivex.FlowableSubscriber;
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
@@ -36,22 +43,43 @@ public class LocalAuthenticationRepository implements nl.brickx.domain.Users.Dat
     }
 
     @Override
-    public Boolean authenticateUser(String apiKey) {
+    public Flowable<Authentication> authenticateUser(String apiKey) {
 
         //Todo: Async RXJava API call. How Tf does this work?
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/")
-        .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-
-        final CompositeDisposable compositeDisposable = new CompositeDisposable();
-
         LocalAuthenticationRepositoryService localAuthenticationRepositoryService = retrofit.create(LocalAuthenticationRepositoryService.class);
-        final Single<Authentication> validateApiKeyResult = localAuthenticationRepositoryService.validateApiKey(apiKey).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
 
-        return true;
+        Flowable<Authentication> authenticationSingle = localAuthenticationRepositoryService.validateApiKey(1);
+        authenticationSingle.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new FlowableSubscriber<Authentication>() {
+                    @Override
+                    public void onSubscribe(Subscription s) {
+
+                    }
+
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Authentication authentication) {
+                        Log.i("API INFO: ", "Data received: " + authentication.getTitle());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        return authenticationSingle;
     }
 
     @Override

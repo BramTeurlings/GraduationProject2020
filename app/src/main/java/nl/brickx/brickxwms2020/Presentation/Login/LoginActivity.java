@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.Observer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +13,9 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivity;
-import nl.brickx.brickxwms2020.Presentation.Models.AuthenticationResult;
+import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.domain.Models.Gson.Authentication;
 import nl.brickx.domain.Models.Permission;
 import nl.brickx.domain.Models.User;
 
@@ -25,6 +28,18 @@ public class LoginActivity extends DaggerAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+        subscribeObservers();
+    }
+
+    private void subscribeObservers() {
+        presenter.observeAuth().observe(this, new Observer<AuthenticationResult>() {
+            @Override
+            public void onChanged(AuthenticationResult authentication) {
+                if(authentication.getAuthenticated()){
+                    AuthenticationCompleted();
+                }
+            }
+        });
     }
 
     public void onLogin(View view){
@@ -42,11 +57,16 @@ public class LoginActivity extends DaggerAppCompatActivity {
         permissions.add(Permission.STOCK_TRANSFER);
 
         //Todo: Save logged in user.
-        AuthenticationResult result = presenter.authenticateUser(new User(0, "TestUser", "sudg276f17f6rdfctr2c6i7kuycu7x", permissions));
-        if(result.getAuthenticated()){
-            Intent intent = new Intent(this, MainMenuActivity.class);
-            startActivity(intent);
-        }
+
+        presenter.authenticateUser(new User(0, "TestUser", "sudg276f17f6rdfctr2c6i7kuycu7x", permissions));
         //Todo: Feedback if authentication failed.
+    }
+
+    /**
+     * Brings user to next screen once authentication is completed.
+     */
+    public void AuthenticationCompleted(){
+        Intent intent = new Intent(this, MainMenuActivity.class);
+        startActivity(intent);
     }
 }

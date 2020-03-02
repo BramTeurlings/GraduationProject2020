@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.Models;
+package nl.brickx.domain.Models;
 
 import nl.brickx.domain.Models.User;
 

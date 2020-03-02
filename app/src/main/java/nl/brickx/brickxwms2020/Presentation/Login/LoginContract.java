@@ -1,6 +1,8 @@
 package nl.brickx.brickxwms2020.Presentation.Login;
 
-import nl.brickx.brickxwms2020.Presentation.Models.AuthenticationResult;
+import androidx.lifecycle.LiveData;
+
+import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.domain.Models.User;
 
 public interface LoginContract {
@@ -8,7 +10,9 @@ public interface LoginContract {
     interface Presenter {
 
         //Todo: Presenter code.
-        AuthenticationResult authenticateUser(User user);
+        void authenticateUser(User user);
+
+        LiveData<AuthenticationResult> observeAuth();
     }
 
     interface Navigator {

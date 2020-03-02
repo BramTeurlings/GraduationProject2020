@@ -66,6 +66,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$reactive_x_version_java"
     implementation "io.reactivex.rxjava2:rxkotlin:$reactive_x_version_kotlin"
     implementation "io.reactivex.rxjava2:rxandroid:$reactive_x_version_android"
+    implementation "android.arch.lifecycle:reactivestreams:$reactivestreams_version"
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:$reactive_x_version_java"
