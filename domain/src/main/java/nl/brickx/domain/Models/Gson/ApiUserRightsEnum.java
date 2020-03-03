@@ -1,0 +1,32 @@
+package nl.brickx.domain.Models.Gson;
+
+public enum ApiUserRightsEnum {
+    Productgroup_Post,
+    Productgroup_Get,
+    Customer_Post,
+    Customer_Get,
+    Product_Post,
+    Product_Get,
+    ProductAttributeCombination_Get,
+    ProductAttribute_Get,
+    Pickslip_Post,
+    Pickslip_Get,
+    PriceCalculation_Get,
+    Stock_Get,
+    Webshopqueue_Get,
+    Webshopqueue_Post,
+    QuantityDiscount_Get,
+    Package_Get,
+    StockTransfer_Post,
+    ProductImage_Post,
+    PurchaseOrder_Get,
+    PurchaseOrder_Post,
+    Stockcount,
+    CustomerInvoice_Get,
+    BackOrder_Get,
+    ProductWebShop_Get,
+    OrderAttribute_Get,
+    PalletInfo_Get,
+    PalletInfo_Post,
+    ProductFixedTransferPrice_Get
+}

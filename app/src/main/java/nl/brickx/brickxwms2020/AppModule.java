@@ -15,6 +15,8 @@ import nl.brickx.data.Authentication.LocalAuthenticationMenuCategoriesRepository
 import nl.brickx.data.Authentication.LocalAuthenticationRepository;
 import nl.brickx.data.Authentication.LocalAuthenticationRepositoryService;
 import nl.brickx.data.Dagger.DataContext;
+import nl.brickx.data.User.LocalUserRepository;
+import nl.brickx.data.User.LocalUserRepositoryService;
 import nl.brickx.domain.Users.Data.AuthenticationRepository;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -72,6 +74,11 @@ class AppModule {
     }
 
     @Provides
+    LocalUserRepositoryService localUserRepositoryService(){
+        return retrofit.create(LocalUserRepositoryService.class);
+    }
+
+    @Provides
     @DataContext
     Context provideDataContext(BaseApplication application){
         return application;
@@ -88,6 +95,9 @@ class AppModule {
 
         @Binds
         AuthenticationRepository.Api bindAuthenticationRepository(LocalAuthenticationRepository localAuthenticationRepository);
+
+        @Binds
+        AuthenticationRepository.GetUserData bindAuthenticationGetUserDataRepository(LocalUserRepository localUserRepository);
 
     }
 }

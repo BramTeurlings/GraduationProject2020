@@ -46,7 +46,7 @@ public class LocalAuthenticationRepository implements nl.brickx.domain.Users.Dat
     LocalAuthenticationRepositoryService localAuthenticationRepositoryService;
 
     @Inject
-    public LocalAuthenticationRepository() {
+    LocalAuthenticationRepository() {
     }
 
     @Override

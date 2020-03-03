@@ -15,6 +15,7 @@ import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivity;
 import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.domain.Models.Gson.ApiUserRightsEnum;
 import nl.brickx.domain.Models.Permission;
 import nl.brickx.domain.Models.User;
 
@@ -42,22 +43,9 @@ public class LoginActivity extends DaggerAppCompatActivity {
     }
 
     public void onLogin(View view){
-        List<Permission> permissions = new ArrayList<>();
-        permissions.add(Permission.BATCH_PICK);
-        permissions.add(Permission.GENERATE_LABEL);
-        permissions.add(Permission.INCOMING_GOODS);
-        permissions.add(Permission.LOCATION_INFO);
-        permissions.add(Permission.ORDER_PICK);
-        permissions.add(Permission.PRODUCT_INFO);
-        permissions.add(Permission.SSCC);
-        permissions.add(Permission.REPLENISHMENT);
-        permissions.add(Permission.STOCK_COUNT);
-        permissions.add(Permission.STOCK_MUTATION);
-        permissions.add(Permission.STOCK_TRANSFER);
-
         //Todo: Save logged in user.
 
-        presenter.authenticateUser(new User(0, "TestUser", "sudg276f17f6rdfctr2c6i7kuycu7x", permissions));
+        presenter.authenticateUser(new User(0, "TestUser", "sudg276f17f6rdfctr2c6i7kuycu7x", null));
         //Todo: Feedback if authentication failed.
     }
 
