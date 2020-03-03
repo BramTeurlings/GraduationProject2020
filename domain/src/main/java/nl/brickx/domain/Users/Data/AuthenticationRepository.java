@@ -12,6 +12,11 @@ import nl.brickx.domain.Models.Permission;
 
 public interface AuthenticationRepository {
 
-    Flowable<Authentication> authenticateUser(String apiKey);
-    Observable<List<MainMenuRecyclerModel>> getMenuItemsByPermissionsAndCategories(List<Permission> permissions, MenuCategory category);
+    interface Api{
+        Flowable<Authentication> authenticateUser(String apiKey);
+    }
+
+    interface Categories {
+        Observable<List<MainMenuRecyclerModel>> getMenuItemsByPermissionsAndCategories(List<Permission> permissions, MenuCategory category);
+    }
 }

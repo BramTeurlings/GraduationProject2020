@@ -13,10 +13,10 @@ import android.content.Context;
 public class GetMenuItemsByPermissionsAndCategory {
 
     private Context context;
-    private AuthenticationRepository authenticationRepository;
+    private AuthenticationRepository.Categories authenticationRepository;
 
     @Inject
-    GetMenuItemsByPermissionsAndCategory(AuthenticationRepository authenticationRepository){
+    GetMenuItemsByPermissionsAndCategory(AuthenticationRepository.Categories authenticationRepository){
         this.authenticationRepository = authenticationRepository;
     }
 

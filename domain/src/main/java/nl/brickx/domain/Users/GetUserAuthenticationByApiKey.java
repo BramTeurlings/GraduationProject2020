@@ -10,10 +10,10 @@ import nl.brickx.domain.Users.Data.AuthenticationRepository;
 
 public class GetUserAuthenticationByApiKey {
 
-    private AuthenticationRepository authenticationRepository;
+    private AuthenticationRepository.Api authenticationRepository;
 
     @Inject
-    GetUserAuthenticationByApiKey(AuthenticationRepository authenticationRepository){
+    GetUserAuthenticationByApiKey(AuthenticationRepository.Api authenticationRepository){
         this.authenticationRepository = authenticationRepository;
     }
 
