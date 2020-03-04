@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import nl.brickx.domain.Models.Gson.Authentication;
+import nl.brickx.domain.Models.Gson.UserInfo;
 import nl.brickx.domain.Models.Gson.GetUserInfoResult;
 import nl.brickx.domain.Models.Gson.TestAuthentication;
 import nl.brickx.domain.Models.MainMenuRecyclerModel;
@@ -22,6 +23,6 @@ public interface AuthenticationRepository {
     }
 
     interface GetUserData {
-        Flowable<GetUserInfoResult> getUserData(String apiKey);
+        Flowable<UserInfo> getUserData(String apiKey);
     }
 }

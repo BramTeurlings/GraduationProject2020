@@ -39,7 +39,7 @@ class AppModule {
     Gson provideGson(){
         return new GsonBuilder()
                 .setLenient()
-                .excludeFieldsWithoutExposeAnnotation()
+                .serializeNulls()
                 .create();
     }
 

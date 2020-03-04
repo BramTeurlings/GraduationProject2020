@@ -1,32 +1,62 @@
 package nl.brickx.domain.Models.Gson;
 
+import com.google.gson.annotations.SerializedName;
+
 public enum ApiUserRightsEnum {
+    @SerializedName("Productgroup-Post")
     Productgroup_Post,
+    @SerializedName("Productgroup-Get")
     Productgroup_Get,
+    @SerializedName("Customer-Post")
     Customer_Post,
+    @SerializedName("Customer-Get")
     Customer_Get,
+    @SerializedName("Product-Post")
     Product_Post,
+    @SerializedName("Product-Get")
     Product_Get,
+    @SerializedName("ProductAttributeCombination-Get")
     ProductAttributeCombination_Get,
+    @SerializedName("ProductAttribute-Get")
     ProductAttribute_Get,
+    @SerializedName("Pickslip-Post")
     Pickslip_Post,
+    @SerializedName("Pickslip-Get")
     Pickslip_Get,
+    @SerializedName("PriceCalculation-Get")
     PriceCalculation_Get,
+    @SerializedName("Stock-Get")
     Stock_Get,
+    @SerializedName("Webshopqueue-Get")
     Webshopqueue_Get,
+    @SerializedName("Webshopqueue-Post")
     Webshopqueue_Post,
+    @SerializedName("QuantityDiscount-Get")
     QuantityDiscount_Get,
+    @SerializedName("Package-Get")
     Package_Get,
+    @SerializedName("StockTransfer-Post")
     StockTransfer_Post,
+    @SerializedName("ProductImage-Post")
     ProductImage_Post,
+    @SerializedName("PurchaseOrder-Get")
     PurchaseOrder_Get,
+    @SerializedName("PurchaseOrder-Post")
     PurchaseOrder_Post,
+    @SerializedName("Stockcount")
     Stockcount,
+    @SerializedName("CustomerInvoice-Get")
     CustomerInvoice_Get,
+    @SerializedName("BackOrder-Get")
     BackOrder_Get,
+    @SerializedName("ProductWebShop-Get")
     ProductWebShop_Get,
+    @SerializedName("OrderAttribute-Get")
     OrderAttribute_Get,
+    @SerializedName("PalletInfo-Get")
     PalletInfo_Get,
+    @SerializedName("PalletInfo-Post")
     PalletInfo_Post,
+    @SerializedName("ProductFixedTransferPrice-Get")
     ProductFixedTransferPrice_Get
 }

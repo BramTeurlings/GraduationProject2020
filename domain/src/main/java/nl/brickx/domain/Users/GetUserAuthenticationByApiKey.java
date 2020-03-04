@@ -11,6 +11,7 @@ import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.domain.Models.Gson.ApiUserRightsEnum;
 import nl.brickx.domain.Models.Gson.Authentication;
 import nl.brickx.domain.Models.Gson.GetUserInfoResult;
+import nl.brickx.domain.Models.Gson.UserInfo;
 import nl.brickx.domain.Models.Permission;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.Users.Data.AuthenticationRepository;
@@ -29,10 +30,10 @@ public class GetUserAuthenticationByApiKey {
     public Flowable<AuthenticationResult> invoke(User user) {
         //Todo: Add all the permissions.
         if(authenticationApiRepository.authenticateUser( user.getApiKey()).subscribeOn(Schedulers.io()).blockingFirst().getApiKey()){
-            GetUserInfoResult userInfo = authenticationUserRepository.getUserData(user.getApiKey()).subscribeOn(Schedulers.io()).blockingFirst();
+            UserInfo userInfo = authenticationUserRepository.getUserData(user.getApiKey()).subscribeOn(Schedulers.io()).blockingFirst();
             List<Permission> enums = new ArrayList<>();
-            for(int i = 0; i < userInfo.getApiUserRights().size(); i++){
-                if(userInfo.getApiUserRights().get(i).getApiRight() == ApiUserRightsEnum.Product_Get){
+            for(int i = 0; i < userInfo.getUserInfoResult().getApiUserRights().size(); i++){
+                if(userInfo.getUserInfoResult().getApiUserRights().get(i).getApiRight() == ApiUserRightsEnum.Product_Get){
                     if(!enums.contains(Permission.PRODUCT_INFO)){
                         enums.add(Permission.PRODUCT_INFO);
                     }
@@ -42,7 +43,7 @@ public class GetUserAuthenticationByApiKey {
                     }
                 }
             }
-            User newUser = new User(userInfo.getId(), userInfo.getUserName(), user.getApiKey(), enums);
+            User newUser = new User(userInfo.getUserInfoResult().getId(), userInfo.getUserInfoResult().getUserName(), user.getApiKey(), enums);
             return Flowable.just(new AuthenticationResult(newUser, true));
         }else{
             return Flowable.just(new AuthenticationResult(new User(), false));
