@@ -43,7 +43,7 @@ public enum ApiUserRightsEnum {
     PurchaseOrder_Get,
     @SerializedName("PurchaseOrder-Post")
     PurchaseOrder_Post,
-    @SerializedName("Stockcount")
+    @SerializedName("StockCount")
     Stockcount,
     @SerializedName("CustomerInvoice-Get")
     CustomerInvoice_Get,
@@ -53,6 +53,8 @@ public enum ApiUserRightsEnum {
     ProductWebShop_Get,
     @SerializedName("OrderAttribute-Get")
     OrderAttribute_Get,
+    @SerializedName("OrderAttribute-Post")
+    OrderAttribute_POST,
     @SerializedName("PalletInfo-Get")
     PalletInfo_Get,
     @SerializedName("PalletInfo-Post")

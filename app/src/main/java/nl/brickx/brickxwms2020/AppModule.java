@@ -50,9 +50,9 @@ class AppModule {
             interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(interceptor)
-                    .connectTimeout(30, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
-                    .writeTimeout(30, TimeUnit.SECONDS)
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(15, TimeUnit.SECONDS)
+                    .writeTimeout(15, TimeUnit.SECONDS)
                     .cache(null)
                     .retryOnConnectionFailure(false)
                     .build();
@@ -97,7 +97,12 @@ class AppModule {
         AuthenticationRepository.Api bindAuthenticationRepository(LocalAuthenticationRepository localAuthenticationRepository);
 
         @Binds
-        AuthenticationRepository.GetUserData bindAuthenticationGetUserDataRepository(LocalUserRepository localUserRepository);
+        AuthenticationRepository.GetUserDataFromApi bindAuthenticationGetUserDataRepository(LocalUserRepository localUserRepository);
 
+        @Binds
+        AuthenticationRepository.GetUserDataSharedPref bindAuthenticationGetUserDataSharedPrefRepository(LocalUserRepository localUserRepository);
+
+        @Binds
+        AuthenticationRepository.SaveUserDataSharedPref bindAuthenticationSaveUserDataSharedPrefRepository(LocalUserRepository localUserRepository);
     }
 }

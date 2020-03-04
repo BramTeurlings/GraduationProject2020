@@ -11,6 +11,7 @@ import nl.brickx.domain.Models.Gson.TestAuthentication;
 import nl.brickx.domain.Models.MainMenuRecyclerModel;
 import nl.brickx.domain.Models.MenuCategory;
 import nl.brickx.domain.Models.Permission;
+import nl.brickx.domain.Models.User;
 
 public interface AuthenticationRepository {
 
@@ -22,7 +23,15 @@ public interface AuthenticationRepository {
         Observable<List<MainMenuRecyclerModel>> getMenuItemsByPermissionsAndCategories(List<Permission> permissions, MenuCategory category);
     }
 
-    interface GetUserData {
+    interface GetUserDataFromApi {
         Flowable<UserInfo> getUserData(String apiKey);
+    }
+
+    interface SaveUserDataSharedPref {
+        Boolean saveUserDataSharedPref(User user);
+    }
+
+    interface GetUserDataSharedPref {
+        User getuserDataSharedPref();
     }
 }
