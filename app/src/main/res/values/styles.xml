@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:background">@color/colorBackground</item>
+<!--        <item name="android:background">@color/colorBackground</item>-->
 
         <item name="textAppearanceHeadline3">@style/TextAppearance.AppTheme.h3</item>
         <item name="textAppearanceHeadline4">@style/TextAppearance.AppTheme.h4</item>

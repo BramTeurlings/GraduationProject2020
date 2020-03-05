@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
+    android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -33,7 +34,7 @@
         android:layout_marginStart="@dimen/grid_2"
         android:layout_marginTop="@dimen/grid_1"
         android:layout_marginEnd="@dimen/grid_2"
-        android:background="@color/colorViewElement"
+        android:background="@color/colorTextDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_info_textInputLayout">
