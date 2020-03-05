@@ -24,5 +24,8 @@
     <style name="WhiteMaterialCardView" parent="Widget.MaterialComponents.CardView">
         <item name="android:background">@color/true_white</item>
     </style>
+    <style name="WhiteBackGround">
+        <item name="android:background">@color/true_white</item>
+    </style>
 
 </resources>

@@ -33,4 +33,17 @@
     <string name="location_info_name_title">Naam:</string>
     <string name="location_info_location_name">Locatie:</string>
 
+    <!--    Combined info screen-->
+    <string name="combined_productname_text">Productnaam:</string>
+    <string name="combined_barcodes_text">Barcodes:</string>
+    <string name="combined_ean">EAN: </string>
+    <string name="combined_upc">UPC: </string>
+    <string name="combined_custom_barcode">Eigen Barcode: </string>
+    <string name="combined_stock_text">Voorraad:</string>
+    <string name="combined_sku_text">SKU:</string>
+    <string name="combined_details_text">Details:</string>
+    <string name="combined_packaging_units_text">Hoeveelheid per verpakking:</string>
+    <string name="combined_weight_text">Gewicht:</string>
+    <string name="combined_properties_text">Eigenschappen:</string>
+
 </resources>

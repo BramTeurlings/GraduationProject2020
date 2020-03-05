@@ -37,8 +37,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         User returnedUser = new User(user.getId(), user.getUsername(), context.getString(R.string.api_key_default), user.getPermissions());
 
         try{
-            final LiveData<AuthenticationResult> source = LiveDataReactiveStreams.fromPublisher(getUserAuthenticationByApiKey.invoke(returnedUser)
-                    .subscribeOn(Schedulers.io()));
+            final LiveData<AuthenticationResult> source = LiveDataReactiveStreams.fromPublisher(getUserAuthenticationByApiKey.invoke(returnedUser).subscribeOn(Schedulers.io()));
 
             auth.addSource(source, new Observer<AuthenticationResult>() {
                 @Override
