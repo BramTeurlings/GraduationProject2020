@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -41,339 +42,415 @@
 
     </View>
 
-    <TextView
-        android:id="@+id/combined_name_text"
-        style="@style/TextAppearance.AppTheme.h6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_1"
-        android:text="@string/combined_productname_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/combined_info_view" />
-
-    <TextView
-        android:id="@+id/combined_name_content"
-        style="@style/TextAppearance.AppTheme.body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/grid_0_5"
-        android:text="@string/empty"
-        app:layout_constraintStart_toStartOf="@+id/combined_name_text"
-        app:layout_constraintTop_toBottomOf="@+id/combined_name_text" />
-
-    <TextView
-        android:id="@+id/combined_sku_text"
-        style="@style/TextAppearance.AppTheme.h6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_1"
-        android:text="@string/combined_sku_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/combined_name_content" />
-
-    <TextView
-        android:id="@+id/combined_sku_content"
-        style="@style/TextAppearance.AppTheme.body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/grid_0_5"
-        android:text="@string/empty"
-        app:layout_constraintStart_toStartOf="@+id/combined_sku_text"
-        app:layout_constraintTop_toBottomOf="@+id/combined_sku_text" />
-
-    <TextView
-        android:id="@+id/combined_stock_text"
-        style="@style/TextAppearance.AppTheme.h6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_1"
-        android:text="@string/combined_stock_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/combined_sku_content" />
-
-    <TextView
-        android:id="@+id/combined_stock_content"
-        style="@style/TextAppearance.AppTheme.body1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/grid_0_5"
-        android:text="@string/empty"
-        app:layout_constraintStart_toStartOf="@+id/combined_stock_text"
-        app:layout_constraintTop_toBottomOf="@+id/combined_stock_text" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/combined_barcodes_card"
-        style="@style/WhiteMaterialCardView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_1"
-        android:layout_marginEnd="@dimen/grid_2"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/bg_ontouch_ripple"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="3dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/combined_stock_content">
+        app:layout_constraintTop_toBottomOf="@+id/combined_info_view">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/combined_barcodes_card_constraint"
             android:layout_width="match_parent"
-            android:background="@color/true_white"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/grid_0_5"
-            android:layout_marginTop="@dimen/grid_0_5">
+            android:layout_height="0dp">
 
             <TextView
-                android:id="@+id/combined_codes_text"
+                android:id="@+id/combined_name_text"
+                android:textStyle="bold"
                 style="@style/TextAppearance.AppTheme.h6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/grid_1"
-                android:layout_marginTop="@dimen/grid_0_5"
-                android:layout_marginBottom="@dimen/grid_0_5"
-                android:text="@string/combined_barcodes_text"
-                app:layout_constraintBottom_toTopOf="@+id/combined_barcodes_group"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:text="@string/combined_productname_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/combined_barcodes_arrow_image"
+            <TextView
+                android:id="@+id/combined_name_content"
+                style="@style/TextAppearance.AppTheme.body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/true_white"
                 android:layout_marginTop="@dimen/grid_0_5"
-                android:layout_marginEnd="@dimen/grid_0_5"
-                android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/combined_barcodes_group"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/grid_1"
-                android:background="@color/true_white"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/combined_codes_text"
-                app:layout_constraintTop_toBottomOf="@+id/combined_codes_text">
-
-                <TextView
-                    android:id="@+id/combined_codes_ean_content"
-                    style="@style/TextAppearance.AppTheme.body1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginBottom="@dimen/grid_0_5"
-                    android:text="@string/combined_ean"
-                    app:layout_constraintBottom_toTopOf="@+id/combined_codes_upc_content"
-                    app:layout_constraintStart_toStartOf="@+id/combined_barcodes_group"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/combined_codes_custom_content"
-                    style="@style/TextAppearance.AppTheme.body1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/grid_0_5"
-
-                    android:layout_marginBottom="@dimen/grid_0_5"
-                    android:text="@string/combined_custom_barcode"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/combined_codes_upc_content" />
-
-                <TextView
-                    android:id="@+id/combined_codes_upc_content"
-                    style="@style/TextAppearance.AppTheme.body1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/grid_0_5"
-
-                    android:layout_marginBottom="@dimen/grid_0_5"
-                    android:text="@string/combined_upc"
-                    app:layout_constraintBottom_toTopOf="@+id/combined_codes_custom_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/combined_codes_ean_content" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/combined_details_card"
-        style="@style/WhiteMaterialCardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_0_5"
-        android:layout_marginEnd="@dimen/grid_2"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/bg_ontouch_ripple"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/combined_barcodes_card">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/combined_details_card_constraint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/grid_0_5"
-            android:layout_marginBottom="@dimen/grid_0_5"
-            android:background="@color/true_white">
+                android:text="@string/empty"
+                app:layout_constraintStart_toStartOf="@+id/combined_name_text"
+                app:layout_constraintTop_toBottomOf="@+id/combined_name_text" />
 
             <TextView
-                android:id="@+id/combined_details_text"
+                android:id="@+id/combined_sku_text"
+                android:textStyle="bold"
                 style="@style/TextAppearance.AppTheme.h6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/grid_1"
-                android:layout_marginTop="@dimen/grid_0_5"
-                android:layout_marginBottom="@dimen/grid_0_5"
-                android:text="@string/combined_details_text"
-                app:layout_constraintBottom_toTopOf="@id/combined_details_group"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:text="@string/combined_sku_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/combined_name_content" />
 
-            <ImageView
-                android:id="@+id/combined_details_arrow_image"
+            <TextView
+                android:id="@+id/combined_sku_content"
+                style="@style/TextAppearance.AppTheme.body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/grid_0_5"
-                android:layout_marginEnd="@dimen/grid_0_5"
-                android:background="@color/true_white"
-                android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/combined_details_group"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/grid_1"
-                android:background="@color/true_white"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/combined_details_text"
-                app:layout_constraintTop_toBottomOf="@+id/combined_details_text">
-
-                <TextView
-                    android:id="@+id/combined_details_packaging_units_content"
-                    style="@style/TextAppearance.AppTheme.body1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/grid_0_5"
-                    android:text="@string/combined_packaging_units_text"
-                    app:layout_constraintBottom_toTopOf="@+id/combined_details_weight_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/combined_details_weight_content"
-                    style="@style/TextAppearance.AppTheme.body1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/grid_0_5"
-                    android:layout_marginBottom="@dimen/grid_0_5"
-                    android:text="@string/combined_weight_text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/combined_details_packaging_units_content" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/combined_properties_card"
-        style="@style/WhiteMaterialCardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/grid_2"
-        android:layout_marginTop="@dimen/grid_0_5"
-        android:layout_marginEnd="@dimen/grid_2"
-        android:animateLayoutChanges="true"
-        android:background="@drawable/bg_ontouch_ripple"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/combined_details_card">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/combined_properties_card_constraint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/grid_0_5"
-            android:layout_marginBottom="@dimen/grid_0_5"
-            android:background="@color/true_white">
+                android:text="@string/empty"
+                app:layout_constraintStart_toStartOf="@+id/combined_sku_text"
+                app:layout_constraintTop_toBottomOf="@+id/combined_sku_text" />
 
             <TextView
-                android:id="@+id/combined_properties_text"
+                android:id="@+id/combined_stock_text"
+                android:textStyle="bold"
                 style="@style/TextAppearance.AppTheme.h6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/grid_1"
-                android:layout_marginTop="@dimen/grid_0_5"
-                android:layout_marginBottom="@dimen/grid_0_5"
-                android:text="@string/combined_properties_text"
-                app:layout_constraintBottom_toTopOf="@id/combined_properties_group"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:text="@string/combined_stock_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/combined_sku_content" />
 
-            <ImageView
-                android:id="@+id/combined_properties_arrow_image"
+            <TextView
+                android:id="@+id/combined_stock_content"
+                style="@style/TextAppearance.AppTheme.body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/grid_0_5"
-                android:layout_marginEnd="@dimen/grid_0_5"
-                android:background="@color/true_white"
-                android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="@string/empty"
+                app:layout_constraintStart_toStartOf="@+id/combined_stock_text"
+                app:layout_constraintTop_toBottomOf="@+id/combined_stock_text" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/combined_properties_group"
-                android:layout_width="0dp"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/combined_barcodes_card"
+                style="@style/WhiteMaterialCardView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
                 android:layout_marginTop="@dimen/grid_1"
-                android:background="@color/true_white"
-                android:visibility="gone"
+                android:layout_marginEnd="@dimen/grid_2"
+                android:paddingTop="@dimen/grid_2"
+                android:paddingBottom="@dimen/grid_2"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/bg_ontouch_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/combined_properties_text"
-                app:layout_constraintTop_toBottomOf="@+id/combined_properties_text">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/combined_stock_content">
 
-                <androidx.recyclerview.widget.RecyclerView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/combined_barcodes_card_constraint"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_0_5"
+                    android:layout_marginBottom="@dimen/grid_0_5"
+                    android:background="@color/true_white">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    <TextView
+                        android:id="@+id/combined_codes_text"
+                        style="@style/TextAppearance.AppTheme.h6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/grid_1"
+                        android:layout_marginTop="@dimen/grid_0_5"
+                        android:layout_marginBottom="@dimen/grid_0_5"
+                        android:text="@string/combined_barcodes_text"
+                        app:layout_constraintBottom_toTopOf="@+id/combined_barcodes_group"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/combined_barcodes_arrow_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/grid_0_5"
+                        android:layout_marginEnd="@dimen/grid_0_5"
+                        android:background="@color/true_white"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/combined_barcodes_group"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/grid_1"
+                        android:background="@color/true_white"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/combined_codes_text"
+                        app:layout_constraintTop_toBottomOf="@+id/combined_codes_text">
+
+                        <TextView
+                            android:id="@+id/combined_codes_ean_content"
+                            style="@style/TextAppearance.AppTheme.body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginBottom="@dimen/grid_0_5"
+                            android:text="@string/combined_ean"
+                            app:layout_constraintBottom_toTopOf="@+id/combined_codes_upc_content"
+                            app:layout_constraintStart_toStartOf="@+id/combined_barcodes_group"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/combined_codes_custom_content"
+                            style="@style/TextAppearance.AppTheme.body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/grid_0_5"
+
+                            android:layout_marginBottom="@dimen/grid_0_5"
+                            android:text="@string/combined_custom_barcode"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/combined_codes_upc_content" />
+
+                        <TextView
+                            android:id="@+id/combined_codes_upc_content"
+                            style="@style/TextAppearance.AppTheme.body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/grid_0_5"
+
+                            android:layout_marginBottom="@dimen/grid_0_5"
+                            android:text="@string/combined_upc"
+                            app:layout_constraintBottom_toTopOf="@+id/combined_codes_custom_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/combined_codes_ean_content" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/combined_details_card"
+                style="@style/WhiteMaterialCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_0_5"
+                android:layout_marginEnd="@dimen/grid_2"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/bg_ontouch_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/combined_barcodes_card">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/combined_details_card_constraint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_0_5"
+                    android:layout_marginBottom="@dimen/grid_0_5"
+                    android:background="@color/true_white">
+
+                    <TextView
+                        android:id="@+id/combined_details_text"
+                        style="@style/TextAppearance.AppTheme.h6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/grid_1"
+                        android:layout_marginTop="@dimen/grid_0_5"
+                        android:layout_marginBottom="@dimen/grid_0_5"
+                        android:text="@string/combined_details_text"
+                        app:layout_constraintBottom_toTopOf="@id/combined_details_group"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/combined_details_arrow_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/grid_0_5"
+                        android:layout_marginEnd="@dimen/grid_0_5"
+                        android:background="@color/true_white"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/combined_details_group"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/grid_1"
+                        android:background="@color/true_white"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/combined_details_text"
+                        app:layout_constraintTop_toBottomOf="@+id/combined_details_text">
+
+                        <TextView
+                            android:id="@+id/combined_details_packaging_units_content"
+                            style="@style/TextAppearance.AppTheme.body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/grid_0_5"
+                            android:text="@string/combined_packaging_units_text"
+                            app:layout_constraintBottom_toTopOf="@+id/combined_details_weight_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/combined_details_weight_content"
+                            style="@style/TextAppearance.AppTheme.body1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/grid_0_5"
+                            android:layout_marginBottom="@dimen/grid_0_5"
+                            android:text="@string/combined_weight_text"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/combined_details_packaging_units_content" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/combined_properties_card"
+                style="@style/WhiteMaterialCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_0_5"
+                android:layout_marginEnd="@dimen/grid_2"
+                android:animateLayoutChanges="true"
+                android:background="@drawable/bg_ontouch_ripple"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/combined_details_card">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/combined_properties_card_constraint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/grid_0_5"
+                    android:layout_marginBottom="@dimen/grid_0_5"
+                    android:background="@color/true_white">
+
+                    <TextView
+                        android:id="@+id/combined_properties_text"
+                        style="@style/TextAppearance.AppTheme.h6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/grid_1"
+                        android:layout_marginTop="@dimen/grid_0_5"
+                        android:layout_marginBottom="@dimen/grid_0_5"
+                        android:text="@string/combined_properties_text"
+                        app:layout_constraintBottom_toTopOf="@id/combined_properties_group"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/combined_properties_arrow_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/grid_0_5"
+                        android:layout_marginEnd="@dimen/grid_0_5"
+                        android:background="@color/true_white"
+                        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <FrameLayout
+                        android:id="@+id/combined_properties_group"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/grid_1"
+                        android:layout_marginEnd="@dimen/grid_1"
+                        android:background="@color/true_white"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/combined_properties_text"
+                        app:layout_constraintTop_toBottomOf="@+id/combined_properties_text">
+
+                        <View
+                            android:id="@+id/combined_properties_click_catcher_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:background="@android:color/transparent"
+                            android:elevation="100dp">
+
+                        </View>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/combined_info_properties_recycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:overScrollMode="never"
+                            tools:listitem="@layout/combined_info_recycler">
+
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                    </FrameLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:id="@+id/combined_location_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:layout_marginEnd="@dimen/grid_2"
+                android:background="@color/colorTextDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/combined_properties_card" />
+
+            <TextView
+                android:id="@+id/combined_location_text"
+                style="@style/TextAppearance.AppTheme.h6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:text="@string/combined_location_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/combined_location_view" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/combined_location_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:layout_marginEnd="@dimen/grid_2"
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/combined_location_text"
+                tools:listitem="@layout/location_info_recycler_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

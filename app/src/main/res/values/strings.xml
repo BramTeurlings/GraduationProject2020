@@ -45,5 +45,8 @@
     <string name="combined_packaging_units_text">Hoeveelheid per verpakking:</string>
     <string name="combined_weight_text">Gewicht:</string>
     <string name="combined_properties_text">Eigenschappen:</string>
+    <string name="combined_property_content">Eigenschap: </string>
+    <string name="combined_property_value_content">Waarde: </string>
+    <string name="combined_location_text">Locatie:</string>
 
 </resources>
