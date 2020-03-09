@@ -1,7 +1,9 @@
-package nl.brickx.domain.Models.Gson;
+package nl.brickx.domain.Models.Gson.UserInfo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import nl.brickx.domain.Models.Gson.ApiUserRightsEnum;
 
 public class ApiUserRight {
 

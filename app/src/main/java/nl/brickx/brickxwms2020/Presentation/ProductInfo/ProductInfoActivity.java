@@ -6,16 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +37,12 @@ import nl.brickx.domain.Models.ProductInfoRecyclerModel;
 public class ProductInfoActivity extends DaggerAppCompatActivity {
 
     @Inject
-    LocationInfoPresenter presenter;
+    ProductInfoPresenter infoPresenter;
+
+    @Inject
+    LocationInfoPresenter locationPresenter;
+
+    private final String TAG = "ProductInfoActivity: ";
 
     SpannableStringBuilder stringBuilder;
 
@@ -41,6 +51,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
     FrameLayout propertiesGroup;
     View propertiesClickCatcherView;
 
+    TextInputEditText barcodeInput;
     TextView productNameTextView;
     TextView skuTextView;
     TextView stockTextView;
@@ -82,6 +93,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
         amountPerPackageTextView = findViewById(R.id.combined_details_packaging_units_content);
         weightTextView = findViewById(R.id.combined_details_weight_content);
 
+        barcodeInput = findViewById(R.id.combined_info_textinputEditText);
         propertiesClickCatcherView = findViewById(R.id.combined_properties_click_catcher_view);
         barcodesGroup = findViewById(R.id.combined_barcodes_group);
         detailsGroup = findViewById(R.id.combined_details_group);
@@ -106,37 +118,66 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
         //Todo: Make less jank if possible.
         propertiesClickCatcherView.setOnClickListener(this::onClickProperties);
 
-        //Todo: Remove mock code.
-        ProductInfoHolder holder = new ProductInfoHolder("Smartphone", "HASV412612VSDHAW", 10, "AUSVDWQYD12314", "219846718238712", "80003123", 1, "300g");
-        setTextViews(holder);
+        barcodeInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    onBarcodeScanned();
+                    return true;
+                }
+                return false;
+            }
+        });
 
+        //Todo: Remove mock code.
+        ProductInfoHolder holder = new ProductInfoHolder("Smartphone", "HASV412612VSDHAW", 10d, "AUSVDWQYD12314", "219846718238712", "80003123", 1d, "300g");
+        setTextViews(holder);
+        subscribeObservers();
         initRecyclerViews();
     }
 
+    private void subscribeObservers() {
+        infoPresenter.observeProductInfo().observe(this, new Observer<ProductInfoHolder>() {
+            @Override
+            public void onChanged(ProductInfoHolder productInfoHolder) {
+                //Change info
+                productInfoAdapter.setData(productInfoHolder.getProperties());
+                productInfoAdapter.notifyDataSetChanged();
+                setTextViews(productInfoHolder);
+            }
+        });
+    }
+
     public void setTextViews(ProductInfoHolder productInfo){
-        productNameTextView.setText(productInfo.getProductName());
-        skuTextView.setText(productInfo.getSku());
-        //stockTextView.setText(productInfo.getStock());
+        try{
+            productNameTextView.setText(productInfo.getProductName());
+            skuTextView.setText(productInfo.getSku());
+            //stockTextView.setText(productInfo.getStock());
 
-        stringBuilder = new SpannableStringBuilder(getText(R.string.combined_ean) + " " + productInfo.getEan());
-        stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_ean).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        eanTextView.setText(stringBuilder);
+            stringBuilder = new SpannableStringBuilder(getText(R.string.combined_ean) + " " + productInfo.getEan());
+            stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_ean).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            eanTextView.setText(stringBuilder);
 
-        stringBuilder = new SpannableStringBuilder(getText(R.string.combined_upc) + " " + productInfo.getUpc());
-        stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_upc).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        upcTextView.setText(stringBuilder);
+            stringBuilder = new SpannableStringBuilder(getText(R.string.combined_upc) + " " + productInfo.getUpc());
+            stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_upc).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            upcTextView.setText(stringBuilder);
 
-        stringBuilder = new SpannableStringBuilder(getText(R.string.combined_custom_barcode) + " " + productInfo.getCustomBarcode());
-        stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_custom_barcode).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        customCodeTextView.setText(stringBuilder);
+            stringBuilder = new SpannableStringBuilder(getText(R.string.combined_custom_barcode) + " " + productInfo.getCustomBarcode());
+            stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_custom_barcode).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            customCodeTextView.setText(stringBuilder);
 
-        stringBuilder = new SpannableStringBuilder(getText(R.string.combined_packaging_units_text) + " " + productInfo.getAmountPerPackage());
-        stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_packaging_units_text).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        amountPerPackageTextView.setText(stringBuilder);
+            stringBuilder = new SpannableStringBuilder(getText(R.string.combined_packaging_units_text) + " " + productInfo.getAmountPerPackage());
+            stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_packaging_units_text).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            amountPerPackageTextView.setText(stringBuilder);
 
-        stringBuilder = new SpannableStringBuilder(getText(R.string.combined_weight_text) + " " + productInfo.getWeight());
-        stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_weight_text).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        weightTextView.setText(stringBuilder);
+            stringBuilder = new SpannableStringBuilder(getText(R.string.combined_weight_text) + " " + productInfo.getWeight());
+            stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_weight_text).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            weightTextView.setText(stringBuilder);
+        }catch (NullPointerException e){
+            Log.e(TAG, "Unable to load resources as api returned uncaught null value on ProductInfoHolder object.");
+        }
     }
 
     public void initRecyclerViews(){
@@ -155,10 +196,24 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
 
         //Location:
         //Todo: Get data from domain layer and data layer and bind to the correct adapter.
-        recyclerViewAdapter = new LocationInfoAdapter(presenter.getProductsByLocation("mockLocationCode"), "mockLocationCode");
+        recyclerViewAdapter = new LocationInfoAdapter(locationPresenter.getProductsByLocation("mockLocationCode"), "mockLocationCode");
+
+        getProductInfoByScan("AE00872");
 
         locationInfoRecyclerView.setAdapter(recyclerViewAdapter);
         locationInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void onBarcodeScanned(){
+        try{
+            getProductInfoByScan(barcodeInput.getText().toString());
+        }catch (NullPointerException e){
+            //Todo: Tell user to fill in a code.
+        }
+    }
+
+    private void getProductInfoByScan(String scannedCode){
+        infoPresenter.getProductInfoByScan(scannedCode);
     }
 
     public void onClickBarcodes(View view){
@@ -187,7 +242,9 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
 
     public void onClickProperties(View view){
         if(propertiesExpansionToggle){
-            propertiesGroup.setVisibility(View.VISIBLE);
+            if(recyclerViewAdapter.getItemCount() > 0){
+                propertiesGroup.setVisibility(View.VISIBLE);
+            }
             propertiesArrowImage.setImageDrawable(getDrawable(R.drawable.ic_keyboard_arrow_up_black_24dp));
             propertiesExpansionToggle = false;
         }else{

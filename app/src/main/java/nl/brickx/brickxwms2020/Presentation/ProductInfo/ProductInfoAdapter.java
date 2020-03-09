@@ -57,7 +57,7 @@ public class ProductInfoAdapter extends RecyclerView.Adapter<ProductInfoAdapter.
             stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, context.getText(R.string.combined_property_content).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.propertyTextView.setText(stringBuilder);
 
-            stringBuilder = new SpannableStringBuilder(context.getText(R.string.combined_property_value_content) + " " + data.get(position).getValue());
+            stringBuilder = new SpannableStringBuilder(context.getText(R.string.combined_property_value_content) + " " + data.get(position).getValue() + data.get(position).getUnit());
             stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, context.getText(R.string.combined_property_value_content).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.valueTextView.setText(stringBuilder);
         }catch (Exception e){
@@ -81,5 +81,13 @@ public class ProductInfoAdapter extends RecyclerView.Adapter<ProductInfoAdapter.
             valueTextView = infoView.findViewById(R.id.combined_property_recycler_value);
             cardView = infoView.findViewById(R.id.combined_property_item_card);
         }
+    }
+
+    public List<ProductInfoRecyclerModel> getData() {
+        return data;
+    }
+
+    public void setData(List<ProductInfoRecyclerModel> data) {
+        this.data = data;
     }
 }

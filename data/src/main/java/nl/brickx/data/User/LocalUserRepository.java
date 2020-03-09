@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 import nl.brickx.data.Dagger.DataContext;
-import nl.brickx.domain.Models.Gson.UserInfo;
+import nl.brickx.domain.Models.Gson.UserInfo.UserInfo;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.Users.Data.AuthenticationRepository;
 import retrofit2.Retrofit;

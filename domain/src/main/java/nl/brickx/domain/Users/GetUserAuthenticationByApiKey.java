@@ -9,7 +9,7 @@ import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
 import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.domain.Models.Gson.ApiUserRightsEnum;
-import nl.brickx.domain.Models.Gson.UserInfo;
+import nl.brickx.domain.Models.Gson.UserInfo.UserInfo;
 import nl.brickx.domain.Models.Permission;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.Users.Data.AuthenticationRepository;

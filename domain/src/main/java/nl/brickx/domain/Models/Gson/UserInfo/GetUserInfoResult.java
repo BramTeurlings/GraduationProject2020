@@ -1,4 +1,4 @@
-package nl.brickx.domain.Models.Gson;
+package nl.brickx.domain.Models.Gson.UserInfo;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

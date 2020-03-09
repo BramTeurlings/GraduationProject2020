@@ -4,6 +4,7 @@ public class ProductInfoRecyclerModel {
 
     private String property;
     private String value;
+    private String unit;
 
     public ProductInfoRecyclerModel() {
     }
@@ -11,6 +12,12 @@ public class ProductInfoRecyclerModel {
     public ProductInfoRecyclerModel(String property, String value) {
         this.property = property;
         this.value = value;
+    }
+
+    public ProductInfoRecyclerModel(String property, String value, String unit) {
+        this.property = property;
+        this.value = value;
+        this.unit = unit;
     }
 
     public String getValue() {
@@ -27,5 +34,13 @@ public class ProductInfoRecyclerModel {
 
     public void setProperty(String property) {
         this.property = property;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

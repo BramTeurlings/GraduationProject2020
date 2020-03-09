@@ -42,7 +42,6 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
             holder.codeTextView.setText(data.get(position).getProductCode());
             holder.descriptionTextView.setText(data.get(position).getProductName());
             holder.stockAmountTextView.setText(data.get(position).getProductStock().toString());
-            holder.locationNameTextView.setText(warehouseLocationName);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -57,14 +56,12 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
         TextView codeTextView;
         TextView descriptionTextView;
         TextView stockAmountTextView;
-        TextView locationNameTextView;
 
         InfoRecyclerViewholder(final View infoView) {
             super(infoView);
             codeTextView = infoView.findViewById(R.id.location_info_code_content);
             descriptionTextView = infoView.findViewById(R.id.location_info_name_content);
             stockAmountTextView = infoView.findViewById(R.id.location_info_stock_amount_content);
-            locationNameTextView = infoView.findViewById(R.id.location_info_location_name_content);
         }
     }
 }
