@@ -13,4 +13,9 @@ public interface ProductInfoContract {
         User getUserData();
         LiveData<ProductInfoHolder> observeProductInfo();
     }
+
+    interface View{
+
+        void onNewProductInfoReceived(ProductInfoHolder holder);
+    }
 }

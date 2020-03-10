@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import javax.inject.Inject;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import nl.brickx.domain.Models.Gson.ProductInfo.ProductInformation;
 import nl.brickx.domain.Models.ProductInfoHolder;
@@ -22,8 +23,11 @@ public class GetProductInfoByScan {
         this.productInfo = productInfo;
     }
 
-    public Flowable<ProductInfoHolder> invoke(String code, String apiKey) {
-        ProductInformation result = productInfo.getProductInfoByScan(code, apiKey).subscribeOn(Schedulers.io()).blockingFirst();
+    public Observable<ProductInformation> invoke(String code, String apiKey) {
+        return productInfo.getProductInfoByScan(code, apiKey).subscribeOn(Schedulers.io()).observeOn(Schedulers.io());
+    }
+
+    public Observable<ProductInfoHolder> onProductInfoReceived(ProductInformation result){
         ProductInfoHolder infoHolder = new ProductInfoHolder();
 
         //Todo: Return error message to user if this code throws an error (on getCurrentStock().get(0).
@@ -96,7 +100,7 @@ public class GetProductInfoByScan {
         }else{
             printErrorMessage("Properties");
         }
-        return Flowable.just(infoHolder);
+        return Observable.just(infoHolder).subscribeOn(Schedulers.io());
     }
 
     private boolean checkForNull(String content){

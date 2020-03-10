@@ -9,24 +9,21 @@ import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoAdapter;
 import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoPresenter;
@@ -34,7 +31,7 @@ import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.ProductInfoHolder;
 import nl.brickx.domain.Models.ProductInfoRecyclerModel;
 
-public class ProductInfoActivity extends DaggerAppCompatActivity {
+public class ProductInfoActivity extends DaggerAppCompatActivity implements ProductInfoContract.View {
 
     @Inject
     ProductInfoPresenter infoPresenter;
@@ -50,6 +47,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
     ConstraintLayout detailsGroup;
     FrameLayout propertiesGroup;
     View propertiesClickCatcherView;
+    NestedScrollView scrollView;
 
     TextInputEditText barcodeInput;
     TextView productNameTextView;
@@ -93,6 +91,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
         amountPerPackageTextView = findViewById(R.id.combined_details_packaging_units_content);
         weightTextView = findViewById(R.id.combined_details_weight_content);
 
+        scrollView = findViewById(R.id.combined_nested_scrollview);
         barcodeInput = findViewById(R.id.combined_info_textinputEditText);
         propertiesClickCatcherView = findViewById(R.id.combined_properties_click_catcher_view);
         barcodesGroup = findViewById(R.id.combined_barcodes_group);
@@ -134,20 +133,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
         //Todo: Remove mock code.
         ProductInfoHolder holder = new ProductInfoHolder("Smartphone", "HASV412612VSDHAW", 10d, "AUSVDWQYD12314", "219846718238712", "80003123", 1d, "300g");
         setTextViews(holder);
-        subscribeObservers();
         initRecyclerViews();
-    }
-
-    private void subscribeObservers() {
-        infoPresenter.observeProductInfo().observe(this, new Observer<ProductInfoHolder>() {
-            @Override
-            public void onChanged(ProductInfoHolder productInfoHolder) {
-                //Change info
-                productInfoAdapter.setData(productInfoHolder.getProperties());
-                productInfoAdapter.notifyDataSetChanged();
-                setTextViews(productInfoHolder);
-            }
-        });
     }
 
     public void setTextViews(ProductInfoHolder productInfo){
@@ -252,5 +238,26 @@ public class ProductInfoActivity extends DaggerAppCompatActivity {
             propertiesArrowImage.setImageDrawable(getDrawable(R.drawable.ic_keyboard_arrow_down_black_24dp));
             propertiesExpansionToggle = true;
         }
+    }
+
+    @Override
+    public void onNewProductInfoReceived(ProductInfoHolder holder) {
+        productInfoAdapter.setData(holder.getProperties());
+        productInfoAdapter.notifyDataSetChanged();
+        setTextViews(holder);
+        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                //Todo: This is a bit jank.
+                scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                scrollView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        scrollView.fullScroll(ScrollView.FOCUS_UP);
+                    }
+                }, 500);
+            }
+        });
+
     }
 }

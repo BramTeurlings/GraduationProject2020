@@ -21,5 +21,11 @@ public interface ProductInfoActivityModule {
 
         @Binds
         Activity bindProductInfoActivity(ProductInfoActivity productInfoActivity);
+
+        @Binds
+        ProductInfoContract.Presenter bindProductInfoPresenter(ProductInfoPresenter productInfoPresenter);
+
+        @Binds
+        ProductInfoContract.View bindProductInfoView(ProductInfoActivity productInfoActivity);
     }
 }
