@@ -19,4 +19,9 @@ public interface LoginContract {
 
         //Todo: Navigate to screens.
     }
+
+    interface View {
+
+        void onAuthenticationDataReceived(AuthenticationResult result);
+    }
 }

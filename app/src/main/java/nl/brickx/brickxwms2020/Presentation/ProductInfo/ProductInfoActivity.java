@@ -42,13 +42,11 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
     private final String TAG = "ProductInfoActivity: ";
 
     SpannableStringBuilder stringBuilder;
-
     ConstraintLayout barcodesGroup;
     ConstraintLayout detailsGroup;
     FrameLayout propertiesGroup;
     View propertiesClickCatcherView;
     NestedScrollView scrollView;
-
     TextInputEditText barcodeInput;
     TextView productNameTextView;
     TextView skuTextView;
