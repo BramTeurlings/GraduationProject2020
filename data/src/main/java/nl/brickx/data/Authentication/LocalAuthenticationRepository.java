@@ -50,9 +50,9 @@ public class LocalAuthenticationRepository implements nl.brickx.domain.Users.Dat
     }
 
     @Override
-    public Flowable<Authentication> authenticateUser(String apiKey) {
+    public Observable<Authentication> authenticateUser(String apiKey) {
         //Todo: Save APIkey in sharedpreferences and add it to the end of every request
-        Flowable<Authentication> authenticationSingle = localAuthenticationRepositoryService.validateApiKey(apiKey, apiKey);
+        Observable<Authentication> authenticationSingle = localAuthenticationRepositoryService.validateApiKey(apiKey, apiKey);
 
         return authenticationSingle;
     }

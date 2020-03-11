@@ -7,6 +7,9 @@ public class AuthenticationResult {
     User user;
     Boolean isAuthenticated;
 
+    public AuthenticationResult() {
+    }
+
     public AuthenticationResult(User user) {
         this.user = user;
     }

@@ -19,7 +19,7 @@ import nl.brickx.domain.Models.Gson.ApiUserRightsEnum;
 import nl.brickx.domain.Models.Permission;
 import nl.brickx.domain.Models.User;
 
-public class LoginActivity extends DaggerAppCompatActivity {
+public class LoginActivity extends DaggerAppCompatActivity implements LoginContract.View {
 
     @Inject
     LoginContract.Presenter presenter;
@@ -28,18 +28,6 @@ public class LoginActivity extends DaggerAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
-        subscribeObservers();
-    }
-
-    private void subscribeObservers() {
-        presenter.observeAuth().observe(this, new Observer<AuthenticationResult>() {
-            @Override
-            public void onChanged(AuthenticationResult authentication) {
-                if(authentication.getAuthenticated()){
-                    AuthenticationCompleted();
-                }
-            }
-        });
     }
 
     public void onLogin(View view){
@@ -55,5 +43,12 @@ public class LoginActivity extends DaggerAppCompatActivity {
     public void AuthenticationCompleted(){
         Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onAuthenticationDataReceived(AuthenticationResult result) {
+        if(result.getAuthenticated()){
+            AuthenticationCompleted();
+        }
     }
 }

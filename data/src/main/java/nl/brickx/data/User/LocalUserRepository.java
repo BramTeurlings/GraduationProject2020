@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.Gson.UserInfo.UserInfo;
 import nl.brickx.domain.Models.User;
@@ -41,8 +42,8 @@ public class LocalUserRepository implements AuthenticationRepository.GetUserData
 
 
     @Override
-    public Flowable<UserInfo> getUserData(String apiKey) {
-        Flowable<UserInfo> authenticationSingle = localUserRepositoryService.getUserInfo(apiKey, apiKey);
+    public Observable<UserInfo> getUserData(String apiKey) {
+        Observable<UserInfo> authenticationSingle = localUserRepositoryService.getUserInfo(apiKey, apiKey);
 
         return authenticationSingle;
     }

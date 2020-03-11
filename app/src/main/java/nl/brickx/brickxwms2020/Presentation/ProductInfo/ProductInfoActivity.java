@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -115,12 +117,13 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         //Todo: Make less jank if possible.
         propertiesClickCatcherView.setOnClickListener(this::onClickProperties);
 
-        barcodeInput.setOnKeyListener(new View.OnKeyListener() {
+        barcodeInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(barcodeInput.getWindowToken(), 0);
                     onBarcodeScanned();
                     return true;
                 }
@@ -226,7 +229,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
 
     public void onClickProperties(View view){
         if(propertiesExpansionToggle){
-            if(recyclerViewAdapter.getItemCount() > 0){
+            if(productInfoAdapter.getItemCount() > 0){
                 propertiesGroup.setVisibility(View.VISIBLE);
             }
             propertiesArrowImage.setImageDrawable(getDrawable(R.drawable.ic_keyboard_arrow_up_black_24dp));

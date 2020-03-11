@@ -19,5 +19,8 @@ public interface LoginActivityModule {
 
         @Binds
         LoginContract.Presenter bindPresenter(LoginPresenter loginPresenter);
+
+        @Binds
+        LoginContract.View bindView(LoginActivity loginActivity);
     }
 }
