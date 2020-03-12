@@ -79,11 +79,11 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Bundle b = intent.getExtras();
             if (action.equals(context.getResources().getString(R.string.datawedge_intent_filter_action))) {
                 //  Received a barcode scan
                 try {
                     //Execute View code.
+                    view.clearBarcodeInput();
                     view.getProductInfoByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)));
                 } catch (Exception e) {
                     Log.i(TAG, "Unable to read data from scanner.");

@@ -264,6 +264,10 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
                 }, 600);
             }
         });
+    }
 
+    @Override
+    public void clearBarcodeInput(){
+        barcodeInput.setText("");
     }
 }
