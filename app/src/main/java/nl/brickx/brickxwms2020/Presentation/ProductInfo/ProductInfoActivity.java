@@ -14,11 +14,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
@@ -70,7 +68,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
     ProductInfoAdapter productInfoAdapter;
     RecyclerView productInfoRecyclerView;
     RecyclerView locationInfoRecyclerView;
-    LocationInfoAdapter recyclerViewAdapter;
+    LocationInfoAdapter locationInfoAdapter;
 
     public static Intent createIntent(Context context){
         return new Intent(context, ProductInfoActivity.class);
@@ -87,7 +85,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         customCodeTextView = findViewById(R.id.combined_codes_custom_content);
         productNameTextView = findViewById(R.id.combined_name_content);
         skuTextView = findViewById(R.id.combined_sku_content);
-        stockTextView = findViewById(R.id.combined_stock_content);
+        stockTextView = findViewById(R.id.combined_stock_content2);
         amountPerPackageTextView = findViewById(R.id.combined_details_packaging_units_content);
         weightTextView = findViewById(R.id.combined_details_weight_content);
 
@@ -141,7 +139,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         try{
             productNameTextView.setText(productInfo.getProductName());
             skuTextView.setText(productInfo.getSku());
-            //stockTextView.setText(productInfo.getStock());
+            stockTextView.setText(String.valueOf(productInfo.getStock().intValue()));
 
             stringBuilder = new SpannableStringBuilder(getText(R.string.combined_ean) + " " + productInfo.getEan());
             stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, getText(R.string.combined_ean).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -183,11 +181,11 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
 
         //Location:
         //Todo: Get data from domain layer and data layer and bind to the correct adapter.
-        recyclerViewAdapter = new LocationInfoAdapter(locationPresenter.getProductsByLocation("mockLocationCode"), "mockLocationCode");
+        locationInfoAdapter = new LocationInfoAdapter(locationPresenter.getProductsByLocation("mockLocationCode"), "mockLocationCode");
 
         getProductInfoByScan("AE00872");
 
-        locationInfoRecyclerView.setAdapter(recyclerViewAdapter);
+        locationInfoRecyclerView.setAdapter(locationInfoAdapter);
         locationInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -199,7 +197,8 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         }
     }
 
-    private void getProductInfoByScan(String scannedCode){
+    @Override
+    public void getProductInfoByScan(String scannedCode){
         infoPresenter.getProductInfoByScan(scannedCode);
     }
 
@@ -243,9 +242,15 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
 
     @Override
     public void onNewProductInfoReceived(ProductInfoHolder holder) {
+        locationInfoAdapter.setData(holder.getLocations());
         productInfoAdapter.setData(holder.getProperties());
+        locationInfoAdapter.notifyDataSetChanged();
         productInfoAdapter.notifyDataSetChanged();
         setTextViews(holder);
+        if(productInfoAdapter.getItemCount() < 1){
+            propertiesExpansionToggle = false;
+            onClickProperties(propertiesCardView);
+        }
         scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -254,9 +259,9 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
                 scrollView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        scrollView.fullScroll(ScrollView.FOCUS_UP);
+                        scrollView.smoothScrollTo(0,0);
                     }
-                }, 500);
+                }, 600);
             }
         });
 

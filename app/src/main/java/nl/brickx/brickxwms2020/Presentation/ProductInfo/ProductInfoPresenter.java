@@ -1,5 +1,10 @@
 package nl.brickx.brickxwms2020.Presentation.ProductInfo;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
@@ -10,7 +15,10 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import nl.brickx.brickxwms2020.R;
+import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.Gson.ProductInfo.ProductInformation;
+import nl.brickx.domain.Models.LocationInfoRecyclerModel;
 import nl.brickx.domain.Models.ProductInfoHolder;
 import nl.brickx.domain.Models.ProductInfoRecyclerModel;
 import nl.brickx.domain.Models.User;
@@ -26,13 +34,22 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
     private UserDataManager userDataManager;
     private GetProductInfoByScan getProductInfoByScan;
     private ProductInfoRecyclerModel tempProductInfoRecyclerModel = new ProductInfoRecyclerModel();
+    private LocationInfoRecyclerModel tempLocationInfoRecyclerModel = new LocationInfoRecyclerModel();
     private ProductInfoContract.View view;
+    private Context context;
+
 
     @Inject
-    ProductInfoPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, ProductInfoContract.View view){
+    ProductInfoPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, ProductInfoContract.View view, @DataContext Context context){
         this.userDataManager = userDataManager;
         this.getProductInfoByScan = getProductInfoByScan;
         this.view = view;
+
+        //Datawedge
+        IntentFilter filter = new IntentFilter();
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        filter.addAction(context.getString(R.string.datawedge_intent_filter_action));
+        context.registerReceiver(textInputBroadcastReceiver, filter);
     }
 
     @Override
@@ -47,6 +64,33 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
                             Throwable::printStackTrace,
                             () -> onProductInfoFetched(result));
     }
+
+    @Override
+    public User getUserData() {
+        return userDataManager.GetUserData();
+    }
+
+    @Override
+    public LiveData<ProductInfoHolder> observeProductInfo() {
+        return productInfo;
+    }
+
+    private BroadcastReceiver textInputBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Bundle b = intent.getExtras();
+            if (action.equals(context.getResources().getString(R.string.datawedge_intent_filter_action))) {
+                //  Received a barcode scan
+                try {
+                    //Execute View code.
+                    view.getProductInfoByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)));
+                } catch (Exception e) {
+                    Log.i(TAG, "Unable to read data from scanner.");
+                }
+            }
+        }
+    };
 
     private void onProductInfoFetched(List<ProductInformation> productInformations){
         System.out.println(new Date());
@@ -65,8 +109,8 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
         }
 
         try{
-            if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getAvailableStock() != null){
-                infoHolder.setStock(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getAvailableStock());
+            if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getCurrentStock() != null){
+                infoHolder.setStock(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getCurrentStock());
             }else{
                 printErrorMessage("Stock");
             }
@@ -174,20 +218,34 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
             printErrorMessage("Properties");
         }
 
+        try{
+            if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock() != null){
+                if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation() != null){
+                    for(int i = 0; i < result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().size(); i++){
+                        tempLocationInfoRecyclerModel = new LocationInfoRecyclerModel();
+                        if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getCurrentStock() != null){
+                            tempLocationInfoRecyclerModel.setProductStock(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getCurrentStock().intValue());
+                        }
+                        if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseLocation().getLocationName() != null){
+                            tempLocationInfoRecyclerModel.setLocation(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseLocation().getLocationName());
+                        }
+                        if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseName() != null){
+                            tempLocationInfoRecyclerModel.setWarehouseName(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseName());
+                        }
+                        infoHolder.getLocations().add(tempLocationInfoRecyclerModel);
+                    }
+                }
+            }else{
+                printErrorMessage("Location");
+            }
+        }catch (NullPointerException e){
+            printErrorMessage("Location");
+        }
+
         view.onNewProductInfoReceived(infoHolder);
     }
 
     private void printErrorMessage(String missingObject){
         Log.i(TAG, "Product " + missingObject + " not present.");
-    }
-
-    @Override
-    public User getUserData() {
-        return userDataManager.GetUserData();
-    }
-
-    @Override
-    public LiveData<ProductInfoHolder> observeProductInfo() {
-        return productInfo;
     }
 }

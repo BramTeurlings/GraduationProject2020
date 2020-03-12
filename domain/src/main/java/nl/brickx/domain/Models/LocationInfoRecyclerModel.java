@@ -2,34 +2,37 @@ package nl.brickx.domain.Models;
 
 public class LocationInfoRecyclerModel {
 
-    private String productCode;
-    private String productName;
+    private String warehouseName;
+    private String location;
     private Integer productStock;
 
+    public LocationInfoRecyclerModel() {
+    }
+
     public LocationInfoRecyclerModel(String productCode) {
-        this.productCode = productCode;
+        this.warehouseName = productCode;
     }
 
     public LocationInfoRecyclerModel(String productCode, String productName, Integer productStock) {
-        this.productCode = productCode;
-        this.productName = productName;
+        this.warehouseName = productCode;
+        this.location = productName;
         this.productStock = productStock;
     }
 
-    public String getProductCode() {
-        return productCode;
+    public String getWarehouseName() {
+        return warehouseName;
     }
 
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getLocation() {
+        return location;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Integer getProductStock() {

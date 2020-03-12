@@ -17,5 +17,6 @@ public interface ProductInfoContract {
     interface View{
 
         void onNewProductInfoReceived(ProductInfoHolder holder);
+        void getProductInfoByScan(String scannedCode);
     }
 }

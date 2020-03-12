@@ -17,6 +17,7 @@ public class ProductInfoHolder {
     private Double amountPerPackage = 0d;
     private String weight = "-";
     private List<ProductInfoRecyclerModel> properties = new ArrayList<>();
+    private List<LocationInfoRecyclerModel> locations = new ArrayList<>();
 
     public ProductInfoHolder() {
 
@@ -43,6 +44,19 @@ public class ProductInfoHolder {
         this.amountPerPackage = amountPerPackage;
         this.weight = weight;
         this.properties = properties;
+    }
+
+    public ProductInfoHolder(String productName, String sku, Double stock, String ean, String upc, String customBarcode, Double amountPerPackage, String weight, List<ProductInfoRecyclerModel> properties, List<LocationInfoRecyclerModel> locations) {
+        this.productName = productName;
+        this.sku = sku;
+        this.stock = stock;
+        this.ean = ean;
+        this.upc = upc;
+        this.customBarcode = customBarcode;
+        this.amountPerPackage = amountPerPackage;
+        this.weight = weight;
+        this.properties = properties;
+        this.locations = locations;
     }
 
     public String getProductName() {
@@ -115,5 +129,13 @@ public class ProductInfoHolder {
 
     public void setProperties(List<ProductInfoRecyclerModel> properties) {
         this.properties = properties;
+    }
+
+    public List<LocationInfoRecyclerModel> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<LocationInfoRecyclerModel> locations) {
+        this.locations = locations;
     }
 }

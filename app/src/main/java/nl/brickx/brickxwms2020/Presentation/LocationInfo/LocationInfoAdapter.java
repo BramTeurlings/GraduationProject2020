@@ -39,8 +39,8 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
     public void onBindViewHolder(@NonNull LocationInfoAdapter.InfoRecyclerViewholder holder, int position) {
         //Todo: Make a good catch and multiple tries.
         try{
-            holder.codeTextView.setText(data.get(position).getProductCode());
-            holder.descriptionTextView.setText(data.get(position).getProductName());
+            holder.codeTextView.setText(data.get(position).getWarehouseName());
+            holder.descriptionTextView.setText(data.get(position).getLocation());
             holder.stockAmountTextView.setText(data.get(position).getProductStock().toString());
         }catch (Exception e){
             e.printStackTrace();
@@ -63,5 +63,9 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
             descriptionTextView = infoView.findViewById(R.id.location_info_name_content);
             stockAmountTextView = infoView.findViewById(R.id.location_info_stock_amount_content);
         }
+    }
+
+    public void setData(List<LocationInfoRecyclerModel> data) {
+        this.data = data;
     }
 }
