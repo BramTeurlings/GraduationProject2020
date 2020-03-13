@@ -13,12 +13,10 @@ import nl.brickx.domain.Models.LocationInfoRecyclerModel;
 public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapter.InfoRecyclerViewholder>{
 
     private List<LocationInfoRecyclerModel> data;
-    private String warehouseLocationName;
     private RecyclerView recyclerView;
 
-    public LocationInfoAdapter(List<LocationInfoRecyclerModel> items, String warehouseLocationName) {
+    public LocationInfoAdapter(List<LocationInfoRecyclerModel> items) {
         data = items;
-        this.warehouseLocationName = warehouseLocationName;
     }
 
     @Override
@@ -40,8 +38,13 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
         //Todo: Make a good catch and multiple tries.
         try{
             holder.codeTextView.setText(data.get(position).getWarehouseName());
-            holder.descriptionTextView.setText(data.get(position).getLocation());
             holder.stockAmountTextView.setText(data.get(position).getProductStock().toString());
+            if(data.get(position).getProductName() != null){
+                holder.locationTextView.setText(R.string.location_info_product_text);
+                holder.descriptionTextView.setText(data.get(position).getProductName());
+            }else{
+                holder.descriptionTextView.setText(data.get(position).getLocation());
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -56,10 +59,12 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
         TextView codeTextView;
         TextView descriptionTextView;
         TextView stockAmountTextView;
+        TextView locationTextView;
 
         InfoRecyclerViewholder(final View infoView) {
             super(infoView);
             codeTextView = infoView.findViewById(R.id.location_info_code_content);
+            locationTextView = infoView.findViewById(R.id.location_info_name_text);
             descriptionTextView = infoView.findViewById(R.id.location_info_name_content);
             stockAmountTextView = infoView.findViewById(R.id.location_info_stock_amount_content);
         }

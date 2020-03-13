@@ -1,7 +1,5 @@
 package nl.brickx.brickxwms2020.Presentation.ProductInfo;
 
-import androidx.lifecycle.LiveData;
-
 import nl.brickx.domain.Models.ProductInfoHolder;
 import nl.brickx.domain.Models.User;
 
@@ -11,7 +9,7 @@ public interface ProductInfoContract {
 
         void getProductInfoByScan(String scan);
         User getUserData();
-        LiveData<ProductInfoHolder> observeProductInfo();
+        void dispose();
     }
 
     interface View{

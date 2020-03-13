@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
@@ -29,13 +30,12 @@ import static android.content.ContentValues.TAG;
 
 public class ProductInfoPresenter implements ProductInfoContract.Presenter {
 
-    private MediatorLiveData<ProductInfoHolder> productInfo = new MediatorLiveData<>();
-
     private UserDataManager userDataManager;
     private GetProductInfoByScan getProductInfoByScan;
     private ProductInfoRecyclerModel tempProductInfoRecyclerModel = new ProductInfoRecyclerModel();
     private LocationInfoRecyclerModel tempLocationInfoRecyclerModel = new LocationInfoRecyclerModel();
     private ProductInfoContract.View view;
+    private List<Disposable> disposables = new ArrayList<>();
     private Context context;
 
 
@@ -44,6 +44,7 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
         this.userDataManager = userDataManager;
         this.getProductInfoByScan = getProductInfoByScan;
         this.view = view;
+        this.context = context;
 
         //Datawedge
         IntentFilter filter = new IntentFilter();
@@ -56,23 +57,18 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
     public void getProductInfoByScan(String scan) {
         final List<ProductInformation> result = new ArrayList<>();
         System.out.println(new Date());
-        getProductInfoByScan.invoke(scan, getUserData().getApiKey())
+        this.disposables.add(getProductInfoByScan.invoke(scan, getUserData().getApiKey())
                 .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( s -> result.add(s),
                             Throwable::printStackTrace,
-                            () -> onProductInfoFetched(result));
+                            () -> onProductInfoFetched(result)));
     }
 
     @Override
     public User getUserData() {
         return userDataManager.GetUserData();
-    }
-
-    @Override
-    public LiveData<ProductInfoHolder> observeProductInfo() {
-        return productInfo;
     }
 
     private BroadcastReceiver textInputBroadcastReceiver = new BroadcastReceiver() {
@@ -84,13 +80,26 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
                 try {
                     //Execute View code.
                     view.clearBarcodeInput();
-                    view.getProductInfoByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)));
+                    view.getProductInfoByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
                 } catch (Exception e) {
                     Log.i(TAG, "Unable to read data from scanner.");
                 }
             }
         }
     };
+
+    @Override
+    public void dispose() {
+        for(int i = 0; i < disposables.size(); i++){
+            this.disposables.get(i).dispose();
+        }
+
+        try{
+            context.unregisterReceiver(textInputBroadcastReceiver);
+        }catch (Exception e){
+            Log.e(TAG, "Unable to unsubscribe broadcast receiver.");
+        }
+    }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations){
         System.out.println(new Date());

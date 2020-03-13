@@ -26,6 +26,9 @@ public interface LocationInfoActivityModule {
         Activity bindLocationInfoActivity(LocationInfoActivity locationInfoActivity);
 
         @Binds
-        MainMenuContract.Presenter bindPresenter(MainMenuPresenter mainMenuPresenter);
+        LocationInfoContract.Presenter bindLocationInfoPresenter(LocationInfoPresenter locationInfoPresenter);
+
+        @Binds
+        LocationInfoContract.View bindLocationInfoView(LocationInfoActivity locationInfoActivity);
     }
 }

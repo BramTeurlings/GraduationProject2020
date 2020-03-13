@@ -1,5 +1,7 @@
 package nl.brickx.brickxwms2020.Presentation.LocationInfo;
 
+import android.text.SpannableStringBuilder;
+
 import java.util.List;
 import nl.brickx.brickxwms2020.Presentation.Models.WarehouseLocation;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
@@ -8,11 +10,16 @@ public interface LocationInfoContract {
 
     interface Presenter {
 
-        List<LocationInfoRecyclerModel> getProductsByLocation(String locationCode);
+        void getLocationInfoByScan(String locationCode);
+        void dispose();
+        void buildLocationTag(String locationname);
     }
 
-    interface Navigator {
+    interface View {
 
-
+        void getLocationInfoByScan(String scan);
+        void onLocationInfoReceived(List<LocationInfoRecyclerModel> locationInfoRecyclerModel);
+        void clearBarcodeInput();
+        void setLocationTag(SpannableStringBuilder stringBuilder);
     }
 }

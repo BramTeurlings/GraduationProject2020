@@ -34,9 +34,9 @@ public class LocalLocationInfoRepository implements LocationRepository.LocationI
     }
 
     @Override
-    public Observable<LocationInfo> getProductInfoByScan(String scan, String apiKey) {
-        Observable<LocationInfo> holder = localLocationRepositoryService.getLocationInfo(scan, apiKey).subscribeOn(Schedulers.computation()).observeOn(Schedulers.io());
+    public Observable<LocationInfo> getLocationInfoByScan(String scan, String apiKey) {
+        Observable<LocationInfo> locationInfoObservable = localLocationRepositoryService.getLocationInfo(scan, apiKey).subscribeOn(Schedulers.computation()).observeOn(Schedulers.io());
 
-        return holder;
+        return locationInfoObservable;
     }
 }

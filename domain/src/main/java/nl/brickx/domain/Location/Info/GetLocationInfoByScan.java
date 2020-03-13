@@ -16,7 +16,7 @@ public class GetLocationInfoByScan {
     }
 
     public Observable<LocationInfo> invoke(String scan, String apiKey){
-        return locationRepository.getProductInfoByScan(scan, apiKey);
+        return locationRepository.getLocationInfoByScan(scan, apiKey);
     }
 
 }

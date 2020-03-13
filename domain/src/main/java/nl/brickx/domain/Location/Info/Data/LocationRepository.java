@@ -7,6 +7,6 @@ public interface LocationRepository {
 
     interface LocationInfo{
 
-        Observable<nl.brickx.domain.Models.Gson.LocationInfo.LocationInfo> getProductInfoByScan(String scan, String apiKey);
+        Observable<nl.brickx.domain.Models.Gson.LocationInfo.LocationInfo> getLocationInfoByScan(String scan, String apiKey);
     }
 }

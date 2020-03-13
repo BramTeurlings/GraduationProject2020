@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:background="@color/colorBackground"
+    android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,9 +22,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/location_info_textInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"/>
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionDone"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,17 +47,17 @@
 
     <TextView
         android:id="@+id/location_info_location_name_content"
-        style="@style/TextAppearance.AppTheme.h6.bold"
+        style="@style/TextAppearance.AppTheme.h6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/grid_0_5"
         android:autoSizeMaxTextSize="18sp"
         android:autoSizeMinTextSize="6sp"
         android:autoSizeStepGranularity="2sp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
         android:text="@string/location_info_location_name"
-        app:layout_constraintTop_toBottomOf="@id/location_info_view" />
+        app:layout_constraintTop_toBottomOf="@id/location_info_view"
+        tools:layout_editor_absoluteX="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/location_info_recycler_view"

@@ -36,9 +36,6 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
     @Inject
     ProductInfoPresenter infoPresenter;
 
-    @Inject
-    LocationInfoPresenter locationPresenter;
-
     private final String TAG = "ProductInfoActivity: ";
 
     SpannableStringBuilder stringBuilder;
@@ -79,7 +76,6 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         super.onCreate(savedInstanceState);
         setContentView(R.layout.combined_info_and_location_page);
 
-        //Todo: Currently unsused.
         eanTextView = findViewById(R.id.combined_codes_ean_content);
         upcTextView = findViewById(R.id.combined_codes_upc_content);
         customCodeTextView = findViewById(R.id.combined_codes_custom_content);
@@ -88,7 +84,6 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         stockTextView = findViewById(R.id.combined_stock_content2);
         amountPerPackageTextView = findViewById(R.id.combined_details_packaging_units_content);
         weightTextView = findViewById(R.id.combined_details_weight_content);
-
         scrollView = findViewById(R.id.combined_nested_scrollview);
         barcodeInput = findViewById(R.id.combined_info_textinputEditText);
         propertiesClickCatcherView = findViewById(R.id.combined_properties_click_catcher_view);
@@ -130,7 +125,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         });
 
         //Todo: Remove mock code.
-        ProductInfoHolder holder = new ProductInfoHolder("Smartphone", "HASV412612VSDHAW", 10d, "AUSVDWQYD12314", "219846718238712", "80003123", 1d, "300g");
+        ProductInfoHolder holder = new ProductInfoHolder();
         setTextViews(holder);
         initRecyclerViews();
     }
@@ -167,24 +162,12 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
 
     public void initRecyclerViews(){
         //Productinfo
-        //Todo: get proper data from domain.
-        List<ProductInfoRecyclerModel> data  = new ArrayList<>();
-        data.add(new ProductInfoRecyclerModel("Garantie", "2 jaar"));
-        data.add(new ProductInfoRecyclerModel("Lengte kabels", "1.5 M"));
-        data.add(new ProductInfoRecyclerModel("Aantal per doos", "20"));
-        data.add(new ProductInfoRecyclerModel("Waterdichtheid", "IP68"));
-        data.add(new ProductInfoRecyclerModel("Ingangsstroom template tekst omdat ik wil zien hoe het veld om gaat met grote hoeveelheden aan woorden en langere zinnen ect ect ect.", "12V"));
-
-        productInfoAdapter = new ProductInfoAdapter(data);
+        productInfoAdapter = new ProductInfoAdapter(new ArrayList<>());
         productInfoRecyclerView.setAdapter(productInfoAdapter);
         productInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Location:
-        //Todo: Get data from domain layer and data layer and bind to the correct adapter.
-        locationInfoAdapter = new LocationInfoAdapter(locationPresenter.getProductsByLocation("mockLocationCode"), "mockLocationCode");
-
-        getProductInfoByScan("AE00872");
-
+        locationInfoAdapter = new LocationInfoAdapter(new ArrayList<>());
         locationInfoRecyclerView.setAdapter(locationInfoAdapter);
         locationInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -269,5 +252,11 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
     @Override
     public void clearBarcodeInput(){
         barcodeInput.setText("");
+    }
+
+    @Override
+    public void onDestroy(){
+        infoPresenter.dispose();
+        super.onDestroy();
     }
 }

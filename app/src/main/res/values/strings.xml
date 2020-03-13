@@ -36,6 +36,7 @@
     <string name="location_info_code_title">Magazijn:</string>
     <string name="location_info_name_title">Locatie:</string>
     <string name="location_info_location_name">Locatie:</string>
+    <string name="location_info_product_text">Product:</string>
 
     <!--    Combined info screen-->
     <string name="combined_productname_text">Productnaam:</string>

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
@@ -26,12 +27,10 @@ import static android.content.ContentValues.TAG;
 
 public class LoginPresenter implements LoginContract.Presenter {
 
-    private MediatorLiveData<AuthenticationResult> auth = new MediatorLiveData<>();
-
     private GetUserAuthenticationByApiKey authenticationManager;
-
     private Context context;
     private LoginContract.View view;
+    private List<Disposable> disposables = new ArrayList<>();
 
     @Inject
     LoginPresenter(GetUserAuthenticationByApiKey authenticationRepository, @DataContext Context context, LoginContract.View view){
@@ -45,14 +44,14 @@ public class LoginPresenter implements LoginContract.Presenter {
         User returnedUser = new User(user.getId(), user.getUsername(), context.getString(R.string.api_key_default), user.getPermissions());
         final List<Authentication> result = new ArrayList<>();
 
-       authenticationManager.authenticateUser(returnedUser)
+       disposables.add(authenticationManager.authenticateUser(returnedUser)
             .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                s -> result.add(s),
                Throwable::printStackTrace,
-               () -> getUserData(result.get(0), returnedUser));
+               () -> getUserData(result.get(0), returnedUser)));
     }
 
     @Override
@@ -60,14 +59,13 @@ public class LoginPresenter implements LoginContract.Presenter {
         if(authentication.getApiKey()){
             List<UserInfo> userInfo = new ArrayList<>();
 
-            authenticationManager.getUserInfo(user.getApiKey())
+            disposables.add(authenticationManager.getUserInfo(user.getApiKey())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
                             s -> userInfo.add(s),
                             Throwable::printStackTrace,
-                            () -> processUserData(userInfo.get(0), user.getApiKey())
-                    );
+                            () -> processUserData(userInfo.get(0), user.getApiKey())));
         }else{
             //Todo: Show message on screen.
             Log.i(TAG, "Authentication failed, invalid credidentials.");
@@ -104,5 +102,12 @@ public class LoginPresenter implements LoginContract.Presenter {
 
     private void onAuthenticationInfoFetched(AuthenticationResult result){
         view.onAuthenticationDataReceived(result);
+    }
+
+    @Override
+    public void dispose() {
+        for(int i = 0; i < disposables.size(); i++){
+            this.disposables.get(i).dispose();
+        }
     }
 }

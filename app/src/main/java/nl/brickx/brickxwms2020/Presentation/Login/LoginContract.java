@@ -12,6 +12,7 @@ public interface LoginContract {
 
         void authenticateUser(User user);
         void getUserData(Authentication authentication, User user);
+        void dispose();
     }
 
     interface Navigator {

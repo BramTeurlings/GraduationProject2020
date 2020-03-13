@@ -15,10 +15,13 @@ import nl.brickx.data.Authentication.LocalAuthenticationMenuCategoriesRepository
 import nl.brickx.data.Authentication.LocalAuthenticationRepository;
 import nl.brickx.data.Authentication.LocalAuthenticationRepositoryService;
 import nl.brickx.data.Dagger.DataContext;
+import nl.brickx.data.LocationInfo.LocalLocationInfoRepository;
+import nl.brickx.data.LocationInfo.LocalLocationRepositoryService;
 import nl.brickx.data.ProductInfo.LocalProductInfoRepository;
 import nl.brickx.data.ProductInfo.LocalProductRepositoryService;
 import nl.brickx.data.User.LocalUserRepository;
 import nl.brickx.data.User.LocalUserRepositoryService;
+import nl.brickx.domain.Location.Info.Data.LocationRepository;
 import nl.brickx.domain.Product.Info.Data.ProductRepository;
 import nl.brickx.domain.Users.Data.AuthenticationRepository;
 import okhttp3.OkHttpClient;
@@ -87,6 +90,11 @@ class AppModule {
     }
 
     @Provides
+    LocalLocationRepositoryService locationRepositoryService(){
+        return retrofit.create(LocalLocationRepositoryService.class);
+    }
+
+    @Provides
     @DataContext
     Context provideDataContext(BaseApplication application){
         return application;
@@ -115,5 +123,8 @@ class AppModule {
 
         @Binds
         ProductRepository.ProductInfo bindProductInfoRepository(LocalProductInfoRepository localProductInfoRepository);
+
+        @Binds
+        LocationRepository.LocationInfo bindLocationInfoRepository(LocalLocationInfoRepository localLocationInfoRepository);
     }
 }
