@@ -34,6 +34,7 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
     TextView activityHeaderText;
     TextView infoHeaderText;
     TextView maintenanceHeaderText;
+    TextView usernameText;
     RecyclerView activityFeatureRecyclerView;
     RecyclerView infoFeatureRecyclerView;
     RecyclerView maintenanceFeatureRecyclerView;
@@ -52,6 +53,9 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
         activityFeatureRecyclerView = this.findViewById(R.id.activitiesRecyclerView);
         infoFeatureRecyclerView = this.findViewById(R.id.infoRecyclerView);
         maintenanceFeatureRecyclerView = this.findViewById(R.id.maintenanceRecyclerView);
+        usernameText = this.findViewById(R.id.main_menu_login_username_text);
+
+        usernameText.setText(presenter.getUserData().getUsername());
         initRecyclerViews();
     }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BrickxWMS2020</string>
+    <string name="app_name">Brickx WMS</string>
 
     <!--    DataWedge-->
     <string name="datawedge_intent_filter_action">nl.brickx.ACTION</string>
@@ -10,6 +10,7 @@
     <string name="login_header_textview">Log in bij Brickx</string>
     <string name="log_in">Log in</string>
     <string name="api_key_default">7737d6b3-21fe-4f7d-88e3-0c887365f2aa</string>
+    <string name="login_error_message">There was a problem logging in, try again.</string>
 
     <!--    Main Menu-->
     <string name="brickx_wms">Brickx WMS</string>
@@ -28,6 +29,7 @@
     <string name="product_info_ean_text">EAN</string>
     <string name="product_info_custom_barcode_title">Eigen Barcode</string>
     <string name="product_info_upc_title">UPC</string>
+    <string name="product_error_message">There was a problem getting product data, try again.</string>
 
     <!--    Location Info-->
     <string name="location_info_input_hint">Vul een locatienummer in</string>
@@ -37,6 +39,7 @@
     <string name="location_info_name_title">Locatie:</string>
     <string name="location_info_location_name">Locatie:</string>
     <string name="location_info_product_text">Product:</string>
+    <string name="location_error_message">There was a problem getting location data, try again.</string>
 
     <!--    Combined info screen-->
     <string name="combined_productname_text">Productnaam:</string>

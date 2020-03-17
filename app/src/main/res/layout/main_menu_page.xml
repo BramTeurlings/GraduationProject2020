@@ -43,29 +43,45 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/main_menu_user_icon"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/grid_1"
                 android:layout_marginEnd="@dimen/grid_2"
-                android:background="@null"
-                android:src="@drawable/ic_account_circle_black_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/bg_ontouch_ripple">
 
-            </ImageButton>
+                <ImageButton
+                    android:id="@+id/main_menu_user_icon"
+                    android:clickable="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="@null"
+                    android:src="@drawable/ic_account_circle_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/main_menu_login_username_text"
-                style="@style/TextAppearance.AppTheme.body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/gebruiker"
-                app:layout_constraintBottom_toBottomOf="@+id/main_menu_user_icon"
-                app:layout_constraintEnd_toStartOf="@+id/main_menu_user_icon"
-                app:layout_constraintTop_toTopOf="@+id/main_menu_user_icon" />
+                </ImageButton>
+
+                <TextView
+                    android:id="@+id/main_menu_login_username_text"
+                    style="@style/TextAppearance.AppTheme.body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/gebruiker"
+                    app:layout_constraintBottom_toBottomOf="@+id/main_menu_user_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/main_menu_user_icon"
+                    app:layout_constraintTop_toTopOf="@+id/main_menu_user_icon" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
             <View
                 android:id="@+id/main_menu_view"

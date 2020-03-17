@@ -21,5 +21,7 @@ public interface LocationInfoContract {
         void onLocationInfoReceived(List<LocationInfoRecyclerModel> locationInfoRecyclerModel);
         void clearBarcodeInput();
         void setLocationTag(SpannableStringBuilder stringBuilder);
+        void changeLoadingState(Boolean isLoading);
+        void setErrorMessage(String message);
     }
 }

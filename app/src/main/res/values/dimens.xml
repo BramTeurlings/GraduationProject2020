@@ -8,5 +8,6 @@
     <dimen name="grid_4">32dp</dimen>
     <dimen name="grid_5">64dp</dimen>
     <dimen name="divider_height">1dp</dimen>
+    <dimen name="loading_icon_offset">6dp</dimen>
     <dimen name="radius_card_corner">20dp</dimen>
 </resources>

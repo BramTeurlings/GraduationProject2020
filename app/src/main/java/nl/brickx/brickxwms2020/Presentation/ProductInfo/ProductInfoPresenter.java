@@ -37,6 +37,7 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
     private ProductInfoContract.View view;
     private List<Disposable> disposables = new ArrayList<>();
     private Context context;
+    private Boolean isLoading = false;
 
 
     @Inject
@@ -55,15 +56,19 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
 
     @Override
     public void getProductInfoByScan(String scan) {
-        final List<ProductInformation> result = new ArrayList<>();
-        System.out.println(new Date());
-        this.disposables.add(getProductInfoByScan.invoke(scan, getUserData().getApiKey())
-                .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( s -> result.add(s),
-                            Throwable::printStackTrace,
+        if(!isLoading){
+            onApiRequestStarted();
+            changeLoadingState();
+            final List<ProductInformation> result = new ArrayList<>();
+            System.out.println(new Date());
+            this.disposables.add(getProductInfoByScan.invoke(scan, getUserData().getApiKey())
+                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe( s -> result.add(s),
+                            t -> onLoginFailed(t),
                             () -> onProductInfoFetched(result)));
+        }
     }
 
     @Override
@@ -251,7 +256,28 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
             printErrorMessage("Location");
         }
 
+        onApiRequestCompleted();
+        changeLoadingState();
         view.onNewProductInfoReceived(infoHolder);
+    }
+
+    private void onLoginFailed(Throwable throwable){
+        throwable.printStackTrace();
+        onApiRequestCompleted();
+        changeLoadingState();
+        view.setErrorMessage(context.getString(R.string.product_error_message));
+    }
+
+    private void onApiRequestStarted(){
+        isLoading = true;
+    }
+
+    private void onApiRequestCompleted(){
+        isLoading = false;
+    }
+
+    private void changeLoadingState(){
+        view.changeLoadingState(isLoading);
     }
 
     private void printErrorMessage(String missingObject){

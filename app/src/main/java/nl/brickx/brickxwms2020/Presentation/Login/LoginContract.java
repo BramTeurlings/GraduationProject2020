@@ -23,5 +23,7 @@ public interface LoginContract {
     interface View {
 
         void onAuthenticationDataReceived(AuthenticationResult result);
+        void changeLoadingState(Boolean isLoading);
+        void setErrorMessage(String message);
     }
 }

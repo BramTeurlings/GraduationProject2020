@@ -10,6 +10,16 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/product_info_loadingIcon"
+        layout="@layout/loading_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/loading_icon_offset"
+        android:elevation="7dp"
+        app:layout_constraintEnd_toEndOf="@+id/combined_info_textInputLayout"
+        app:layout_constraintTop_toTopOf="@+id/combined_info_textInputLayout" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/combined_info_textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

@@ -16,9 +16,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.disposables.Disposables;
 import io.reactivex.schedulers.Schedulers;
-import nl.brickx.brickxwms2020.Presentation.Models.WarehouseLocation;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Location.Info.GetLocationInfoByScan;
@@ -36,6 +34,7 @@ public class LocationInfoPresenter implements LocationInfoContract.Presenter {
     private LocationInfoContract.View view;
     private List<Disposable> disposables = new ArrayList<>();
     private Context context;
+    private Boolean isLoading = false;
 
     @Inject
     LocationInfoPresenter(GetLocationInfoByScan getLocationInfoByScan, UserDataManager userDataManager, LocationInfoContract.View view, @DataContext Context context){
@@ -53,14 +52,18 @@ public class LocationInfoPresenter implements LocationInfoContract.Presenter {
 
     @Override
     public void getLocationInfoByScan(String locationCode) {
-        List<LocationInfo> result = new ArrayList<>();
-        disposables.add(getLocationInfoByScan.invoke(locationCode, userDataManager.GetUserData().getApiKey())
-                .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( s -> result.add(s),
-                        Throwable::printStackTrace,
-                        () -> onLocationInfoFetched(result)));
+        if(!isLoading){
+            onApiRequestStarted();
+            changeLoadingState();
+            List<LocationInfo> result = new ArrayList<>();
+            disposables.add(getLocationInfoByScan.invoke(locationCode, userDataManager.GetUserData().getApiKey())
+                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe( s -> result.add(s),
+                            t -> onLoginFailed(t),
+                            () -> onLocationInfoFetched(result)));
+        }
     }
 
     @Override
@@ -122,11 +125,32 @@ public class LocationInfoPresenter implements LocationInfoContract.Presenter {
             }
         }
 
+        onApiRequestCompleted();
+        changeLoadingState();
         view.onLocationInfoReceived(locationData);
         if(locationData.size() > 0){
             buildLocationTag(locationData.get(0).getLocation());
         }else{
             buildLocationTag("");
         }
+    }
+
+    private void onLoginFailed(Throwable throwable){
+        throwable.printStackTrace();
+        onApiRequestCompleted();
+        changeLoadingState();
+        view.setErrorMessage(context.getString(R.string.location_error_message));
+    }
+
+    private void onApiRequestStarted(){
+        isLoading = true;
+    }
+
+    private void onApiRequestCompleted(){
+        isLoading = false;
+    }
+
+    private void changeLoadingState(){
+        view.changeLoadingState(isLoading);
     }
 }

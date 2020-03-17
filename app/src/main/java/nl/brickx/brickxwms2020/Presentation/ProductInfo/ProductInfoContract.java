@@ -17,5 +17,7 @@ public interface ProductInfoContract {
         void onNewProductInfoReceived(ProductInfoHolder holder);
         void getProductInfoByScan(String scannedCode);
         void clearBarcodeInput();
+        void changeLoadingState(Boolean isLoading);
+        void setErrorMessage(String message);
     }
 }

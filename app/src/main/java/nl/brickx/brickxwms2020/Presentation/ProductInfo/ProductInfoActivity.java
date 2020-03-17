@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -53,12 +56,14 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
     TextView customCodeTextView;
     TextView amountPerPackageTextView;
     TextView weightTextView;
+    TextInputLayout combinedInputLayout;
     ImageView barcodeArrowImage;
     ImageView detailsArrowImage;
     ImageView propertiesArrowImage;
     MaterialCardView barcodeCardView;
     MaterialCardView detailsCardView;
     MaterialCardView propertiesCardView;
+    ProgressBar loadingProgressBar;
     Boolean barcodeExpansionToggle = true;
     Boolean detailsExpansionToggle = true;
     Boolean propertiesExpansionToggle = true;
@@ -98,6 +103,8 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         propertiesArrowImage = findViewById(R.id.combined_properties_arrow_image);
         productInfoRecyclerView = findViewById(R.id.combined_info_properties_recycler);
         locationInfoRecyclerView = findViewById(R.id.combined_location_recycler);
+        combinedInputLayout = findViewById(R.id.combined_info_textInputLayout);
+        loadingProgressBar = findViewById(R.id.loadingIcon);
 
         //Todo: Add listener for recyclerview items to toggle the click.
         barcodeCardView.setOnClickListener(this::onClickBarcodes);
@@ -182,6 +189,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
 
     @Override
     public void getProductInfoByScan(String scannedCode){
+        setErrorMessage(null);
         infoPresenter.getProductInfoByScan(scannedCode);
     }
 
@@ -258,5 +266,19 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
     public void onDestroy(){
         infoPresenter.dispose();
         super.onDestroy();
+    }
+
+    @Override
+    public void changeLoadingState(Boolean isLoading) {
+        if(isLoading){
+            loadingProgressBar.setVisibility(View.VISIBLE);
+        }else{
+            loadingProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setErrorMessage(String message) {
+        combinedInputLayout.setError(message);
     }
 }

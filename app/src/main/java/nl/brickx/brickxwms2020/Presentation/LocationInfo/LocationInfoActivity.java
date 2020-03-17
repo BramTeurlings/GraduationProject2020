@@ -7,12 +7,15 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +30,8 @@ public class LocationInfoActivity extends DaggerAppCompatActivity implements Loc
     LocationInfoAdapter recyclerViewAdapter;
     TextInputEditText barcodeInput;
     TextView locationTitleTextView;
+    TextInputLayout locationInputLayout;
+    ProgressBar locationProgressBar;
 
     @Inject
     LocationInfoPresenter presenter;
@@ -42,6 +47,8 @@ public class LocationInfoActivity extends DaggerAppCompatActivity implements Loc
         recyclerView = findViewById(R.id.location_info_recycler_view);
         barcodeInput = findViewById(R.id.location_info_textInput);
         locationTitleTextView = findViewById(R.id.location_info_location_name_content);
+        locationProgressBar = findViewById(R.id.loadingIcon);
+        locationInputLayout = findViewById(R.id.location_info_textInputLayout);
         presenter.buildLocationTag("");
 
         initRecyclerViews();
@@ -102,5 +109,19 @@ public class LocationInfoActivity extends DaggerAppCompatActivity implements Loc
     public void onDestroy(){
         super.onDestroy();
         presenter.dispose();
+    }
+
+    @Override
+    public void setErrorMessage(String message){
+        locationInputLayout.setError(message);
+    }
+
+    @Override
+    public void changeLoadingState(Boolean isLoading) {
+        if(isLoading){
+            locationProgressBar.setVisibility(View.VISIBLE);
+        }else{
+            locationProgressBar.setVisibility(View.GONE);
+        }
     }
 }
