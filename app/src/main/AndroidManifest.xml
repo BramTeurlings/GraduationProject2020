@@ -23,6 +23,7 @@
         </activity>
         <activity
             android:name=".Presentation.ProductInfo.ProductInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
             android:parentActivityName=".Presentation.ProductInfo.ProductInfoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -30,6 +31,7 @@
         </activity>
         <activity
             android:name=".Presentation.LocationInfo.LocationInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
             android:parentActivityName=".Presentation.LocationInfo.LocationInfoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

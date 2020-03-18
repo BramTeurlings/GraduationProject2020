@@ -23,16 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoAdapter;
-import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoPresenter;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.ProductInfoHolder;
-import nl.brickx.domain.Models.ProductInfoRecyclerModel;
 
 public class ProductInfoActivity extends DaggerAppCompatActivity implements ProductInfoContract.View {
 
