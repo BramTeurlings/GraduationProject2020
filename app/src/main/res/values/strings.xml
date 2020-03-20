@@ -57,4 +57,10 @@
     <string name="combined_property_value_content">Waarde: </string>
     <string name="combined_location_text">Locatie:</string>
 
+    <!--    Order pick-->
+    <string name="order_pick_open_order_title">Openstaande Orders</string>
+    <string name="order_pick_landing_card_status">Status</string>
+    <string name="order_pick_landing_text_input_hint">Scan een ordernummer in</string>
+
+
 </resources>

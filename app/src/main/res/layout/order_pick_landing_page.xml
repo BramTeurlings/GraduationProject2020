@@ -2,37 +2,37 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
+    android:id="@+id/order_pick_landing_constraint_layout"
     android:background="@color/colorBackground"
     android:focusableInTouchMode="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/location_info_loadingIcon"
+        android:id="@+id/order_pick_landing_loadingIcon"
         layout="@layout/loading_animation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/loading_icon_offset"
         android:elevation="7dp"
-        app:layout_constraintEnd_toEndOf="@+id/location_info_textInputLayout"
-        app:layout_constraintTop_toTopOf="@+id/location_info_textInputLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/order_pick_landing_textInputLayout"
+        app:layout_constraintTop_toTopOf="@+id/order_pick_landing_textInputLayout" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/location_info_textInputLayout"
+        android:id="@+id/order_pick_landing_textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
         android:layout_marginTop="@dimen/grid_1"
         android:layout_marginEnd="@dimen/grid_2"
-        android:hint="@string/location_info_input_hint"
+        android:hint="@string/order_pick_landing_text_input_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/location_info_textInput"
+            android:id="@+id/order_pick_landing_textInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -42,7 +42,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
-        android:id="@+id/location_info_view"
+        android:id="@+id/order_pick_landing_view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="@dimen/grid_2"
@@ -51,12 +51,12 @@
         android:background="@color/colorTextDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_info_textInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/order_pick_landing_textInputLayout">
 
     </View>
 
     <TextView
-        android:id="@+id/location_info_open_orders_title"
+        android:id="@+id/order_pick_landing_open_orders_title"
         style="@style/TextAppearance.AppTheme.h6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,12 +65,12 @@
         android:autoSizeStepGranularity="2sp"
         android:autoSizeTextType="uniform"
         android:gravity="center"
-        android:text="@string/location_info_location_name"
-        app:layout_constraintTop_toBottomOf="@id/location_info_view"
+        android:text="@string/order_pick_open_order_title"
+        app:layout_constraintTop_toBottomOf="@id/order_pick_landing_view"
         tools:layout_editor_absoluteX="0dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/location_info_recycler_view"
+        android:id="@+id/order_pick_landing_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/grid_1"
@@ -79,8 +79,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_info_open_orders_title"
-        tools:listitem="@layout/location_info_recycler_item">
+        app:layout_constraintTop_toBottomOf="@+id/order_pick_landing_open_orders_title"
+        tools:listitem="@layout/order_pick_landing_page_recycler_item">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -2,10 +2,7 @@ package nl.brickx.brickxwms2020.Presentation.LocationInfo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.view.KeyEvent;
 import android.view.View;
@@ -45,11 +42,11 @@ public class LocationInfoActivity extends DaggerAppCompatActivity implements Loc
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_info_page);
-        recyclerView = findViewById(R.id.location_info_recycler_view);
-        barcodeInput = findViewById(R.id.location_info_textInput);
-        locationTitleTextView = findViewById(R.id.location_info_location_name_content);
+        recyclerView = findViewById(R.id.order_pick_landing_recycler_view);
+        barcodeInput = findViewById(R.id.order_pick_landing_textInput);
+        locationTitleTextView = findViewById(R.id.order_pick_landing_open_orders_title);
         locationProgressBar = findViewById(R.id.loadingIcon);
-        locationInputLayout = findViewById(R.id.location_info_textInputLayout);
+        locationInputLayout = findViewById(R.id.order_pick_landing_textInputLayout);
         presenter.buildLocationTag("");
 
         initRecyclerViews();
