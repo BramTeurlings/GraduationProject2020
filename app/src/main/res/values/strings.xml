@@ -61,6 +61,13 @@
     <string name="order_pick_open_order_title">Openstaande Orders</string>
     <string name="order_pick_landing_card_status">Status</string>
     <string name="order_pick_landing_text_input_hint">Scan een ordernummer in</string>
+    <string name="order_pick_next_product_title">Volgend product info</string>
+    <string name="order_pick_main_product_name_text">Productnaam:</string>
+    <string name="order_pick_product_location_title">Locatie:</string>
+    <string name="order_pick_main_warehouse_text">Magazijn:</string>
+    <string name="order_pick_main_amount_to_pick_text">Aantal te picken:</string>
+    <string name="order_pick_main_product_pick_status_item_amount_out_of_placeholder">/ 0</string>
+    <string name="order_pick_main_product_pick_status_amount_input_hint">Aantal</string>
 
 
 </resources>

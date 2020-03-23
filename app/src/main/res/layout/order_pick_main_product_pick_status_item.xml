@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="24dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/order_pick_main_product_pick_status_item_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/fab"
+                android:backgroundTint="@color/true_white"
+                android:elevation="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_check_black_24dp"
+                android:tint="@color/colorTextDark"
+                app:borderWidth="1dp"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/order_pick_main_product_pick_status_item_textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="@dimen/grid_0_5"
+                android:layout_marginEnd="@dimen/grid_0_5"
+                android:layout_marginBottom="@dimen/grid_0_5"
+                android:hint="@string/order_pick_main_product_pick_status_amount_input_hint"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintStart_toEndOf="@+id/order_pick_main_product_pick_status_item_fab"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/order_pick_main_product_pick_status_item_textInputLayout_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="@dimen/grid_0_5"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="@string/order_pick_main_product_pick_status_item_amount_out_of_placeholder"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="@+id/order_pick_main_product_pick_status_item_textInputLayout"
+                app:layout_constraintEnd_toStartOf="@+id/order_pick_main_product_pick_equals_item_fab"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/order_pick_main_product_pick_equals_item_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_0_5"
+                android:layout_marginEnd="@dimen/grid_0_5"
+                android:layout_marginBottom="@dimen/grid_0_5"
+                android:background="@drawable/fab"
+                android:backgroundTint="@color/true_white"
+                android:elevation="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_drag_handle_black_24dp"
+                android:tint="@color/colorTextDark"
+                app:borderWidth="1dp"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/order_pick_main_product_pick_plus_item_fab"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/order_pick_main_product_pick_plus_item_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_0_5"
+                android:layout_marginEnd="@dimen/grid_0_5"
+                android:layout_marginBottom="@dimen/grid_0_5"
+                android:background="@drawable/fab"
+                android:backgroundTint="@color/true_white"
+                android:elevation="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_add_black_24dp"
+                android:tint="@color/colorTextDark"
+                app:borderWidth="1dp"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/order_pick_main_product_pick_minus_item_fab"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.555" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/order_pick_main_product_pick_minus_item_fab"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_0_5"
+                android:layout_marginEnd="@dimen/grid_0_5"
+                android:layout_marginBottom="@dimen/grid_0_5"
+                android:background="@drawable/fab"
+                android:backgroundTint="@color/true_white"
+                android:elevation="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_remove_black_24dp"
+                android:tint="@color/colorTextDark"
+                app:borderWidth="1dp"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
