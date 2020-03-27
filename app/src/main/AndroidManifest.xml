@@ -30,6 +30,14 @@
                 android:value=".Presentation.MainMenu.MainMenuActivity"/>
         </activity>
         <activity
+            android:name=".Presentation.OrderPick.OrderPickActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+            android:parentActivityName=".Presentation.OrderPick.OrderPickActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.MainMenu.MainMenuActivity"/>
+        </activity>
+        <activity
             android:name=".Presentation.LocationInfo.LocationInfoActivity"
             android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
             android:parentActivityName=".Presentation.LocationInfo.LocationInfoActivity">

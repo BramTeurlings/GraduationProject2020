@@ -7,6 +7,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoActivityModule;
 import nl.brickx.brickxwms2020.Presentation.Login.LoginActivityModule;
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivityModule;
+import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityModule;
 import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModule;
 
 
@@ -15,6 +16,7 @@ import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModul
         modules = {
                 AppModule.class,
                 AndroidSupportInjectionModule.class,
+                OrderPickActivityModule.class,
                 MainMenuActivityModule.class,
                 LoginActivityModule.class,
                 ProductInfoActivityModule.class,

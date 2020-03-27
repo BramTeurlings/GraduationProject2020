@@ -54,6 +54,8 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
                         navigator.navigateToProductInfo();
                     }else if(data.get(position).getIdentifier() == MenuItemIdentifier.LOCATION_INFO_ITEM){
                         navigator.navigateToLocationInfo();
+                    }else if(data.get(position).getIdentifier() == MenuItemIdentifier.ORDER_PICK_ITEM){
+                        navigator.navigateToOrderPickScreen();
                     }
                 }
             });

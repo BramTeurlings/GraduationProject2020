@@ -68,6 +68,10 @@
     <string name="order_pick_main_amount_to_pick_text">Aantal te picken:</string>
     <string name="order_pick_main_product_pick_status_item_amount_out_of_placeholder">/ 0</string>
     <string name="order_pick_main_product_pick_status_amount_input_hint">Aantal</string>
+    <string name="order_pick_end_product_name_content">Product naam</string>
+    <string name="order_pick_end_title">Overzicht</string>
+    <string name="order_pick_end_items_left_content">0 / 0 Artikelen</string>
+    <string name="order_pick_end_button">Orderpick Afronden</string>
 
 
 </resources>

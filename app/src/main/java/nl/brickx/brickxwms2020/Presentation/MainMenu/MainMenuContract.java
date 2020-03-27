@@ -19,5 +19,6 @@ public interface MainMenuContract {
 
         void navigateToProductInfo();
         void navigateToLocationInfo();
+        void navigateToOrderPickScreen();
     }
 }
