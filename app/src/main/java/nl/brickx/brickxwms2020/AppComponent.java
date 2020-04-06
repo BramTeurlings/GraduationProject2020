@@ -8,6 +8,7 @@ import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoActivityMod
 import nl.brickx.brickxwms2020.Presentation.Login.LoginActivityModule;
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivityModule;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityModule;
+import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingActivityModule;
 import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModule;
 
 
@@ -20,7 +21,8 @@ import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModul
                 MainMenuActivityModule.class,
                 LoginActivityModule.class,
                 ProductInfoActivityModule.class,
-                LocationInfoActivityModule.class
+                LocationInfoActivityModule.class,
+                OrderPickLandingActivityModule.class
         }
 )
 interface AppComponent extends AndroidInjector<BaseApplication> {

@@ -11,4 +11,10 @@
 
     <color name="colorBackground">#fafafa</color>
     <color name="true_white">#FFFFFF</color>
+
+    <!--    Status colors-->
+    <color name="status_free">#38db2a</color>
+    <color name="status_in_progress">#1069c2</color>
+    <color name="status_on_hold">#ff992b</color>
+    <color name="status_completed">#f51818</color>
 </resources>

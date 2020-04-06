@@ -4,13 +4,15 @@ import android.app.Activity;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragmentModule;
 
 @Module
 public interface OrderPickActivityModule {
 
     @ContributesAndroidInjector(
             modules = {
-                    nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityModule.Bindings.class
+                    nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityModule.Bindings.class,
+                    OrderPickFragmentModule.class
             }
     )
     OrderPickActivity orderPickActivity();

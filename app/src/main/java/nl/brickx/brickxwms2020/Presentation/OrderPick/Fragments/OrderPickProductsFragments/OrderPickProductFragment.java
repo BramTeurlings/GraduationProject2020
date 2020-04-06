@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.OrderPick;
+package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickProductsFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

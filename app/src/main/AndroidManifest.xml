@@ -35,6 +35,14 @@
             android:parentActivityName=".Presentation.OrderPick.OrderPickActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.OrderPickLanding.OrderPickLandingActivity"/>
+        </activity>
+        <activity
+            android:name=".Presentation.OrderPickLanding.OrderPickLandingActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+            android:parentActivityName=".Presentation.OrderPickLanding.OrderPickLandingActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Presentation.MainMenu.MainMenuActivity"/>
         </activity>
         <activity

@@ -7,89 +7,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/order_pick_tablayout_dots"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/order_pick_orderinfo_constraint"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/product_info_textInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/grid_2"
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/order_pick_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginTop="@dimen/grid_1"
-                android:layout_marginEnd="@dimen/grid_2"
-                android:hint="@string/product_info_input_hint"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/order_pick_textInputLayout_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:id="@+id/order_pick_view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="@dimen/grid_2"
-                android:layout_marginTop="@dimen/grid_1"
-                android:layout_marginEnd="@dimen/grid_2"
-                android:background="@color/colorViewElement"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/product_info_textInputLayout">
-
-            </View>
+            </androidx.viewpager.widget.ViewPager>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/order_pick_tablayout_dots"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
         android:layout_width="match_parent"
         android:layout_height="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/order_pick_viewpager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:screenReaderFocusable="false"
+        android:focusable="false"
         android:clickable="false"
-        app:tabMaxWidth="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/order_pick_status"
+        android:backgroundTint="@color/colorBackground"
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="center"
-        app:tabRippleColor="@null"
         app:tabIndicator="@null"
-        app:tabIndicatorHeight="0dp"/>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/order_pick_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/grid_1"
-        android:layout_marginBottom="@dimen/grid_2"
-        app:layout_constraintBottom_toTopOf="@+id/order_pick_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
-
-    </androidx.viewpager.widget.ViewPager>
+        app:tabIndicatorHeight="0dp"
+        app:tabMaxWidth="12dp"
+        app:tabRippleColor="@null" />
 
     <include
         android:id="@+id/order_pick_status"
@@ -97,18 +60,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:elevation="7dp"
-        app:layout_constraintBottom_toTopOf="@+id/order_pick_main_bottom_nav"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/order_pick_main_bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemIconSize="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/order_pick_bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
