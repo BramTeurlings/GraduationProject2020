@@ -104,7 +104,7 @@ public class LocationInfoPresenter implements LocationInfoContract.Presenter {
     };
 
     private void onLocationInfoFetched(List<LocationInfo> locationInfos){
-        //Todo: Could add more data here if we want to.
+        //Todo: Could add more data here if we want to. Also possibly not safe because values might be null.
         List<LocationInfoRecyclerModel> locationData = new ArrayList<>();
         if(locationInfos.get(0).getGetWmsLocationViewForLocationResult() != null){
             for(int i = 0; i < locationInfos.get(0).getGetWmsLocationViewForLocationResult().size(); i++){

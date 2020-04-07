@@ -23,7 +23,7 @@ public class OrderPickLandingNavigator implements OrderPickLandingContract.Navig
     }
 
     @Override
-    public void navigateToOrder(Context context, String orderId) {
+    public void navigateToOrder(Context context, int orderId) {
         activity.startActivity(OrderPickActivity.createIntent(context, orderId));
     }
 }

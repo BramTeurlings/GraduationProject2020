@@ -281,6 +281,6 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
     }
 
     private void printErrorMessage(String missingObject){
-        Log.i(TAG, "Product " + missingObject + " not present.");
+        Log.e(TAG, "Product " + missingObject + " not present.");
     }
 }

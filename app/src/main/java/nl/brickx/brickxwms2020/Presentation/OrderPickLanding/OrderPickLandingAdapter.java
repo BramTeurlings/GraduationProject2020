@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,6 +55,8 @@ public class OrderPickLandingAdapter extends RecyclerView.Adapter<OrderPickLandi
         //Todo: Make a good catch and multiple tries.
         try{
             holder.orderNameTextView.setText(data.get(position).getOrderName());
+            DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+            holder.orderDateTextView.setText(df.format(data.get(position).getOrderDate()));
 
             switch (data.get(position).getOrderStatus()){
                 case FREE:
@@ -95,12 +99,14 @@ public class OrderPickLandingAdapter extends RecyclerView.Adapter<OrderPickLandi
     static class InfoRecyclerViewholder extends RecyclerView.ViewHolder {
         CardView parentCardView;
         TextView orderNameTextView;
+        TextView orderDateTextView;
         TextView orderStatusTextView;
 
         InfoRecyclerViewholder(final View infoView) {
             super(infoView);
             parentCardView = infoView.findViewById(R.id.order_pick_landing_recycler_item_card);
-            orderNameTextView = infoView.findViewById(R.id.order_pick_landing_recycler_item_text);
+            orderNameTextView = infoView.findViewById(R.id.order_pick_landing_recycler_item_order_number);
+            orderDateTextView = infoView.findViewById(R.id.order_pick_landing_recycler_item_date);
             orderStatusTextView = infoView.findViewById(R.id.order_pick_landing_recycler_item_image);
         }
     }

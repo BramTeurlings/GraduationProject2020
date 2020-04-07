@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +29,17 @@ import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.OrderPickLandingRecyclerModel;
 import nl.brickx.domain.Models.OrderPickLandingStatus;
 
-public class OrderPickLandingActivity extends DaggerAppCompatActivity {
+public class OrderPickLandingActivity extends DaggerAppCompatActivity implements OrderPickLandingContract.View {
 
     private RecyclerView orderRecycler;
+    private OrderPickLandingAdapter adapter;
+    ProgressBar loadingProgressBar;
+    TextInputLayout combinedInputLayout;
+    TextInputEditText barcodeInput;
+
+
+    @Inject
+    OrderPickLandingContract.Presenter presenter;
 
     @Inject
     OrderPickLandingContract.Navigator navigator;
@@ -36,24 +48,57 @@ public class OrderPickLandingActivity extends DaggerAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_pick_landing_page);
-
         orderRecycler = findViewById(R.id.order_pick_landing_recycler_view);
+        loadingProgressBar = findViewById(R.id.loadingIcon);
+        combinedInputLayout = findViewById(R.id.order_pick_landing_textInputLayout);
+        barcodeInput = findViewById(R.id.order_pick_landing_textInput);
 
-        //Todo: Remove mock code.
+        presenter.getOrdersToPick();
+
         List<OrderPickLandingRecyclerModel> data = new ArrayList<>();
-        data.add(new OrderPickLandingRecyclerModel("asd", "Order 1", OrderPickLandingStatus.FREE));
-        data.add(new OrderPickLandingRecyclerModel("asf", "Order 2", OrderPickLandingStatus.IN_PROGRESS));
-        data.add(new OrderPickLandingRecyclerModel("asg", "Order 3", OrderPickLandingStatus.FREE));
-        data.add(new OrderPickLandingRecyclerModel("ash", "Order 4", OrderPickLandingStatus.COMPLETED));
-        data.add(new OrderPickLandingRecyclerModel("asj", "Order 5", OrderPickLandingStatus.ON_HOLD));
-        data.add(new OrderPickLandingRecyclerModel("ask", "Order 6", OrderPickLandingStatus.ON_HOLD));
-
-        OrderPickLandingAdapter adapter = new OrderPickLandingAdapter(data, navigator);
+        adapter = new OrderPickLandingAdapter(data, navigator);
         orderRecycler.setAdapter(adapter);
         orderRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public static Intent createIntent(Context context){
         return new Intent(context, OrderPickLandingActivity.class);
+    }
+
+    @Override
+    public void clearBarcodeInput(){
+        barcodeInput.setText("");
+    }
+
+    @Override
+    public void getPickslipByScan(String scannedCode) {
+        setErrorMessage(null);
+        presenter.getPickslipByNumber(scannedCode);
+    }
+
+    @Override
+    public void onDestroy(){
+        presenter.dispose();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onOrderInfoReceived(List<OrderPickLandingRecyclerModel> holder) {
+        adapter.setData(holder);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void changeLoadingState(Boolean isLoading) {
+        if(isLoading){
+            loadingProgressBar.setVisibility(View.VISIBLE);
+        }else{
+            loadingProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setErrorMessage(String message) {
+        combinedInputLayout.setError(message);
     }
 }

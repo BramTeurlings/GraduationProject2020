@@ -29,5 +29,8 @@ public interface OrderPickLandingActivityModule {
         @Binds
         OrderPickLandingContract.Navigator bindNavigator(OrderPickLandingNavigator orderPickLandingNavigator);
 
+        @Binds
+        OrderPickLandingContract.View bindView(OrderPickLandingActivity orderPickLandingActivity);
+
     }
 }

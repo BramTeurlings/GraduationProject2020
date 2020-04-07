@@ -57,7 +57,7 @@ public class OrderPickActivity extends DaggerAppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickFragment).commit();
     }
 
-    public static Intent createIntent(Context context, String orderId){
+    public static Intent createIntent(Context context, int orderId){
         Intent orderPickIntent = new Intent(context, OrderPickActivity.class);
         orderPickIntent.putExtra("order_id", orderId);
         return orderPickIntent;

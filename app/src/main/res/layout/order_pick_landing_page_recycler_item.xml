@@ -31,15 +31,28 @@
             android:layout_height="50dp">
 
             <TextView
-                android:id="@+id/order_pick_landing_recycler_item_text"
+                android:id="@+id/order_pick_landing_recycler_item_order_number"
                 style="@style/TextAppearance.AppTheme.body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/grid_4"
+                android:maxLines="1"
+                android:layout_marginTop="@dimen/grid_0_5"
                 android:text=""
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/order_pick_landing_recycler_item_date"
+                style="@style/TextAppearance.AppTheme.body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:layout_marginStart="@dimen/grid_4"
+                android:layout_marginBottom="@dimen/grid_0_5"
+                android:text=""
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/order_pick_landing_recycler_item_secondary_card"
@@ -61,6 +74,10 @@
                         android:id="@+id/order_pick_landing_recycler_item_image"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:autoSizeMaxTextSize="100sp"
+                        android:autoSizeMinTextSize="8sp"
+                        android:autoSizeStepGranularity="2sp"
+                        android:autoSizeTextType="uniform"
                         android:padding="6dp"
                         android:text="@string/order_pick_landing_card_status"
                         android:textAlignment="center"

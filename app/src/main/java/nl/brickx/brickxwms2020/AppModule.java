@@ -17,11 +17,14 @@ import nl.brickx.data.Authentication.LocalAuthenticationRepositoryService;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.data.LocationInfo.LocalLocationInfoRepository;
 import nl.brickx.data.LocationInfo.LocalLocationRepositoryService;
+import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingRepository;
+import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingService;
 import nl.brickx.data.ProductInfo.LocalProductInfoRepository;
 import nl.brickx.data.ProductInfo.LocalProductRepositoryService;
 import nl.brickx.data.User.LocalUserRepository;
 import nl.brickx.data.User.LocalUserRepositoryService;
 import nl.brickx.domain.Location.Info.Data.LocationRepository;
+import nl.brickx.domain.OrderPick.Landing.Data.OrderPickLandingRepository;
 import nl.brickx.domain.Product.Info.Data.ProductRepository;
 import nl.brickx.domain.Users.Data.AuthenticationRepository;
 import okhttp3.OkHttpClient;
@@ -44,6 +47,7 @@ class AppModule {
     @Provides
     Gson provideGson(){
         return new GsonBuilder()
+                .setDateFormat("dd-MM-yyyy HH:mm:ss")
                 .setLenient()
                 .serializeNulls()
                 .create();
@@ -95,6 +99,11 @@ class AppModule {
     }
 
     @Provides
+    LocalOrderPickLandingService orderPickLandingRepositoryService(){
+        return retrofit.create(LocalOrderPickLandingService.class);
+    }
+
+    @Provides
     @DataContext
     Context provideDataContext(BaseApplication application){
         return application;
@@ -126,5 +135,8 @@ class AppModule {
 
         @Binds
         LocationRepository.LocationInfo bindLocationInfoRepository(LocalLocationInfoRepository localLocationInfoRepository);
+
+        @Binds
+        OrderPickLandingRepository.OpenOrders bindOrderPickLandingRepository(LocalOrderPickLandingRepository localOrderPickLandingRepository);
     }
 }

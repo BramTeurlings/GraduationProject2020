@@ -76,6 +76,7 @@
     <string name="order_pick_status_busy">Bezig</string>
     <string name="order_pick_status_on_hold">In de wacht</string>
     <string name="order_pick_status_completed">Afgerond</string>
+    <string name="order_pick_landing_error_message">There was a problem getting orders, try again.</string>
 
 
 </resources>

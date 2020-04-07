@@ -1,16 +1,20 @@
 package nl.brickx.domain.Models;
 
+import java.util.Date;
+
 public class OrderPickLandingRecyclerModel {
 
-    String orderId;
+    int orderId;
+    Date orderDate;
     String orderName;
     OrderPickLandingStatus orderStatus;
 
     public OrderPickLandingRecyclerModel() {
     }
 
-    public OrderPickLandingRecyclerModel(String orderId, String orderName, OrderPickLandingStatus orderStatus) {
+    public OrderPickLandingRecyclerModel(int orderId, Date orderDate, String orderName, OrderPickLandingStatus orderStatus) {
         this.orderId = orderId;
+        this.orderDate = orderDate;
         this.orderName = orderName;
         this.orderStatus = orderStatus;
     }
@@ -31,11 +35,19 @@ public class OrderPickLandingRecyclerModel {
         this.orderStatus = orderStatus;
     }
 
-    public String getOrderId() {
+    public int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(int orderId) {
         this.orderId = orderId;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 }
