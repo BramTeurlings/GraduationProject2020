@@ -4,7 +4,8 @@ public interface OrderPickOverviewFragmentContract {
 
     interface Presenter {
 
-
+        void loadPickSlipData();
+        void dispose();
     }
 
     interface Navigator {

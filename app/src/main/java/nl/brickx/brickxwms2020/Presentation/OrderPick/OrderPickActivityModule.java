@@ -12,6 +12,8 @@ public interface OrderPickActivityModule {
     @ContributesAndroidInjector(
             modules = {
                     nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityModule.Bindings.class,
+                    nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragmentModule.class,
+                    nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragmentModule.class,
                     OrderPickFragmentModule.class
             }
     )
