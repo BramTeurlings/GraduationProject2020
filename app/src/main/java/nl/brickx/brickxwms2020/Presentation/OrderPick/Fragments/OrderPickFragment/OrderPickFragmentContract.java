@@ -7,13 +7,9 @@ public interface OrderPickFragmentContract {
         void startPresenting();
     }
 
-    interface Navigator {
-
-        //Todo: Navigate to screens.
-    }
-
     interface View {
 
-
+        void changeLoadingState(Boolean isLoading);
+        void setErrorMessage(String message);
     }
 }

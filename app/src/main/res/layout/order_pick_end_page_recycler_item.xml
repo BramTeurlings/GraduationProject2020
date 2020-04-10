@@ -15,7 +15,7 @@
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="@color/true_white"
-        app:cardCornerRadius="25dp"
+        app:cardCornerRadius="35dp"
         app:cardElevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,19 +25,19 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/order_pick_end_recycler_item_constraint"
             android:layout_width="match_parent"
-            android:layout_height="55dp">
+            android:layout_height="60dp">
 
             <TextView
                 android:id="@+id/order_pick_end_recycler_item_product_name_text"
                 style="@style/TextAppearance.AppTheme.body1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:layout_marginStart="@dimen/grid_1"
                 android:layout_marginTop="@dimen/grid_0_5"
                 android:layout_marginEnd="@dimen/grid_1"
                 android:maxLines="2"
                 android:text="@string/order_pick_end_product_name_content"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/order_pick_end_recycler_item_secondary_card"
                 app:layout_constraintStart_toEndOf="@+id/order_pick_end_recycler_item_tertiary_card"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -48,9 +48,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/grid_0_5"
-                android:maxLines="2"
-                android:text="@string/order_pick_end_product_name_content"
+                android:maxLines="1"
 
+                android:text="@string/order_pick_end_product_name_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/order_pick_end_recycler_item_product_name_text"
                 app:layout_constraintStart_toStartOf="@+id/order_pick_end_recycler_item_product_name_text" />
@@ -58,9 +58,9 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/order_pick_end_recycler_item_tertiary_card"
                 style="@style/WhiteMaterialCardView"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                app:cardCornerRadius="25dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:cardCornerRadius="35dp"
                 app:cardElevation="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/order_pick_end_recycler_item_product_name_text"
@@ -83,8 +83,8 @@
                 android:id="@+id/order_pick_end_recycler_item_secondary_card"
                 style="@style/WhiteMaterialCardView"
                 android:layout_width="100dp"
-                android:layout_height="55dp"
-                app:cardCornerRadius="25dp"
+                android:layout_height="60dp"
+                app:cardCornerRadius="35dp"
                 app:cardElevation="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +98,7 @@
                     <TextView
                         android:id="@+id/order_pick_end_recycler_item_amount_text"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="50dp"
                         android:autoSizeMaxTextSize="40sp"
                         android:autoSizeMinTextSize="8sp"
                         android:autoSizeStepGranularity="2sp"

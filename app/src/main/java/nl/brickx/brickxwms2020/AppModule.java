@@ -17,6 +17,10 @@ import nl.brickx.data.Authentication.LocalAuthenticationRepositoryService;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.data.LocationInfo.LocalLocationInfoRepository;
 import nl.brickx.data.LocationInfo.LocalLocationRepositoryService;
+import nl.brickx.data.OrderPick.PickSlip.LocalOrderPickPickSlipRepository;
+import nl.brickx.data.OrderPick.PickSlip.LocalOrderPickPickSlipService;
+import nl.brickx.data.OrderPick.ProductImage.LocalOrderPickProductImageRepository;
+import nl.brickx.data.OrderPick.ProductImage.LocalOrderPickProductImageService;
 import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingRepository;
 import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingService;
 import nl.brickx.data.ProductInfo.LocalProductInfoRepository;
@@ -25,6 +29,7 @@ import nl.brickx.data.User.LocalUserRepository;
 import nl.brickx.data.User.LocalUserRepositoryService;
 import nl.brickx.domain.Location.Info.Data.LocationRepository;
 import nl.brickx.domain.OrderPick.Landing.Data.OrderPickLandingRepository;
+import nl.brickx.domain.OrderPick.Main.Data.OrderPickRepository;
 import nl.brickx.domain.Product.Info.Data.ProductRepository;
 import nl.brickx.domain.Users.Data.AuthenticationRepository;
 import okhttp3.OkHttpClient;
@@ -104,6 +109,16 @@ class AppModule {
     }
 
     @Provides
+    LocalOrderPickPickSlipService orderPickPickSlipService(){
+        return retrofit.create(LocalOrderPickPickSlipService.class);
+    }
+
+    @Provides
+    LocalOrderPickProductImageService orderPickProductImageService(){
+        return retrofit.create(LocalOrderPickProductImageService.class);
+    }
+
+    @Provides
     @DataContext
     Context provideDataContext(BaseApplication application){
         return application;
@@ -138,5 +153,11 @@ class AppModule {
 
         @Binds
         OrderPickLandingRepository.OpenOrders bindOrderPickLandingRepository(LocalOrderPickLandingRepository localOrderPickLandingRepository);
+
+        @Binds
+        OrderPickRepository.PickSlips bindOrderPickPickSlipRepository(LocalOrderPickPickSlipRepository localOrderPickPickSlipRepository);
+
+        @Binds
+        OrderPickRepository.ProductImage bindOrderPickProductImageRepository(LocalOrderPickProductImageRepository localOrderPickProductImageRepository);
     }
 }

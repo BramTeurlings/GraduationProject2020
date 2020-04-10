@@ -27,16 +27,14 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
     private List<OrderPickPickListModel> data;
     private RecyclerView recyclerView;
     private Context context;
-    private OrderPickLandingContract.Navigator navigator;
 
-    OrderPickOverviewAdapter(List<OrderPickPickListModel> data, OrderPickLandingContract.Navigator navigator) {
+    OrderPickOverviewAdapter(List<OrderPickPickListModel> data) {
         this.data = data;
-        this.navigator = navigator;
     }
 
     @Override
     public OrderPickOverviewAdapter.InfoRecyclerViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_pick_landing_page_recycler_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_pick_end_page_recycler_item, parent, false);
         OrderPickOverviewAdapter.InfoRecyclerViewholder holder = new OrderPickOverviewAdapter.InfoRecyclerViewholder(view);
         this.context = parent.getContext();
         return holder;
@@ -58,9 +56,9 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
             amountText = data.get(position).getQuantityPicked() + context.getString(R.string.order_pick_overview_amount_picked_splitter) + data.get(position).getQuantityRequired();
             holder.orderLineAmountPickedTextView.setText(amountText);
             if(data.get(position).getQuantityRequired() == data.get(position).getQuantityPicked() && data.get(position).getLocationScanned()){
-                holder.orderLineStatusImage.setBackgroundColor(context.getResources().getColor(R.color.status_free));
+                holder.statusCardView.setBackgroundColor(context.getResources().getColor(R.color.status_free_transparent));
             }else{
-                holder.orderLineStatusImage.setBackgroundColor(context.getResources().getColor(R.color.status_completed));
+                holder.statusCardView.setBackgroundColor(context.getResources().getColor(R.color.status_completed_transparent));
             }
 
             holder.parentCardView.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +80,7 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
 
     static class InfoRecyclerViewholder extends RecyclerView.ViewHolder {
         CardView parentCardView;
+        CardView statusCardView;
         ImageView orderLineStatusImage;
         TextView orderLineProductNameTextView;
         TextView orderLineProductSKUTextView;
@@ -90,6 +89,7 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
         InfoRecyclerViewholder(final View infoView) {
             super(infoView);
             parentCardView = infoView.findViewById(R.id.order_pick_end_recycler_item_card);
+            statusCardView = infoView.findViewById(R.id.order_pick_end_recycler_item_tertiary_card);
             orderLineStatusImage = infoView.findViewById(R.id.order_pick_end_status_icon);
             orderLineProductNameTextView = infoView.findViewById(R.id.order_pick_end_recycler_item_product_name_text);
             orderLineProductSKUTextView = infoView.findViewById(R.id.order_pick_end_recycler_item_product_sku_text);

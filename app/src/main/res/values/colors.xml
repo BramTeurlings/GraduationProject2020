@@ -17,4 +17,7 @@
     <color name="status_in_progress">#1069c2</color>
     <color name="status_on_hold">#ff992b</color>
     <color name="status_completed">#f51818</color>
+
+    <color name="status_free_transparent">#8038db2a</color>
+    <color name="status_completed_transparent">#90f51818</color>
 </resources>

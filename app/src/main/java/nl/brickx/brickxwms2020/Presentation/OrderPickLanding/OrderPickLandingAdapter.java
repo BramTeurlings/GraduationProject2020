@@ -82,7 +82,7 @@ public class OrderPickLandingAdapter extends RecyclerView.Adapter<OrderPickLandi
                 public void onClick(View v) {
                     System.out.println("CLICK! - " + position);
                     if(data.get(position).getOrderStatus() != OrderPickLandingStatus.COMPLETED || data.get(position).getOrderStatus() != OrderPickLandingStatus.IN_PROGRESS){
-                        navigator.navigateToOrder(context, data.get(position).getOrderId());
+                        navigator.navigateToOrder(context, data.get(position).getOrderName());
                     }
                 }
             });

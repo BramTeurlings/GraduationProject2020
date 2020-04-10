@@ -38,7 +38,7 @@
     </View>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/order_pick_end_totals_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/grid_1"
@@ -46,6 +46,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/order_pick_view" />
+
+    <include
+        android:id="@+id/orderPick_overview_loadingIcon"
+        layout="@layout/loading_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_1"
+        android:elevation="7dp"
+        app:layout_constraintEnd_toEndOf="@+id/order_pick_end_totals_text"
+        app:layout_constraintStart_toStartOf="@+id/order_pick_end_totals_text"
+        app:layout_constraintTop_toTopOf="@+id/order_pick_end_recyclerView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/order_pick_end_recyclerView"
@@ -58,7 +69,7 @@
         app:layout_constraintBottom_toTopOf="@+id/materialButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/order_pick_end_totals_text"
         tools:listitem="@layout/order_pick_end_page_recycler_item" />
 
     <com.google.android.material.button.MaterialButton

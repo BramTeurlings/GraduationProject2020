@@ -16,7 +16,7 @@ public interface OrderPickLandingContract {
     }
 
     interface Navigator {
-        void navigateToOrder(Context context, int orderId);
+        void navigateToOrder(Context context, String orderId);
     }
 
     interface View {

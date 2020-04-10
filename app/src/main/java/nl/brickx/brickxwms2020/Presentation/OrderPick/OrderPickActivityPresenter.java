@@ -17,6 +17,7 @@ import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingCon
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.Gson.Orderpick.OrderPickSlip;
+import nl.brickx.domain.Models.OrderPickPickListModel;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.OrderPick.Main.GetPickSlipByOrderNumber;
 import nl.brickx.domain.OrderPick.Main.GetProductImageByNumber;
@@ -58,7 +59,107 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
                         () -> onProductInfoFetched(result)));
     }
     private void onProductInfoFetched(List<OrderPickSlip> pickSlips) {
+        List<OrderPickPickListModel> fragmentData = new ArrayList<>();
 
+        for(int i = 0; i < pickSlips.get(0).getGetPickslipByNumberResult().getPickList().size(); i++){
+            OrderPickPickListModel tempModel = new OrderPickPickListModel();
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getId() != null){
+                    tempModel.setId(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getId());
+                }else{
+                    printErrorMessage("Picklist Id");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Picklist Id");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getQuantity() != null){
+                    tempModel.setQuantityRequired(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getQuantity().intValue());
+                }else{
+                    printErrorMessage("Quantity");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Quantity");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getCode() != null){
+                    tempModel.setProductSku(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getCode());
+                }else{
+                    printErrorMessage("Sku");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Sku");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getId() != null){
+                    tempModel.setProductId(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getId());
+                }else{
+                    printErrorMessage("Product Id");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Product Id");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getName() != null){
+                    tempModel.setProductName(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getName());
+                }else{
+                    printErrorMessage("Product Name");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Product Name");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getCurrentStock() != null){
+                    tempModel.setCurrentStock(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getCurrentStock().intValue());
+                }else{
+                    printErrorMessage("Current Stock");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Current Stock");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getWareHouseLocation().getLocationName() != null){
+                    tempModel.setProductLocation(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getWareHouseLocation().getLocationName());
+                }else{
+                    printErrorMessage("Location");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Location");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getWareHouseLocation().getScanLocationTag() != null){
+                    tempModel.setLocationTag(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getWareHouseLocation().getScanLocationTag());
+                }else{
+                    printErrorMessage("Location Tag");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Location Tag");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getWareHouseName() != null){
+                    tempModel.setWarehouseName(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getWareHouseName());
+                }else{
+                    printErrorMessage("Warehouse Name");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Warehouse Name");
+            }
+
+            fragmentData.add(tempModel);
+        }
+
+        onApiRequestCompleted();
+        changeLoadingState();
+        view.onPickListInfoReceived(fragmentData);
     }
 
     public User getUserData() {

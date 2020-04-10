@@ -5,6 +5,7 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragmentModule;
+import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingActivity;
 
 @Module
 public interface OrderPickActivityModule {
@@ -24,6 +25,9 @@ public interface OrderPickActivityModule {
 
         @Binds
         Activity bindOrderPickActivity(OrderPickActivity orderPickActivity);
+
+        @Binds
+        OrderPickActivityContract.View bindView(OrderPickActivity orderPickActivity);
 
     }
 }

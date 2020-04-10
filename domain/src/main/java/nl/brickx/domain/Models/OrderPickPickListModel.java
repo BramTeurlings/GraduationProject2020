@@ -10,9 +10,11 @@ public class OrderPickPickListModel {
     private String productName;
     private Boolean isSerialNumberRequired;
     private Boolean isLocationScanned;
+    private int currentStock;
     private String productLocation;
     private String locationTag;
     private String warehouseName;
+    private String scannedSerialNumber;
 
     public OrderPickPickListModel() {
     }
@@ -117,5 +119,21 @@ public class OrderPickPickListModel {
 
     public void setLocationScanned(Boolean locationScanned) {
         isLocationScanned = locationScanned;
+    }
+
+    public String getScannedSerialNumber() {
+        return scannedSerialNumber;
+    }
+
+    public void setScannedSerialNumber(String scannedSerialNumber) {
+        this.scannedSerialNumber = scannedSerialNumber;
+    }
+
+    public int getCurrentStock() {
+        return currentStock;
+    }
+
+    public void setCurrentStock(int currentStock) {
+        this.currentStock = currentStock;
     }
 }

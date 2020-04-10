@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import nl.brickx.domain.Models.Gson.Orderpick.OrderPickSlip;
+import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
 import nl.brickx.domain.OrderPick.Main.Data.OrderPickRepository;
 
 public class GetProductImageByNumber {
@@ -16,7 +16,7 @@ public class GetProductImageByNumber {
         this.productImageRepo = productImageRepo;
     }
 
-    public Observable<String> invoke(String productId, String apiKey) {
+    public Observable<ProductImage> invoke(String productId, String apiKey) {
         return productImageRepo.getProductImage(productId, apiKey).subscribeOn(Schedulers.io()).observeOn(Schedulers.io());
     }
 }

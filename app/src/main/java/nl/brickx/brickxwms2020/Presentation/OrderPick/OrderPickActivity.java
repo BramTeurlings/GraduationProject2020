@@ -11,12 +11,15 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragment;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragment;
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.domain.Models.OrderPickPickListModel;
 
 public class OrderPickActivity extends DaggerAppCompatActivity implements OrderPickActivityContract.View {
 
@@ -27,7 +30,7 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
     final OrderPickFragment orderPickFragment = new OrderPickFragment();
     final OrderPickOverviewFragment orderPickOverviewFragment = new OrderPickOverviewFragment();
     Fragment active = orderPickFragment;
-    static int pickslipId;
+    static String orderName;
 
     //Todo: put in presenter.
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -39,10 +42,12 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                             case R.id.navigation_main:
                                 getSupportFragmentManager().beginTransaction().hide(active).show(orderPickFragment).commit();
                                 active = orderPickFragment;
+                                orderPickFragment.data = orderPickOverviewFragment.data;
                                 break;
                             case R.id.navigation_end:
                                 getSupportFragmentManager().beginTransaction().hide(active).show(orderPickOverviewFragment).commit();
                                 active = orderPickOverviewFragment;
+                                orderPickOverviewFragment.data = orderPickFragment.data;
                                 break;
                         }
                     }catch (NullPointerException e){
@@ -58,18 +63,37 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
         setContentView(R.layout.order_pick_bottom_nav);
         bottomNavigationView = findViewById(R.id.order_pick_main_bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
-        pickslipId = getIntent().getIntExtra("order_id", 0);
-        presenter.getDataForFragments(Integer.toString(pickslipId));
-        //Todo: Get pickslip data and pass to fragments.
+        orderName = getIntent().getStringExtra("order_name");
 
+        getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickOverviewFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickFragment).hide(orderPickFragment).commit();
+        bottomNavigationView.setSelectedItemId(R.id.navigation_end);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickOverviewFragment).hide(orderPickOverviewFragment).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickFragment).commit();
+        presenter.getDataForFragments(orderName);
     }
 
-    public static Intent createIntent(Context context, int orderId){
+    public static Intent createIntent(Context context, String orderName){
         Intent orderPickIntent = new Intent(context, OrderPickActivity.class);
-        orderPickIntent.putExtra("order_id", orderId);
+        orderPickIntent.putExtra("order_name", orderName);
         return orderPickIntent;
+    }
+
+    @Override
+    public void changeLoadingState(Boolean isLoading) {
+        //Todo: Change state for presenters
+        orderPickOverviewFragment.changeLoadingState(isLoading);
+        orderPickFragment.changeLoadingState(isLoading);
+    }
+
+    @Override
+    public void setErrorMessage(String message) {
+        orderPickOverviewFragment.setErrorMessage(message);
+        orderPickFragment.setErrorMessage(message);
+    }
+
+    @Override
+    public void onPickListInfoReceived(List<OrderPickPickListModel> data) {
+        orderPickFragment.onPickListDataReceived(data);
+        orderPickOverviewFragment.onPickListDataReceived(data);
     }
 }

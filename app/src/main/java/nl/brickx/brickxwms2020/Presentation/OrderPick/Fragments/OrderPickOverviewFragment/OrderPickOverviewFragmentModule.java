@@ -1,5 +1,7 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment;
 
+import android.app.Activity;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -18,7 +20,10 @@ public interface OrderPickOverviewFragmentModule {
     interface Bindings {
 
         @Binds
-        OrderPickOverviewFragmentContract.Presenter bindPresenter(OrderPickOverviewFragmentPresenter orderPickOverviewFragmentPresenter);
+        OrderPickOverviewFragmentContract.Presenter bindOrderPickOverviewPresenter(OrderPickOverviewFragmentPresenter orderPickOverviewFragmentPresenter);
+
+        @Binds
+        OrderPickOverviewFragmentContract.View bindOrderPickOverviewView(OrderPickOverviewFragment orderPickOverviewFragment);
 
     }
 }
