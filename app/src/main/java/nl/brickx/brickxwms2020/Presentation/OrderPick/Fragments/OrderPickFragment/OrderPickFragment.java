@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
@@ -28,6 +30,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     ViewPager imageViewPager;
     ViewPagerFragmentAdapter adapter;
     TabLayout tabLayout;
+    FloatingActionButton plusButton;
     ProgressBar progressBar;
 
     @Inject
@@ -61,13 +64,24 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
             imageViewPager.setAdapter(adapter);
         }
 
-//        if(progressBar == null){
-//            progressBar = view.findViewById(R.id.loadingIcon);
-//        }
+        if(plusButton == null){
+            plusButton = view.findViewById(R.id.order_pick_main_product_pick_plus_item_fab);
+
+            plusButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    data.get(imageViewPager.getCurrentItem()).setQuantityMet(true);
+                    adapter.data = data;
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     public void onPickListDataReceived(List<OrderPickPickListModel> data){
         this.data = data;
+        adapter.data = data;
+        adapter.notifyDataSetChanged();
     }
 
     @Override

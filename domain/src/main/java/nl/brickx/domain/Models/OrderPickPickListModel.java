@@ -1,6 +1,8 @@
 package nl.brickx.domain.Models;
 
-public class OrderPickPickListModel {
+import java.io.Serializable;
+
+public class OrderPickPickListModel implements Serializable {
 
     private int Id;
     private int quantityRequired;
@@ -8,8 +10,9 @@ public class OrderPickPickListModel {
     private String productSku;
     private int ProductId;
     private String productName;
-    private Boolean isSerialNumberRequired;
-    private Boolean isLocationScanned;
+    private Boolean isSerialNumberRequired = false;
+    private Boolean isLocationScanned = false;
+    private Boolean isQuantityMet = false;
     private int currentStock;
     private String productLocation;
     private String locationTag;
@@ -135,5 +138,13 @@ public class OrderPickPickListModel {
 
     public void setCurrentStock(int currentStock) {
         this.currentStock = currentStock;
+    }
+
+    public Boolean getQuantityMet() {
+        return isQuantityMet;
+    }
+
+    public void setQuantityMet(Boolean quantityMet) {
+        isQuantityMet = quantityMet;
     }
 }

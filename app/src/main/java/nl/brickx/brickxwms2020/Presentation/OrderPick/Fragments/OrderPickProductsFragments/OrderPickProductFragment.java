@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.domain.Models.OrderPickPickListModel;
 import nl.brickx.domain.Models.OrderPickViewPagerModel;
 
 public class OrderPickProductFragment extends Fragment {
@@ -43,11 +44,15 @@ public class OrderPickProductFragment extends Fragment {
 
         Bundle args = getArguments();
         assert args != null;
-        OrderPickViewPagerModel data = (OrderPickViewPagerModel)args.getSerializable("data");
+        OrderPickPickListModel data = (OrderPickPickListModel)args.getSerializable("data");
         assert data != null;
         productNameText.setText(data.getProductName());
-        locationText.setText(data.getLocation());
-        warehouseText.setText(data.getWarehouse());
-        amountToPickText.setText(String.valueOf(data.getAmountToPick().intValue()));
+        locationText.setText(data.getProductLocation());
+        warehouseText.setText(data.getWarehouseName());
+        amountToPickText.setText(String.valueOf(data.getQuantityRequired()));
+
+        if(data.getQuantityMet()){
+            amountToPickText.setTextColor(getContext().getResources().getColor(R.color.status_free));
+        }
     }
 }

@@ -40,11 +40,13 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                     try{
                         switch (item.getItemId()){
                             case R.id.navigation_main:
+                                //Hands most recent order pick data over.
                                 getSupportFragmentManager().beginTransaction().hide(active).show(orderPickFragment).commit();
                                 active = orderPickFragment;
                                 orderPickFragment.data = orderPickOverviewFragment.data;
                                 break;
                             case R.id.navigation_end:
+                                //Hands most recent order pick data over.
                                 getSupportFragmentManager().beginTransaction().hide(active).show(orderPickOverviewFragment).commit();
                                 active = orderPickOverviewFragment;
                                 orderPickOverviewFragment.data = orderPickFragment.data;
