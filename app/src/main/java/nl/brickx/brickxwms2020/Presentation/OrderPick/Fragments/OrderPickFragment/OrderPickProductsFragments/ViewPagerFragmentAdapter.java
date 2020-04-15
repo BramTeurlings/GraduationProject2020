@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickProductsFragments;
+package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickProductsFragments;
 
 import android.os.Bundle;
 
@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.brickx.domain.Models.OrderPickPickListModel;
-import nl.brickx.domain.Models.OrderPickViewPagerModel;
 
 public class ViewPagerFragmentAdapter extends FragmentStatePagerAdapter {
 

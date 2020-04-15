@@ -52,7 +52,7 @@
                 android:layout_marginBottom="@dimen/grid_0_5"
                 android:hint="@string/order_pick_main_product_pick_status_amount_input_hint"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintEnd_toStartOf="@+id/order_pick_main_amount_out_of_needed"
                 app:layout_constraintStart_toEndOf="@+id/order_pick_main_product_pick_status_item_fab"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -60,13 +60,13 @@
                     android:id="@+id/order_pick_main_product_pick_status_item_textInputLayout_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/order_pick_main_amount_out_of_needed"
                 android:layout_width="60dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="18dp"

@@ -43,13 +43,13 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                                 //Hands most recent order pick data over.
                                 getSupportFragmentManager().beginTransaction().hide(active).show(orderPickFragment).commit();
                                 active = orderPickFragment;
-                                orderPickFragment.data = orderPickOverviewFragment.data;
+                                orderPickFragment.onPickListDataReceived(orderPickOverviewFragment.data);
                                 break;
                             case R.id.navigation_end:
                                 //Hands most recent order pick data over.
                                 getSupportFragmentManager().beginTransaction().hide(active).show(orderPickOverviewFragment).commit();
                                 active = orderPickOverviewFragment;
-                                orderPickOverviewFragment.data = orderPickFragment.data;
+                                orderPickOverviewFragment.onPickListDataReceived(orderPickFragment.data);
                                 break;
                         }
                     }catch (NullPointerException e){
@@ -69,9 +69,8 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
 
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickOverviewFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickFragment).hide(orderPickFragment).commit();
-        bottomNavigationView.setSelectedItemId(R.id.navigation_end);
-
         presenter.getDataForFragments(orderName);
+        bottomNavigationView.getMenu().findItem(R.id.navigation_end).setChecked(true);
     }
 
     public static Intent createIntent(Context context, String orderName){

@@ -6,11 +6,12 @@ public class OrderPickPickListModel implements Serializable {
 
     private int Id;
     private int quantityRequired;
-    private int quantityPicked;
+    private int quantityPicked = 0;
     private String productSku;
     private int ProductId;
     private String productName;
     private Boolean isSerialNumberRequired = false;
+    private Boolean isSerialNumberScanned = false;
     private Boolean isLocationScanned = false;
     private Boolean isQuantityMet = false;
     private int currentStock;
@@ -146,5 +147,13 @@ public class OrderPickPickListModel implements Serializable {
 
     public void setQuantityMet(Boolean quantityMet) {
         isQuantityMet = quantityMet;
+    }
+
+    public Boolean getSerialNumberScanned() {
+        return isSerialNumberScanned;
+    }
+
+    public void setSerialNumberScanned(Boolean serialNumberScanned) {
+        isSerialNumberScanned = serialNumberScanned;
     }
 }

@@ -78,6 +78,7 @@
     <string name="order_pick_status_completed">Afgerond</string>
     <string name="order_pick_landing_error_message">There was a problem getting orders, try again.</string>
     <string name="order_pick_overview_amount_picked_splitter"> / </string>
+    <string name="spaceless_splitter">/</string>
 
 
 </resources>
