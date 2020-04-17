@@ -19,9 +19,13 @@ public class OrderPickProductFragment extends Fragment {
     ViewPagerFragmentAdapter adapter;
     ViewPager viewPager;
     TextView productNameText;
+    TextView productNameTitleText;
     TextView locationText;
     TextView warehouseText;
+    TextView warehouseTitleText;
     TextView amountToPickText;
+    TextView amountToPickTitleText;
+    TextView orderInfoTitle;
     ImageView imageView;
 
     public OrderPickProductFragment() {
@@ -40,6 +44,10 @@ public class OrderPickProductFragment extends Fragment {
         locationText = view.findViewById(R.id.order_pick_product_location_content);
         warehouseText = view.findViewById(R.id.order_pick_product_warehouse_content);
         amountToPickText = view.findViewById(R.id.order_pick_product_amount_content);
+        orderInfoTitle = view.findViewById(R.id.order_pick_title);
+        productNameTitleText = view.findViewById(R.id.order_pick_product_name_text);
+        warehouseTitleText = view.findViewById(R.id.order_pick_product_warehouse_text);
+        amountToPickTitleText = view.findViewById(R.id.order_pick_product_amount_text);
 
         Bundle args = getArguments();
         assert args != null;
@@ -50,8 +58,32 @@ public class OrderPickProductFragment extends Fragment {
         warehouseText.setText(data.getWarehouseName());
         amountToPickText.setText(String.valueOf(data.getQuantityRequired()));
 
-        if(data.getQuantityMet()){
+        //If quantity met, make text green.
+        if(data.getQuantityMet() && data.getLocationScanned()){
+            changeOrderTitle(getString(R.string.order_pick_info_title_done));
             amountToPickText.setTextColor(getContext().getResources().getColor(R.color.status_free));
         }
+
+        //If location is scanned
+        if(data.getLocationScanned()){
+            locationText.setTextColor(getContext().getResources().getColor(R.color.status_free));
+            productNameTitleText.setAlpha(1);
+            amountToPickTitleText.setAlpha(1);
+            warehouseTitleText.setAlpha(1);
+            productNameText.setAlpha(1);
+            warehouseText.setAlpha(1);
+            amountToPickText.setAlpha(1);
+            if(!data.getQuantityMet()){
+                changeOrderTitle(getString(R.string.order_pick_info_title_scan_right_amount));
+                amountToPickText.setTextColor(getContext().getResources().getColor(R.color.status_completed));
+            }
+        }else{
+            locationText.setTextColor(getContext().getResources().getColor(R.color.status_completed));
+            changeOrderTitle(getString(R.string.order_pick_info_title_scan_location));
+        }
+    }
+
+    private void changeOrderTitle(String newTitle){
+        orderInfoTitle.setText(String.valueOf(newTitle));
     }
 }

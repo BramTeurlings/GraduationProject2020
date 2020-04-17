@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityContract;
 import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingAdapter;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
@@ -80,5 +81,9 @@ public class OrderPickOverviewFragment extends Fragment implements OrderPickOver
     @Override
     public void setErrorMessage(String message) {
 
+    }
+
+    public void setAdapterNavigator(OrderPickActivityContract.Navigator navigator){
+        adapter.setNavigator(navigator);
     }
 }

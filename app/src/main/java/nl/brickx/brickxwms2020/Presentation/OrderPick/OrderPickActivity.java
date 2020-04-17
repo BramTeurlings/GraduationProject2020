@@ -1,9 +1,13 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,10 +22,11 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragment;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragment;
+import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragmentContract;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 
-public class OrderPickActivity extends DaggerAppCompatActivity implements OrderPickActivityContract.View {
+public class OrderPickActivity extends DaggerAppCompatActivity implements OrderPickActivityContract.View, OrderPickActivityContract.Navigator {
 
     @Inject
     OrderPickActivityPresenter presenter;
@@ -29,6 +34,8 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
     BottomNavigationView bottomNavigationView;
     final OrderPickFragment orderPickFragment = new OrderPickFragment();
     final OrderPickOverviewFragment orderPickOverviewFragment = new OrderPickOverviewFragment();
+    private InputMethodManager imm;
+    private View view;
     Fragment active = orderPickFragment;
     static String orderName;
 
@@ -40,16 +47,15 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                     try{
                         switch (item.getItemId()){
                             case R.id.navigation_main:
-                                //Hands most recent order pick data over.
-                                getSupportFragmentManager().beginTransaction().hide(active).show(orderPickFragment).commit();
-                                active = orderPickFragment;
-                                orderPickFragment.onPickListDataReceived(orderPickOverviewFragment.data);
+                                transferOverviewDataToMainPage();
                                 break;
                             case R.id.navigation_end:
-                                //Hands most recent order pick data over.
-                                getSupportFragmentManager().beginTransaction().hide(active).show(orderPickOverviewFragment).commit();
-                                active = orderPickOverviewFragment;
-                                orderPickOverviewFragment.onPickListDataReceived(orderPickFragment.data);
+                                transferMainPageDataToOverview();
+                                view = getCurrentFocus();
+                                if (view == null) {
+                                    view = new View(getApplicationContext());
+                                }
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                                 break;
                         }
                     }catch (NullPointerException e){
@@ -67,6 +73,7 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
         orderName = getIntent().getStringExtra("order_name");
 
+        imm = (InputMethodManager)this.getSystemService(Activity.INPUT_METHOD_SERVICE);
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickOverviewFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickFragment).hide(orderPickFragment).commit();
         presenter.getDataForFragments(orderName);
@@ -77,6 +84,11 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
         Intent orderPickIntent = new Intent(context, OrderPickActivity.class);
         orderPickIntent.putExtra("order_name", orderName);
         return orderPickIntent;
+    }
+
+    @Override
+    public void onBarcodeScanned(String scan) {
+        orderPickFragment.handleScan(scan);
     }
 
     @Override
@@ -96,5 +108,27 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
     public void onPickListInfoReceived(List<OrderPickPickListModel> data) {
         orderPickFragment.onPickListDataReceived(data);
         orderPickOverviewFragment.onPickListDataReceived(data);
+        orderPickOverviewFragment.setAdapterNavigator(this);
+    }
+
+    @Override
+    public void navigateToOrder(int index) {
+        transferOverviewDataToMainPage();
+        orderPickFragment.setActivePage(index);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+    }
+
+    private void transferMainPageDataToOverview(){
+        //Hands most recent order pick data over.
+        getSupportFragmentManager().beginTransaction().hide(active).show(orderPickOverviewFragment).commit();
+        active = orderPickOverviewFragment;
+        orderPickOverviewFragment.onPickListDataReceived(orderPickFragment.data);
+    }
+
+    private void transferOverviewDataToMainPage(){
+        //Hands most recent order pick data over.
+        getSupportFragmentManager().beginTransaction().hide(active).show(orderPickFragment).commit();
+        active = orderPickFragment;
+        orderPickFragment.onPickListDataReceived(orderPickOverviewFragment.data);
     }
 }

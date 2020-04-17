@@ -14,10 +14,12 @@ public interface OrderPickActivityContract {
 
     interface Navigator {
 
+        void navigateToOrder(int index);
         //Todo: Navigate to screens.
     }
     interface View {
 
+        void onBarcodeScanned(String scan);
         void changeLoadingState(Boolean isLoading);
         void setErrorMessage(String message);
         void onPickListInfoReceived(List<OrderPickPickListModel> data);

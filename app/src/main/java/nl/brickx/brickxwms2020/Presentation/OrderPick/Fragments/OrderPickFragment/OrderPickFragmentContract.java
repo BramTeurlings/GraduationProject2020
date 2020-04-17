@@ -9,6 +9,7 @@ public interface OrderPickFragmentContract {
 
     interface View {
 
+        void handleScan(String scan);
         void changeLoadingState(Boolean isLoading);
         void setErrorMessage(String message);
     }

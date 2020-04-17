@@ -2,6 +2,9 @@ package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOvervi
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivity;
+import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityContract;
 import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingContract;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.OrderPickLandingRecyclerModel;
@@ -27,6 +34,8 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
     private List<OrderPickPickListModel> data;
     private RecyclerView recyclerView;
     private Context context;
+    private OrderPickActivityContract.Navigator navigator;
+    private Handler handler;
 
     OrderPickOverviewAdapter(List<OrderPickPickListModel> data) {
         this.data = data;
@@ -65,7 +74,10 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
                 @Override
                 public void onClick(View v) {
                     System.out.println("CLICK! - " + position);
-                    //Todo: Navigate to main fragment with this item on top.
+                    //Todo: Navigate to main fragment with this item on top. I don't like the way this works yet, execution is slow.
+                    if(navigator != null) {
+                        navigator.navigateToOrder(position);
+                    }
                 }
             });
         }catch (Exception e){
@@ -99,5 +111,9 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
 
     public void setData(List<OrderPickPickListModel> data) {
         this.data = data;
+    }
+
+    public void setNavigator(OrderPickActivityContract.Navigator navigator) {
+        this.navigator = navigator;
     }
 }

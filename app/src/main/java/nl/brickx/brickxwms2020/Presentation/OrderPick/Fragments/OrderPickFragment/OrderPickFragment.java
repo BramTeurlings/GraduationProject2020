@@ -2,6 +2,8 @@ package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragme
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -76,12 +78,14 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
                 @Override
                 public void onPageSelected(int position) {
-                    updateButtonToolBar();
+
                 }
 
                 @Override
                 public void onPageScrollStateChanged(int state) {
-
+                    if(state == 0){
+                        updateButtonToolBar();
+                    }
                 }
             });
         }
@@ -110,17 +114,15 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
             plusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
-                        int currentAmount = -1;
-                        try{
-                            currentAmount = Integer.parseInt(amountPickedText.getText().toString());
-                        }catch (Exception e){}
+                    plusPickedAmount();
+                }
+            });
 
-                        if(currentAmount > -1 && currentAmount < data.get(imageViewPager.getCurrentItem()).getQuantityRequired()){
-                            currentAmount++;
-                            amountPickedText.setText(String.valueOf(currentAmount));
-                        }
-                    }
+            plusButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    equalPickedAmount();
+                    return true;
                 }
             });
         }
@@ -131,17 +133,20 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
             minusButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
-                        int currentAmount = -1;
-                        try{
-                            currentAmount = Integer.parseInt(amountPickedText.getText().toString());
-                        }catch (Exception e){}
+                    minusPickedAmount();
+                }
+            });
 
-                        if(currentAmount > 0){
-                            currentAmount--;
-                            amountPickedText.setText(String.valueOf(currentAmount));
-                        }
-                    }
+            minusButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    //Todo: Debug code
+                    onEqualsClicked();
+
+                    //Reset the counted amount.
+                    zeroPickedAmount();
+
+                    return true;
                 }
             });
         }
@@ -159,19 +164,15 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
             });
         }
 
-        if(equalsButton == null){
-            equalsButton = view.findViewById(R.id.order_pick_main_product_pick_equals_item_fab);
-
-            equalsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Todo: Check if location is correct.
-                    data.get(imageViewPager.getCurrentItem()).setLocationScanned(true);
-                    onLocationScanned();
-                    updateButtonToolBar();
+        amountPickedText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(amountPickedText.getText().equals("0")){
+                    amountPickedText.setText(String.valueOf(""));
                 }
-            });
-        }
+                amountPickedText.setSelection(amountPickedText.getText().length());
+            }
+        });
 
         amountPickedText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -202,6 +203,8 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
                     data.get(imageViewPager.getCurrentItem()).setQuantityMet(false);
                     completedButton.setBackgroundTintList(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorPrimary)));
                 }
+                adapter.updateOrderState(data.get(imageViewPager.getCurrentItem()), imageViewPager.getCurrentItem());
+                amountPickedText.setSelection(amountPickedText.getText().length());
             }
         });
     }
@@ -209,9 +212,10 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     private void updateButtonToolBar(){
         try{
             if(!data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
-                amountPickedText.setActivated(false);
+                amountPickedText.setFocusable(false);
             }else{
-                amountPickedText.setActivated(true);
+                amountPickedText.setFocusable(true);
+                amountPickedText.setFocusableInTouchMode(true);
             }
         }catch (Exception e){
             Log.i(TAG, "Edit text not visible on screen.");
@@ -243,6 +247,19 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     }
 
     @Override
+    public void handleScan(String scan) {
+        if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
+            if(scan.equals(data.get(imageViewPager.getCurrentItem()).getProductSku())){
+                plusPickedAmount();
+            }
+        }else{
+            if(scan.equals(data.get(imageViewPager.getCurrentItem()).getLocationTag())){
+                onEqualsClicked();
+            }
+        }
+    }
+
+    @Override
     public void changeLoadingState(Boolean isLoading) {
 
     }
@@ -266,8 +283,60 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
         updateButtonToolBar();
     }
 
+    private void plusPickedAmount(){
+        if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
+            int currentAmount = -1;
+            try{
+                currentAmount = Integer.parseInt(amountPickedText.getText().toString());
+            }catch (Exception e){
+                currentAmount = 0;
+            }
+
+            if(currentAmount > -1 && currentAmount < data.get(imageViewPager.getCurrentItem()).getQuantityRequired()){
+                currentAmount++;
+                amountPickedText.setText(String.valueOf(currentAmount));
+            }
+        }
+    }
+
+    private void minusPickedAmount(){
+        if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
+            int currentAmount = -1;
+            try{
+                currentAmount = Integer.parseInt(amountPickedText.getText().toString());
+            }catch (Exception e){}
+
+            if(currentAmount > 0){
+                currentAmount--;
+                amountPickedText.setText(String.valueOf(currentAmount));
+            }
+        }
+    }
+
+    private void zeroPickedAmount(){
+        if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
+            amountPickedText.setText(String.valueOf(0));
+        }
+    }
+
+    private void equalPickedAmount(){
+        if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
+            amountPickedText.setText(String.valueOf(data.get(imageViewPager.getCurrentItem()).getQuantityRequired()));
+        }
+    }
+
+    private void onEqualsClicked(){
+        data.get(imageViewPager.getCurrentItem()).setLocationScanned(true);
+        onLocationScanned();
+        updateButtonToolBar();
+    }
+
     private void updateFragementData(){
         adapter.data = data;
         adapter.notifyDataSetChanged();
+    }
+
+    public void setActivePage(int index){
+        imageViewPager.setCurrentItem(index);
     }
 }

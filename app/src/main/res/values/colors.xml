@@ -11,6 +11,8 @@
 
     <color name="colorBackground">#fafafa</color>
     <color name="true_white">#FFFFFF</color>
+    <color name="half_transparent">#80000000</color>
+
 
     <!--    Status colors-->
     <color name="status_free">#38db2a</color>

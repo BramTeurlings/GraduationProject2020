@@ -22,12 +22,10 @@ public class ViewPagerFragmentAdapter extends FragmentStatePagerAdapter {
         super(fm, behavior);
     }
 
-//    public OrderPickViewPagerModel getData(int position){
-//        OrderPickPickListModel tempModel = new OrderPickPickListModel();
-//        tempModel = data.get(position);
-//        ("ProductName" + String.valueOf(position), "Location" + String.valueOf(position), "Warehouse" + String.valueOf(position), (double)position);
-//        tempModel.setProductName("ProductName"tempModel.getProductName());
-//    }
+    public void updateOrderState(OrderPickPickListModel data, int position){
+        this.data.set(position, data);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemPosition(Object object) {

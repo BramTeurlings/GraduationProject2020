@@ -29,5 +29,8 @@ public interface OrderPickActivityModule {
         @Binds
         OrderPickActivityContract.View bindView(OrderPickActivity orderPickActivity);
 
+        @Binds
+        OrderPickActivityContract.Navigator bindNavigator(OrderPickActivity orderPickActivity);
+
     }
 }

@@ -1,6 +1,9 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -42,7 +45,29 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
         this.getProductImageByNumber = getProductImageByNumber;
         this.userDataManager = userDataManager;
         this.view = view;
+
+        //Datawedge
+        IntentFilter filter = new IntentFilter();
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        filter.addAction(context.getString(R.string.datawedge_intent_filter_action));
+        context.registerReceiver(textInputBroadcastReceiver, filter);
     }
+
+    private BroadcastReceiver textInputBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(context.getResources().getString(R.string.datawedge_intent_filter_action))) {
+                //  Received a barcode scan
+                try {
+                    //Execute View code.
+                    view.onBarcodeScanned(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
+                } catch (Exception e) {
+                    Log.i(TAG, "Unable to read data from scanner.");
+                }
+            }
+        }
+    };
 
     @Override
     public void getDataForFragments(String orderNumber) {
@@ -58,6 +83,7 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
                         t -> onLoginFailed(t),
                         () -> onProductInfoFetched(result)));
     }
+
     private void onProductInfoFetched(List<OrderPickSlip> pickSlips) {
         List<OrderPickPickListModel> fragmentData = new ArrayList<>();
 
