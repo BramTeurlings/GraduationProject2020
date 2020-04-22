@@ -38,6 +38,17 @@
 
     </ScrollView>
 
+    <include
+        android:id="@+id/orderPick_end_loadingIcon"
+        layout="@layout/loading_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_1"
+        android:elevation="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollView2" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/order_pick_tablayout_dots"
         android:layout_width="match_parent"

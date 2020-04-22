@@ -14,11 +14,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityContract;
 import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingAdapter;
 import nl.brickx.brickxwms2020.R;
@@ -29,9 +32,15 @@ public class OrderPickOverviewFragment extends Fragment implements OrderPickOver
 
     public List<OrderPickPickListModel> data;
     private RecyclerView orderItemRecycler;
+    private OrderPickActivity parent;
     TextView totalArticlesPickedTextView;
     ProgressBar progressBar;
     OrderPickOverviewAdapter adapter;
+
+    //Todo: Not pretty, fix better callback.
+    public OrderPickOverviewFragment(OrderPickActivity parent) {
+        this.parent = parent;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
@@ -85,7 +94,13 @@ public class OrderPickOverviewFragment extends Fragment implements OrderPickOver
 
     @Override
     public void setErrorMessage(String message) {
-
+        Snackbar.make(this.getView(), message, Snackbar.LENGTH_LONG)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        parent.getPresenter().getDataForFragments(OrderPickActivity.getOrderName());
+                    }
+                }).setDuration(20000).show();
     }
 
     public void setAdapterNavigator(OrderPickActivityContract.Navigator navigator){

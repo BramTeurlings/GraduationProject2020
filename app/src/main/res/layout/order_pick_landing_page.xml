@@ -13,10 +13,11 @@
         layout="@layout/loading_animation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/loading_icon_offset"
+        android:layout_marginTop="@dimen/grid_1"
         android:elevation="7dp"
-        app:layout_constraintEnd_toEndOf="@+id/order_pick_landing_textInputLayout"
-        app:layout_constraintTop_toTopOf="@+id/order_pick_landing_textInputLayout" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order_pick_landing_open_orders_title" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/order_pick_landing_textInputLayout"
@@ -68,6 +69,17 @@
         android:text="@string/order_pick_open_order_title"
         app:layout_constraintTop_toBottomOf="@id/order_pick_landing_view"
         tools:layout_editor_absoluteX="0dp" />
+
+    <include
+        android:id="@+id/orderPick_landing_loadingIcon"
+        layout="@layout/loading_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/grid_1"
+        android:elevation="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order_pick_landing_open_orders_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/order_pick_landing_recycler_view"

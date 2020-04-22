@@ -44,6 +44,7 @@ public class OrderPickLandingActivity extends DaggerAppCompatActivity implements
     @Inject
     OrderPickLandingContract.Navigator navigator;
 
+    //Todo: Allow barcode scan to select an order.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
