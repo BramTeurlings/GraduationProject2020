@@ -42,11 +42,9 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginContr
     }
 
     public void onLogin(View view){
-        //Todo: Save logged in user.
-
+        //Todo: Remove test user
         loginTextLayout.setError(null);
         presenter.authenticateUser(new User(0, "TestUser", "sudg276f17f6rdfctr2c6i7kuycu7x", null));
-        //Todo: Feedback if authentication failed.
     }
 
     /**

@@ -3,7 +3,7 @@ package nl.brickx.brickxwms2020.Presentation.OrderPick;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -22,8 +21,8 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragment;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragment;
-import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragmentContract;
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 
 public class OrderPickActivity extends DaggerAppCompatActivity implements OrderPickActivityContract.View, OrderPickActivityContract.Navigator {
@@ -109,6 +108,22 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
         orderPickFragment.onPickListDataReceived(data);
         orderPickOverviewFragment.onPickListDataReceived(data);
         orderPickOverviewFragment.setAdapterNavigator(this);
+        presenter.getImageDataForFragments(data);
+    }
+
+    @Override
+    public void onPickListImageInfoReceived(BitmapDrawable image, int productId) {
+        List<OrderPickPickListModel> models = orderPickFragment.data;
+        for(int i = 0; i < models.size(); i++){
+            if(models.get(i).getProductId() == productId){
+                orderPickFragment.data.get(i).setImage(image);
+                orderPickOverviewFragment.data.get(i).setImage(image);
+                orderPickFragment.data.get(i).setImageLoaded(true);
+                orderPickOverviewFragment.data.get(i).setImageLoaded(true);
+            }
+        }
+        orderPickFragment.updateFragmentData();
+        orderPickOverviewFragment.updateAdapterData();
     }
 
     @Override
@@ -130,5 +145,18 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
         getSupportFragmentManager().beginTransaction().hide(active).show(orderPickFragment).commit();
         active = orderPickFragment;
         orderPickFragment.onPickListDataReceived(orderPickOverviewFragment.data);
+    }
+
+    public void runImageUpdateOnUiThread(BitmapDrawable drawable, int productId){
+        new Thread() {
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onPickListImageInfoReceived(drawable, productId);
+                    }
+                });
+            }
+        }.start();
     }
 }

@@ -78,6 +78,11 @@ public class OrderPickOverviewFragment extends Fragment implements OrderPickOver
         }
     }
 
+    public void updateAdapterData(){
+        adapter.setData(this.data);
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public void setErrorMessage(String message) {
 

@@ -1,5 +1,7 @@
 package nl.brickx.domain.Models;
 
+import android.graphics.drawable.BitmapDrawable;
+
 import java.io.Serializable;
 
 public class OrderPickPickListModel implements Serializable {
@@ -14,11 +16,13 @@ public class OrderPickPickListModel implements Serializable {
     private Boolean isSerialNumberScanned = false;
     private Boolean isLocationScanned = false;
     private Boolean isQuantityMet = false;
+    private Boolean isImageLoaded = false;
     private int currentStock;
     private String productLocation;
     private String locationTag;
     private String warehouseName;
     private String scannedSerialNumber;
+    private BitmapDrawable image;
 
     public OrderPickPickListModel() {
     }
@@ -155,5 +159,21 @@ public class OrderPickPickListModel implements Serializable {
 
     public void setSerialNumberScanned(Boolean serialNumberScanned) {
         isSerialNumberScanned = serialNumberScanned;
+    }
+
+    public BitmapDrawable getImage() {
+        return image;
+    }
+
+    public void setImage(BitmapDrawable image) {
+        this.image = image;
+    }
+
+    public Boolean getImageLoaded() {
+        return isImageLoaded;
+    }
+
+    public void setImageLoaded(Boolean imageLoaded) {
+        isImageLoaded = imageLoaded;
     }
 }

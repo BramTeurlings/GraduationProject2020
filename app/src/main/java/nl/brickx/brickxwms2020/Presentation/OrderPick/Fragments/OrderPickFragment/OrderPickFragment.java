@@ -331,7 +331,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
         updateButtonToolBar();
     }
 
-    private void updateFragementData(){
+    public void updateFragmentData(){
         adapter.data = data;
         adapter.notifyDataSetChanged();
     }

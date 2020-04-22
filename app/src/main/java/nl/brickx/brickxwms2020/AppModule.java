@@ -52,8 +52,9 @@ class AppModule {
     @Provides
     Gson provideGson(){
         return new GsonBuilder()
-                .setDateFormat("dd-MM-yyyy HH:mm:ss")
                 .setLenient()
+                .disableHtmlEscaping()
+                .setDateFormat("dd-MM-yyyy HH:mm:ss")
                 .serializeNulls()
                 .create();
     }

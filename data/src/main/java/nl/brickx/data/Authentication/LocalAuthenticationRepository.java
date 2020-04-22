@@ -40,13 +40,19 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class LocalAuthenticationRepository implements nl.brickx.domain.Users.Data.AuthenticationRepository.Api {
 
     @Inject
+    Gson gson;
+
+    @Inject
     Retrofit retrofit;
 
     @Inject
     LocalAuthenticationRepositoryService localAuthenticationRepositoryService;
 
+    Context context;
+
     @Inject
-    LocalAuthenticationRepository() {
+    LocalAuthenticationRepository(@DataContext Context context){
+        this.context = context;
     }
 
     @Override

@@ -1,6 +1,10 @@
 package nl.brickx.data.OrderPick.ProductImage;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.util.Base64;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -16,6 +20,8 @@ import nl.brickx.domain.OrderPick.Landing.Data.OrderPickLandingRepository;
 import nl.brickx.domain.OrderPick.Main.Data.OrderPickRepository;
 import retrofit2.Retrofit;
 
+import static android.content.ContentValues.TAG;
+
 public class LocalOrderPickProductImageRepository implements OrderPickRepository.ProductImage {
 
     @Inject
@@ -28,6 +34,8 @@ public class LocalOrderPickProductImageRepository implements OrderPickRepository
     LocalOrderPickProductImageService localOrderPickProductImageService;
 
     Context context;
+
+    private ProductImage tempImage;
 
     @Inject
     LocalOrderPickProductImageRepository(@DataContext Context context){

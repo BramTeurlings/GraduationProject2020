@@ -4,22 +4,27 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.util.Base64;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragmentContract;
-import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingContract;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.Gson.Orderpick.OrderPickSlip;
+import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.OrderPick.Main.GetPickSlipByOrderNumber;
@@ -37,6 +42,9 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
     private UserDataManager userDataManager;
     private GetPickSlipByOrderNumber getPickSlipByOrderNumber;
     private GetProductImageByNumber getProductImageByNumber;
+    private HandlerThread backgroundHandlerThread;
+    private Handler handler;
+
 
     @Inject
     public OrderPickActivityPresenter(@DataContext Context context, OrderPickActivityContract.View view, GetPickSlipByOrderNumber getPickSlipByOrderNumber, GetProductImageByNumber getProductImageByNumber, UserDataManager userDataManager){
@@ -45,6 +53,10 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
         this.getProductImageByNumber = getProductImageByNumber;
         this.userDataManager = userDataManager;
         this.view = view;
+        this.handler = new Handler();
+        this.backgroundHandlerThread = new HandlerThread("backgroundThread");
+        backgroundHandlerThread.start();
+
 
         //Datawedge
         IntentFilter filter = new IntentFilter();
@@ -80,8 +92,26 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( s -> result.add(s),
-                        t -> onLoginFailed(t),
+                        t -> onGetApiDataFailed(t),
                         () -> onProductInfoFetched(result)));
+    }
+
+    @Override
+    public void getImageDataForFragments(List<OrderPickPickListModel> data) {
+        onApiRequestStarted();
+        AtomicReference<ProductImage> result = new AtomicReference<ProductImage>(new ProductImage());
+
+        for(int i = 0; i < data.size(); i++){
+            System.out.println(new Date());
+            int index = i;
+            this.disposables.add(getProductImageByNumber.invoke(String.valueOf(data.get(i).getProductId()), getUserData().getApiKey())
+                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result::set,
+                            this::onGetApiDataFailed,
+                            () -> onProductImageFetched(result.get(), data.get(index).getProductId())));
+        }
     }
 
     private void onProductInfoFetched(List<OrderPickSlip> pickSlips) {
@@ -188,6 +218,22 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
         view.onPickListInfoReceived(fragmentData);
     }
 
+    private void onProductImageFetched(ProductImage productImage, int productId){
+        handler = new Handler(backgroundHandlerThread.getLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                     view.runImageUpdateOnUiThread(new BitmapDrawable(context.getResources(), BitmapFactory.decodeByteArray(Base64.decode(productImage.getGetImageByProductIdResult().getBase64Array(), Base64.DEFAULT), 0, Base64.decode(productImage.getGetImageByProductIdResult().getBase64Array(), Base64.DEFAULT).length)), productId);
+                }catch (NullPointerException e){
+                    Log.e(TAG, "Unable to parse Base64 image. Image not present!");
+                }
+
+            }
+        });
+
+    }
+
     public User getUserData() {
         return userDataManager.GetUserData();
     }
@@ -204,7 +250,7 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
         view.changeLoadingState(isLoading);
     }
 
-    private void onLoginFailed(Throwable throwable){
+    private void onGetApiDataFailed(Throwable throwable){
         throwable.printStackTrace();
         onApiRequestCompleted();
         changeLoadingState();

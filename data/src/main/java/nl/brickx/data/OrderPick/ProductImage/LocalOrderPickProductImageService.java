@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 
 public interface LocalOrderPickProductImageService {
 
-    @GET("productimage/getbyproductid")
-    Observable<ProductImage> getProductImage(@Query("number") String productId,
+    @GET("productimage/getbyproductid/")
+    Observable<ProductImage> getProductImage(@Query("id") String productId,
                                              @Query("apikey") String apikey);
 }

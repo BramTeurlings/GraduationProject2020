@@ -4,6 +4,7 @@ import io.reactivex.Observable;
 import nl.brickx.domain.Models.Gson.Orderpick.OrderPickSlip;
 import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
 
+
 public interface OrderPickRepository {
 
     interface PickSlips{
@@ -15,4 +16,5 @@ public interface OrderPickRepository {
 
         Observable<nl.brickx.domain.Models.Gson.ProductImage.ProductImage> getProductImage(String productId, String key);
     }
+
 }

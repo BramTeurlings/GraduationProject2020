@@ -1,15 +1,20 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickProductsFragments;
 
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.transition.Visibility;
 import androidx.viewpager.widget.ViewPager;
 
 import nl.brickx.brickxwms2020.R;
@@ -27,6 +32,7 @@ public class OrderPickProductFragment extends Fragment {
     TextView amountToPickTitleText;
     TextView orderInfoTitle;
     ImageView imageView;
+    ProgressBar loadingIcon;
 
     public OrderPickProductFragment() {
 
@@ -48,6 +54,8 @@ public class OrderPickProductFragment extends Fragment {
         productNameTitleText = view.findViewById(R.id.order_pick_product_name_text);
         warehouseTitleText = view.findViewById(R.id.order_pick_product_warehouse_text);
         amountToPickTitleText = view.findViewById(R.id.order_pick_product_amount_text);
+        imageView = view.findViewById(R.id.order_pick_product_image);
+        loadingIcon = view.findViewById(R.id.order_pick_product_loading_icon);
 
         Bundle args = getArguments();
         assert args != null;
@@ -57,6 +65,14 @@ public class OrderPickProductFragment extends Fragment {
         locationText.setText(data.getProductLocation());
         warehouseText.setText(data.getWarehouseName());
         amountToPickText.setText(String.valueOf(data.getQuantityRequired()));
+
+        if(data.getImageLoaded()){
+            loadingIcon.setVisibility(View.INVISIBLE);
+        }
+
+        if(data.getImage() != null){
+            imageView.setImageDrawable(data.getImage());
+        }
 
         //If quantity met, make text green.
         if(data.getQuantityMet() && data.getLocationScanned()){
