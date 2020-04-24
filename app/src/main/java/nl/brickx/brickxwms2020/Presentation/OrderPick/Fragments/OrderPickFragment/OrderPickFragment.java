@@ -210,6 +210,15 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     }
 
     private void updateButtonToolBar(){
+
+        try{
+            if(data.get(imageViewPager.getCurrentItem()).getSerialNumberRequired()){
+                //Todo: Switch UI
+            }
+        }catch (Exception e){
+            Log.i(TAG, "Couldn't read serial number required field.");
+        }
+
         try{
             if(!data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
                 amountPickedText.setFocusable(false);

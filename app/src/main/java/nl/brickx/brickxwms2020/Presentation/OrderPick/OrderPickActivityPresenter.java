@@ -25,10 +25,12 @@ import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.Gson.Orderpick.OrderPickSlip;
 import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
+import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.OrderPick.Main.GetPickSlipByOrderNumber;
 import nl.brickx.domain.OrderPick.Main.GetProductImageByNumber;
+import nl.brickx.domain.OrderPick.Main.GetSerialnumberByStockLocationIdAndProductId;
 import nl.brickx.domain.Users.UserDataManager;
 
 import static android.content.ContentValues.TAG;
@@ -42,15 +44,17 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
     private UserDataManager userDataManager;
     private GetPickSlipByOrderNumber getPickSlipByOrderNumber;
     private GetProductImageByNumber getProductImageByNumber;
+    private GetSerialnumberByStockLocationIdAndProductId getSerialnumberByStockLocationIdAndProductId;
     private HandlerThread backgroundHandlerThread;
     private Handler handler;
 
 
     @Inject
-    public OrderPickActivityPresenter(@DataContext Context context, OrderPickActivityContract.View view, GetPickSlipByOrderNumber getPickSlipByOrderNumber, GetProductImageByNumber getProductImageByNumber, UserDataManager userDataManager){
+    public OrderPickActivityPresenter(@DataContext Context context, OrderPickActivityContract.View view, GetPickSlipByOrderNumber getPickSlipByOrderNumber, GetProductImageByNumber getProductImageByNumber, UserDataManager userDataManager, GetSerialnumberByStockLocationIdAndProductId getSerialnumberByStockLocationIdAndProductId){
         this.context = context;
         this.getPickSlipByOrderNumber = getPickSlipByOrderNumber;
         this.getProductImageByNumber = getProductImageByNumber;
+        this.getSerialnumberByStockLocationIdAndProductId = getSerialnumberByStockLocationIdAndProductId;
         this.userDataManager = userDataManager;
         this.view = view;
         this.handler = new Handler();
@@ -119,6 +123,16 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
 
         for(int i = 0; i < pickSlips.get(0).getGetPickslipByNumberResult().getPickList().size(); i++){
             OrderPickPickListModel tempModel = new OrderPickPickListModel();
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getId() != null){
+                    tempModel.setStockLocationId(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getStockLocation().getId());
+                }else{
+                    printErrorMessage("Stock Location Id");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Stock Location Id");
+            }
 
             try{
                 if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getId() != null){
@@ -210,12 +224,44 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
                 printErrorMessage("Warehouse Name");
             }
 
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getUniqueBatchNumbers() != null){
+                    tempModel.setSerialNumberRequired(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getUniqueBatchNumbers());
+                    if(tempModel.getSerialNumberRequired()){
+                        //Todo: Get serialnumbers
+                        try{
+                            AtomicReference<Serialnumbers> result = new AtomicReference<>();
+                            int id = tempModel.getProductId();
+                            getSerialnumberByStockLocationIdAndProductId.invoke(tempModel.getStockLocationId(), tempModel.getProductId(), getUserData().getApiKey())
+                                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(result::set,
+                                            this::onGetApiDataFailed,
+                                            () -> onSerialnumbersFetched(result.get(), id));
+                        }catch (Exception e){
+                            //Todo: Raise a visible error here so that orderpickers don't get stuck.
+                            e.printStackTrace();
+                            printErrorMessage("Failed to get serialnumbers");
+                        }
+                    }
+                }else{
+                    printErrorMessage("Is Serialnumber Required");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Is Serialnumber Required");
+            }
+
             fragmentData.add(tempModel);
         }
 
         onApiRequestCompleted();
         changeLoadingState();
         view.onPickListInfoReceived(fragmentData);
+    }
+
+    private void onSerialnumbersFetched(Serialnumbers serialnumbers, int productId){
+        view.onSerialnumbersFetched(serialnumbers, productId);
     }
 
     private void onProductImageFetched(ProductImage productImage, int productId){

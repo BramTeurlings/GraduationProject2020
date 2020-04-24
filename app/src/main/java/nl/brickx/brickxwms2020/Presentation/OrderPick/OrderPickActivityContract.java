@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import java.util.List;
 
 import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
+import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 
 public interface OrderPickActivityContract {
@@ -23,6 +24,7 @@ public interface OrderPickActivityContract {
     }
     interface View {
 
+        void onSerialnumbersFetched(Serialnumbers serialnumbers, int productId);
         void runImageUpdateOnUiThread(BitmapDrawable drawable, int productId);
         void onBarcodeScanned(String scan);
         void changeLoadingState(Boolean isLoading);

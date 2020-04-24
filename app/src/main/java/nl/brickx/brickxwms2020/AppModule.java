@@ -21,6 +21,8 @@ import nl.brickx.data.OrderPick.PickSlip.LocalOrderPickPickSlipRepository;
 import nl.brickx.data.OrderPick.PickSlip.LocalOrderPickPickSlipService;
 import nl.brickx.data.OrderPick.ProductImage.LocalOrderPickProductImageRepository;
 import nl.brickx.data.OrderPick.ProductImage.LocalOrderPickProductImageService;
+import nl.brickx.data.OrderPick.Serialnumbers.LocalOrderPickProductSerialnumberRepository;
+import nl.brickx.data.OrderPick.Serialnumbers.LocalOrderPickProductSerialnumberService;
 import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingRepository;
 import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingService;
 import nl.brickx.data.ProductInfo.LocalProductInfoRepository;
@@ -120,6 +122,11 @@ class AppModule {
     }
 
     @Provides
+    LocalOrderPickProductSerialnumberService localOrderPickProductSerialnumberService(){
+        return retrofit.create(LocalOrderPickProductSerialnumberService.class);
+    }
+
+    @Provides
     @DataContext
     Context provideDataContext(BaseApplication application){
         return application;
@@ -160,5 +167,8 @@ class AppModule {
 
         @Binds
         OrderPickRepository.ProductImage bindOrderPickProductImageRepository(LocalOrderPickProductImageRepository localOrderPickProductImageRepository);
+
+        @Binds
+        OrderPickRepository.SerialNumbers bindOrderPickSerialnumbersRepository(LocalOrderPickProductSerialnumberRepository localOrderPickProductSerialnumberRepository);
     }
 }

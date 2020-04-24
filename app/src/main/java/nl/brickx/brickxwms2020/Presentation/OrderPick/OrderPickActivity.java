@@ -23,6 +23,7 @@ import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragmen
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragment;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
+import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 
 public class OrderPickActivity extends DaggerAppCompatActivity implements OrderPickActivityContract.View, OrderPickActivityContract.Navigator {
@@ -122,6 +123,20 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                 orderPickOverviewFragment.data.get(i).setImageLoaded(true);
             }
         }
+        orderPickFragment.updateFragmentData();
+        orderPickOverviewFragment.updateAdapterData();
+    }
+
+    @Override
+    public void onSerialnumbersFetched(Serialnumbers serialnumbers, int productId) {
+        List<OrderPickPickListModel> models = orderPickFragment.data;
+        for(int i = 0; i < models.size(); i++){
+            if(models.get(i).getProductId() == productId){
+                orderPickFragment.data.get(i).setOpenSerialnumbers(serialnumbers.getGetAvailableBatchNumbersResult());
+                orderPickOverviewFragment.data.get(i).setOpenSerialnumbers(serialnumbers.getGetAvailableBatchNumbersResult());
+            }
+        }
+        //Todo: Could be removed later after some testing.
         orderPickFragment.updateFragmentData();
         orderPickOverviewFragment.updateAdapterData();
     }
