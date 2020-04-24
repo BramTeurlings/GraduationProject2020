@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickProductsFragments.ViewPagerFragmentAdapter;
+import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivity;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 
@@ -36,6 +38,7 @@ import static android.content.ContentValues.TAG;
 
 public class OrderPickFragment extends DaggerFragment implements OrderPickFragmentContract.View {
 
+    private OrderPickActivity parent;
     public List<OrderPickPickListModel> data;
     ViewPager imageViewPager;
     ViewPagerFragmentAdapter adapter;
@@ -50,6 +53,11 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
     @Inject
     OrderPickFragmentContract.Presenter presenter;
+
+    //Todo: Not pretty, fix better callback.
+    public OrderPickFragment(OrderPickActivity parent) {
+        this.parent = parent;
+    }
 
 
     @Override
@@ -88,6 +96,11 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
                     }
                 }
             });
+        }
+
+        if(progressBar == null){
+            progressBar = view.findViewById(R.id.loadingIcon);
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         if(tabLayout == null) {
@@ -270,12 +283,24 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
     @Override
     public void changeLoadingState(Boolean isLoading) {
-
+        if(progressBar != null){
+            if(isLoading){
+                progressBar.setVisibility(View.VISIBLE);
+            }else{
+                progressBar.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
     public void setErrorMessage(String message) {
-
+        Snackbar.make(this.getView(), message, Snackbar.LENGTH_LONG)
+                .setAction("Retry", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        parent.getPresenter().getDataForFragments(OrderPickActivity.getOrderName());
+                    }
+                }).setDuration(20000).show();
     }
 
     @Override

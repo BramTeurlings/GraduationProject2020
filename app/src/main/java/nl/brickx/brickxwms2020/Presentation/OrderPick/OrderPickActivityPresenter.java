@@ -95,8 +95,8 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
                 .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( s -> result.add(s),
-                        t -> onGetApiDataFailed(t),
+                .subscribe(result::add,
+                        this::onGetApiDataFailed,
                         () -> onProductInfoFetched(result)));
     }
 
@@ -111,7 +111,6 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
             this.disposables.add(getProductImageByNumber.invoke(String.valueOf(data.get(i).getProductId()), getUserData().getApiKey())
                     .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(result::set,
                             this::onGetApiDataFailed,
                             () -> onProductImageFetched(result.get(), data.get(index).getProductId())));
@@ -265,6 +264,7 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
     }
 
     private void onProductImageFetched(ProductImage productImage, int productId){
+        System.out.println("processing item on thread " + Thread.currentThread().getName());
         handler = new Handler(backgroundHandlerThread.getLooper());
         handler.post(new Runnable() {
             @Override

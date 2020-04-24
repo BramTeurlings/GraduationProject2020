@@ -10,7 +10,7 @@
     <string name="login_header_textview">Log in bij Brickx</string>
     <string name="log_in">Log in</string>
     <string name="api_key_default">7737d6b3-21fe-4f7d-88e3-0c887365f2aa</string>
-    <string name="login_error_message">There was a problem logging in, try again.</string>
+    <string name="login_error_message">Kon niet inloggen. Probeer opnieuw.</string>
 
     <!--    Main Menu-->
     <string name="brickx_wms">Brickx WMS</string>
@@ -29,7 +29,7 @@
     <string name="product_info_ean_text">EAN</string>
     <string name="product_info_custom_barcode_title">Eigen Barcode</string>
     <string name="product_info_upc_title">UPC</string>
-    <string name="product_error_message">There was a problem getting product data, try again.</string>
+    <string name="product_error_message">Kon product data niet ophalen. Probeer opnieuw.</string>
 
     <!--    Location Info-->
     <string name="location_info_input_hint">Vul een locatienummer in</string>
@@ -39,7 +39,7 @@
     <string name="location_info_name_title">Locatie:</string>
     <string name="location_info_location_name">Locatie:</string>
     <string name="location_info_product_text">Product:</string>
-    <string name="location_error_message">There was a problem getting location data, try again.</string>
+    <string name="location_error_message">Kon locatie data niet ophalen. Probeer opnieuw.</string>
 
     <!--    Combined info screen-->
     <string name="combined_productname_text">Productnaam:</string>
@@ -76,7 +76,7 @@
     <string name="order_pick_status_busy">Bezig</string>
     <string name="order_pick_status_on_hold">In de wacht</string>
     <string name="order_pick_status_completed">Afgerond</string>
-    <string name="order_pick_landing_error_message">There was a problem getting orders, try again.</string>
+    <string name="order_pick_landing_error_message">Kon orders niet ophalen.</string>
     <string name="order_pick_overview_amount_picked_splitter"> / </string>
     <string name="spaceless_splitter">/</string>
     <string name="order_pick_info_title_scan_right_amount">Scan het gevraagde aantal…</string>

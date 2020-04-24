@@ -32,8 +32,8 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
     OrderPickActivityPresenter presenter;
 
     BottomNavigationView bottomNavigationView;
-    final OrderPickFragment orderPickFragment = new OrderPickFragment();
-    final OrderPickOverviewFragment orderPickOverviewFragment = new OrderPickOverviewFragment();
+    final OrderPickFragment orderPickFragment = new OrderPickFragment(this);
+    final OrderPickOverviewFragment orderPickOverviewFragment = new OrderPickOverviewFragment(this);
     private InputMethodManager imm;
     private View view;
     Fragment active = orderPickFragment;
@@ -173,5 +173,13 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                 });
             }
         }.start();
+    }
+
+    public OrderPickActivityPresenter getPresenter() {
+        return presenter;
+    }
+
+    public static String getOrderName() {
+        return orderName;
     }
 }
