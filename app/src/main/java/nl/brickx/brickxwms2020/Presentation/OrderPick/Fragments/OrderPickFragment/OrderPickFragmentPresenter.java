@@ -18,6 +18,7 @@ import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.domain.Models.Gson.ApiUserRightsEnum;
 import nl.brickx.domain.Models.Gson.Authentication;
 import nl.brickx.domain.Models.Gson.UserInfo.UserInfo;
+import nl.brickx.domain.Models.OrderPickSerialStatusModel;
 import nl.brickx.domain.Models.Permission;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.Users.GetUserAuthenticationByApiKey;
@@ -31,6 +32,11 @@ public class OrderPickFragmentPresenter implements OrderPickFragmentContract.Pre
     @Inject
     public OrderPickFragmentPresenter(@DataContext Context context){
         this.context = context;
+    }
+
+    @Override
+    public void removeSerialnumber(OrderPickSerialStatusModel serialStatusModel) {
+
     }
 
     @Override

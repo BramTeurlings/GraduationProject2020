@@ -1,9 +1,12 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment;
 
+import nl.brickx.domain.Models.OrderPickSerialStatusModel;
+
 public interface OrderPickFragmentContract {
 
     interface Presenter {
 
+        void removeSerialnumber(OrderPickSerialStatusModel serialStatusModel);
         void startPresenting();
     }
 

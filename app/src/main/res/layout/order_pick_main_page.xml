@@ -53,11 +53,11 @@
         android:id="@+id/order_pick_tablayout_dots"
         android:layout_width="match_parent"
         android:layout_height="16dp"
-        android:screenReaderFocusable="false"
-        android:focusable="false"
-        android:clickable="false"
-        app:layout_constraintBottom_toTopOf="@+id/order_pick_status"
         android:backgroundTint="@color/colorBackground"
+        android:clickable="false"
+        android:focusable="false"
+        android:screenReaderFocusable="false"
+        app:layout_constraintBottom_toTopOf="@+id/order_pick_status_view_flipper"
         app:tabBackground="@drawable/tab_selector"
         app:tabGravity="center"
         app:tabIndicator="@null"
@@ -65,15 +65,40 @@
         app:tabMaxWidth="12dp"
         app:tabRippleColor="@null" />
 
-    <include
-        android:id="@+id/order_pick_status"
-        layout="@layout/order_pick_main_product_pick_status_item"
-        android:layout_width="0dp"
+    <ViewFlipper
+        android:id="@+id/order_pick_status_view_flipper"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:elevation="7dp"
+        android:measureAllChildren="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <include
+            android:id="@+id/order_pick_status"
+            layout="@layout/order_pick_main_product_pick_status_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <include
+            android:id="@+id/order_pick_status_serial_numbers"
+            layout="@layout/order_pick_main_product_pick_status_item_serial_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </ViewFlipper>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

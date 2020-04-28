@@ -82,6 +82,8 @@
     <string name="order_pick_info_title_scan_right_amount">Scan het gevraagde aantal…</string>
     <string name="order_pick_info_title_scan_location">Scan locatie in…</string>
     <string name="order_pick_info_title_done">Klaar! Door naar de volgende.</string>
+    <string name="Order_pick_serial_number_hint">Serienummers:</string>
+    <string name="order_pick_status_serial_number_template_text">Serienummer:</string>
 
 
 </resources>

@@ -12,9 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +27,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,9 +35,11 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickProductsFragments.ViewPagerFragmentAdapter;
+import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewAdapter;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivity;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.OrderPickPickListModel;
+import nl.brickx.domain.Models.OrderPickSerialStatusModel;
 
 import static android.content.ContentValues.TAG;
 
@@ -40,8 +47,11 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
     private OrderPickActivity parent;
     public List<OrderPickPickListModel> data;
+    public List<OrderPickSerialStatusModel> serialNumbers = new ArrayList<>();
+    RecyclerView statusSerialNumberRecycler;
     ViewPager imageViewPager;
     ViewPagerFragmentAdapter adapter;
+    OrderPickStatusSerialNumbersAdapter serialNumberAdapter;
     TabLayout tabLayout;
     FloatingActionButton plusButton;
     FloatingActionButton minusButton;
@@ -50,6 +60,9 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     ProgressBar progressBar;
     TextView outOfPickedTotalNeededTextView;
     TextInputEditText amountPickedText;
+    ConstraintLayout statusBar;
+    ConstraintLayout statusBarSerialNumbers;
+    ViewFlipper viewFlipper;
 
     @Inject
     OrderPickFragmentContract.Presenter presenter;
@@ -64,6 +77,10 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
+        //Todo: remove mock code
+        serialNumbers.add(new OrderPickSerialStatusModel("ayuvbdu123u15", true));
+        serialNumbers.add(new OrderPickSerialStatusModel("gkljdfg98734nr99vsd", false));
+        serialNumbers.add(new OrderPickSerialStatusModel("83294236f93268gf437vbbcv24v23874", true));
     }
 
     @Override
@@ -73,7 +90,31 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        //Todo: Disable textInput until locationScanned = true; In other words add a listener for the locationScan event.
+
+        if(statusSerialNumberRecycler == null){
+            statusSerialNumberRecycler = view.findViewById(R.id.order_pick_status_item_serial_number_recycler);
+        }
+
+        if(serialNumberAdapter == null){
+            serialNumberAdapter = new OrderPickStatusSerialNumbersAdapter(serialNumbers);
+            if(statusSerialNumberRecycler != null){
+                statusSerialNumberRecycler.setAdapter(serialNumberAdapter);
+                statusSerialNumberRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            }
+        }
+
+        if(statusBar == null){
+            statusBar = view.findViewById(R.id.order_pick_status);
+        }
+
+        if(statusBarSerialNumbers == null){
+            statusBarSerialNumbers = view.findViewById(R.id.order_pick_status_serial_numbers);
+        }
+
+        if(viewFlipper == null){
+            viewFlipper = view.findViewById(R.id.order_pick_status_view_flipper);
+            viewFlipper.setDisplayedChild(0);
+        }
 
         if(imageViewPager == null){
             imageViewPager = view.findViewById(R.id.order_pick_viewpager);
@@ -226,10 +267,13 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
         try{
             if(data.get(imageViewPager.getCurrentItem()).getSerialNumberRequired()){
-                //Todo: Switch UI
+                viewFlipper.setDisplayedChild(1);
+            }else{
+                viewFlipper.setDisplayedChild(0);
             }
         }catch (Exception e){
             Log.i(TAG, "Couldn't read serial number required field.");
+            viewFlipper.setDisplayedChild(0);
         }
 
         try{
