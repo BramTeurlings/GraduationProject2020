@@ -64,7 +64,7 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
             String amountText = "0 / 0";
             amountText = data.get(position).getQuantityPicked() + context.getString(R.string.order_pick_overview_amount_picked_splitter) + data.get(position).getQuantityRequired();
             holder.orderLineAmountPickedTextView.setText(amountText);
-            if(data.get(position).getQuantityRequired() == data.get(position).getQuantityPicked() && data.get(position).getLocationScanned()){
+            if(data.get(position).getQuantityRequired() == data.get(position).getQuantityPicked() || data.get(position).getQuantityRequired() == data.get(position).getScannedSerialNumbers().size() && data.get(position).getLocationScanned()){
                 holder.statusCardView.setBackgroundColor(context.getResources().getColor(R.color.status_free_transparent));
             }else{
                 holder.statusCardView.setBackgroundColor(context.getResources().getColor(R.color.status_completed_transparent));

@@ -83,6 +83,11 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$reactive_x_version_kotlin"
     implementation "io.reactivex.rxjava2:rxandroid:$reactive_x_version_android"
 
+    // ObjectMapper
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.5'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.8.5'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.8.5'
+
     //Dependencies
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':data')

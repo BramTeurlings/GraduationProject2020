@@ -21,6 +21,7 @@ import nl.brickx.data.OrderPick.PickSlip.LocalOrderPickPickSlipRepository;
 import nl.brickx.data.OrderPick.PickSlip.LocalOrderPickPickSlipService;
 import nl.brickx.data.OrderPick.ProductImage.LocalOrderPickProductImageRepository;
 import nl.brickx.data.OrderPick.ProductImage.LocalOrderPickProductImageService;
+import nl.brickx.data.OrderPick.SaveOrderData.LocalSaveOrderPickRepository;
 import nl.brickx.data.OrderPick.Serialnumbers.LocalOrderPickProductSerialnumberRepository;
 import nl.brickx.data.OrderPick.Serialnumbers.LocalOrderPickProductSerialnumberService;
 import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingRepository;
@@ -170,5 +171,11 @@ class AppModule {
 
         @Binds
         OrderPickRepository.SerialNumbers bindOrderPickSerialnumbersRepository(LocalOrderPickProductSerialnumberRepository localOrderPickProductSerialnumberRepository);
+
+        @Binds
+        OrderPickRepository.GetOrderPickProgress bindOrderPickGetOrderPicksLocallyRepository(LocalSaveOrderPickRepository localGetOrderPickRepository);
+
+        @Binds
+        OrderPickRepository.SaveOrderPickProgress bindOrderPickSaveOrderPicksLocallyRepository(LocalSaveOrderPickRepository localSaveOrderPickRepository);
     }
 }

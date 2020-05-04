@@ -28,5 +28,8 @@ public interface OrderPickFragmentModule {
         @Binds
         OrderPickFragmentContract.Presenter bindPresenter(OrderPickFragmentPresenter orderPickFragmentPresenter);
 
+        @Binds
+        OrderPickFragmentContract.View bindView(OrderPickFragment orderPickFragment);
+
     }
 }

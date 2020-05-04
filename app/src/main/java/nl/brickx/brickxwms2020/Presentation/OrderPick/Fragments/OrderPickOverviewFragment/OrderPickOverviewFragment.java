@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class OrderPickOverviewFragment extends Fragment implements OrderPickOver
     public List<OrderPickPickListModel> data;
     private RecyclerView orderItemRecycler;
     private OrderPickActivity parent;
+    MaterialButton bottomButton;
     TextView totalArticlesPickedTextView;
     ProgressBar progressBar;
     OrderPickOverviewAdapter adapter;
@@ -60,6 +62,10 @@ public class OrderPickOverviewFragment extends Fragment implements OrderPickOver
 
         if(totalArticlesPickedTextView == null){
             totalArticlesPickedTextView = view.findViewById(R.id.order_pick_end_totals_text);
+        }
+
+        if(bottomButton == null){
+            bottomButton = view.findViewById(R.id.order_pick_end_page_button);
         }
 
         data = new ArrayList<>();

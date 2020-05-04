@@ -14,6 +14,8 @@ public interface OrderPickActivityContract {
 
         void getDataForFragments(String orderNumber);
         void getImageDataForFragments(List<OrderPickPickListModel> data);
+        void getLocalSaveData();
+        Boolean saveLocalSaveData(List<OrderPickPickListModel> orders);
         void dispose();
     }
 
@@ -26,6 +28,7 @@ public interface OrderPickActivityContract {
 
         void onSerialnumbersFetched(Serialnumbers serialnumbers, int productId);
         void runImageUpdateOnUiThread(BitmapDrawable drawable, int productId);
+        void runOrderUpdateOnUiThread(List<OrderPickPickListModel> orders);
         void onBarcodeScanned(String scan);
         void changeLoadingState(Boolean isLoading);
         void setErrorMessage(String message);

@@ -66,14 +66,14 @@
         android:layout_marginTop="@dimen/grid_1"
         android:layout_marginEnd="@dimen/grid_1"
         android:layout_marginBottom="@dimen/grid_0_5"
-        app:layout_constraintBottom_toTopOf="@+id/materialButton"
+        app:layout_constraintBottom_toTopOf="@+id/order_pick_end_page_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/order_pick_end_totals_text"
         tools:listitem="@layout/order_pick_end_page_recycler_item" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton"
+        android:id="@+id/order_pick_end_page_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_1"

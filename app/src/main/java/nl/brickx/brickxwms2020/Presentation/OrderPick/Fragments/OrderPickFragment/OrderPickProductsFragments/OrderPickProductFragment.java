@@ -75,8 +75,9 @@ public class OrderPickProductFragment extends Fragment {
         }
 
         //If quantity met, make text green.
-        if(data.getQuantityMet() && data.getLocationScanned()){
+        if(data.getQuantityMet() || data.getQuantityRequired() == data.getScannedSerialNumbers().size() && data.getLocationScanned()){
             changeOrderTitle(getString(R.string.order_pick_info_title_done));
+            data.setQuantityMet(true);
             amountToPickText.setTextColor(getContext().getResources().getColor(R.color.status_free));
         }
 

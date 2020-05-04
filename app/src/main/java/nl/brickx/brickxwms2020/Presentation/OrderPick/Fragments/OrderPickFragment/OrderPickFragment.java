@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -46,9 +47,12 @@ import static android.content.ContentValues.TAG;
 public class OrderPickFragment extends DaggerFragment implements OrderPickFragmentContract.View {
 
     private OrderPickActivity parent;
+    private Boolean expansionToggle = false;
     public List<OrderPickPickListModel> data;
     public List<OrderPickSerialStatusModel> serialNumbers = new ArrayList<>();
     RecyclerView statusSerialNumberRecycler;
+    ImageView statusExpander;
+    ConstraintLayout statusSerialNumbersConstraint;
     ViewPager imageViewPager;
     ViewPagerFragmentAdapter adapter;
     OrderPickStatusSerialNumbersAdapter serialNumberAdapter;
@@ -63,6 +67,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     ConstraintLayout statusBar;
     ConstraintLayout statusBarSerialNumbers;
     ViewFlipper viewFlipper;
+    ViewGroup.LayoutParams tempParams;
 
     @Inject
     OrderPickFragmentContract.Presenter presenter;
@@ -77,10 +82,6 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AndroidSupportInjection.inject(this);
-        //Todo: remove mock code
-        serialNumbers.add(new OrderPickSerialStatusModel("ayuvbdu123u15", true));
-        serialNumbers.add(new OrderPickSerialStatusModel("gkljdfg98734nr99vsd", false));
-        serialNumbers.add(new OrderPickSerialStatusModel("83294236f93268gf437vbbcv24v23874", true));
     }
 
     @Override
@@ -97,10 +98,38 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
         if(serialNumberAdapter == null){
             serialNumberAdapter = new OrderPickStatusSerialNumbersAdapter(serialNumbers);
+            serialNumberAdapter.setPresenter(presenter);
             if(statusSerialNumberRecycler != null){
                 statusSerialNumberRecycler.setAdapter(serialNumberAdapter);
                 statusSerialNumberRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
             }
+        }
+
+        if(statusSerialNumbersConstraint == null){
+            statusSerialNumbersConstraint = view.findViewById(R.id.order_pick_status_item_serial_number_constraint);
+        }
+
+        if(statusExpander == null){
+            statusExpander = view.findViewById(R.id.order_pick_serial_numbers_arrow_image);
+            statusExpander.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Todo: Expand Menu toggle
+                    if(!expansionToggle){
+                        tempParams = statusSerialNumberRecycler.getLayoutParams();
+                        tempParams.height = tempParams.height*2;
+                        statusSerialNumberRecycler.setLayoutParams(tempParams);
+                        expansionToggle = true;
+                        statusExpander.setImageDrawable(getContext().getDrawable(R.drawable.ic_keyboard_arrow_up_black_24dp));
+                    }else{
+                        tempParams = statusSerialNumberRecycler.getLayoutParams();
+                        tempParams.height = tempParams.height/2;
+                        statusSerialNumberRecycler.setLayoutParams(tempParams);
+                        expansionToggle = false;
+                        statusExpander.setImageDrawable(getContext().getDrawable(R.drawable.ic_keyboard_arrow_down_black_24dp));
+                    }
+                }
+            });
         }
 
         if(statusBar == null){
@@ -266,7 +295,14 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     private void updateButtonToolBar(){
 
         try{
-            if(data.get(imageViewPager.getCurrentItem()).getSerialNumberRequired()){
+            if(data.get(imageViewPager.getCurrentItem()).getSerialNumberRequired())
+            {
+                serialNumbers.clear();
+                for(int i = 0; i < data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().size(); i++){
+                    serialNumbers.add(new OrderPickSerialStatusModel(data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().get(i), true, data.get(imageViewPager.getCurrentItem()).getProductId()));
+                }
+                serialNumberAdapter.setData(serialNumbers);
+                serialNumberAdapter.notifyDataSetChanged();
                 viewFlipper.setDisplayedChild(1);
             }else{
                 viewFlipper.setDisplayedChild(0);
@@ -317,11 +353,13 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
         if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
             if(scan.equals(data.get(imageViewPager.getCurrentItem()).getProductSku())){
                 plusPickedAmount();
+            }else if(!data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().contains(scan) && data.get(imageViewPager.getCurrentItem()).getOpenSerialnumbers().contains(scan)){
+                data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().add(scan);
+                updateButtonToolBar();
+                checkIfEnoughSerialNumbersScanned();
             }
-        }else{
-            if(scan.equals(data.get(imageViewPager.getCurrentItem()).getLocationTag())){
+        }else if(scan.equals(data.get(imageViewPager.getCurrentItem()).getLocationTag())){
                 onEqualsClicked();
-            }
         }
     }
 
@@ -345,6 +383,24 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
                         parent.getPresenter().getDataForFragments(OrderPickActivity.getOrderName());
                     }
                 }).setDuration(20000).show();
+    }
+
+    @Override
+    public void updateSerialnumbers(List<OrderPickPickListModel> data) {
+        this.data = data;
+        adapter.data = this.data;
+        adapter.notifyDataSetChanged();
+        updateButtonToolBar();
+    }
+
+    @Override
+    public List<OrderPickPickListModel> getData() {
+        return data;
+    }
+
+    @Override
+    public int getCurrentViewPagerIndex() {
+        return imageViewPager.getCurrentItem();
     }
 
     @Override
@@ -374,6 +430,13 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
                 currentAmount++;
                 amountPickedText.setText(String.valueOf(currentAmount));
             }
+        }
+    }
+
+    private void checkIfEnoughSerialNumbersScanned(){
+        if(data.get(imageViewPager.getCurrentItem()).getQuantityRequired() == data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().size()){
+            data.get(imageViewPager.getCurrentItem()).setQuantityMet(true);
+            updateFragmentData();
         }
     }
 

@@ -26,11 +26,14 @@ import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.Gson.Orderpick.OrderPickSlip;
 import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
 import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
+import nl.brickx.domain.Models.GsonOrderPickPickList;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 import nl.brickx.domain.Models.User;
+import nl.brickx.domain.OrderPick.Main.GetOrderPickData;
 import nl.brickx.domain.OrderPick.Main.GetPickSlipByOrderNumber;
 import nl.brickx.domain.OrderPick.Main.GetProductImageByNumber;
 import nl.brickx.domain.OrderPick.Main.GetSerialnumberByStockLocationIdAndProductId;
+import nl.brickx.domain.OrderPick.Main.SaveOrderPickData;
 import nl.brickx.domain.Users.UserDataManager;
 
 import static android.content.ContentValues.TAG;
@@ -45,17 +48,21 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
     private GetPickSlipByOrderNumber getPickSlipByOrderNumber;
     private GetProductImageByNumber getProductImageByNumber;
     private GetSerialnumberByStockLocationIdAndProductId getSerialnumberByStockLocationIdAndProductId;
+    private GetOrderPickData getOrderPickData;
+    private SaveOrderPickData saveOrderPickData;
     private HandlerThread backgroundHandlerThread;
     private Handler handler;
 
 
     @Inject
-    public OrderPickActivityPresenter(@DataContext Context context, OrderPickActivityContract.View view, GetPickSlipByOrderNumber getPickSlipByOrderNumber, GetProductImageByNumber getProductImageByNumber, UserDataManager userDataManager, GetSerialnumberByStockLocationIdAndProductId getSerialnumberByStockLocationIdAndProductId){
+    public OrderPickActivityPresenter(@DataContext Context context, OrderPickActivityContract.View view, GetPickSlipByOrderNumber getPickSlipByOrderNumber, GetProductImageByNumber getProductImageByNumber, UserDataManager userDataManager, GetSerialnumberByStockLocationIdAndProductId getSerialnumberByStockLocationIdAndProductId, GetOrderPickData getOrderPickData, SaveOrderPickData saveOrderPickData){
         this.context = context;
         this.getPickSlipByOrderNumber = getPickSlipByOrderNumber;
         this.getProductImageByNumber = getProductImageByNumber;
         this.getSerialnumberByStockLocationIdAndProductId = getSerialnumberByStockLocationIdAndProductId;
         this.userDataManager = userDataManager;
+        this.getOrderPickData = getOrderPickData;
+        this.saveOrderPickData = saveOrderPickData;
         this.view = view;
         this.handler = new Handler();
         this.backgroundHandlerThread = new HandlerThread("backgroundThread");
@@ -102,7 +109,6 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
 
     @Override
     public void getImageDataForFragments(List<OrderPickPickListModel> data) {
-        onApiRequestStarted();
         AtomicReference<ProductImage> result = new AtomicReference<ProductImage>(new ProductImage());
 
         for(int i = 0; i < data.size(); i++){
@@ -115,6 +121,46 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
                             this::onGetApiDataFailed,
                             () -> onProductImageFetched(result.get(), data.get(index).getProductId())));
         }
+    }
+
+    @Override
+    public void getLocalSaveData() {
+        this.disposables.add(getOrderPickData.invoke()
+                .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::readLocalSaveData,
+                this::onGetApiDataFailed));
+    }
+
+    @Override
+    public Boolean saveLocalSaveData(List<OrderPickPickListModel> orders) {
+        AtomicReference<Boolean> result = new AtomicReference<Boolean>();
+
+        this.disposables.add(saveOrderPickData.invoke(orders)
+                .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                .subscribeOn(Schedulers.io())
+                .subscribe(result::set,
+                this::onGetApiDataFailed));
+
+        return result.get();
+    }
+
+    private Boolean readLocalSaveData(List<GsonOrderPickPickList> orders){
+        String orderName = OrderPickActivity.getOrderName();
+        for(int i = 0; i < orders.size(); i++){
+            try{
+                if(orderName.equals(String.valueOf(orders.get(i).getOrders().get(0).getPickslipNumber()))){
+                    view.runOrderUpdateOnUiThread(orders.get(i).getOrders());
+                    onApiRequestCompleted();
+                    changeLoadingState();
+                    return true;
+                }
+            }catch (Exception e){
+                Log.i(TAG, "Unable to read index from locally saved order list.");
+            }
+        }
+        getDataForFragments(orderName);
+        return false;
     }
 
     private void onProductInfoFetched(List<OrderPickSlip> pickSlips) {
@@ -224,6 +270,16 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
             }
 
             try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickSlipNumber() != null){
+                    tempModel.setPickslipNumber(pickSlips.get(0).getGetPickslipByNumberResult().getPickSlipNumber());
+                }else{
+                    printErrorMessage("Pickslip Number");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Pickslip Number");
+            }
+
+            try{
                 if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getUniqueBatchNumbers() != null){
                     tempModel.setSerialNumberRequired(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getUniqueBatchNumbers());
                     if(tempModel.getSerialNumberRequired()){
@@ -307,6 +363,12 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
     public void dispose() {
         for(int i = 0; i < disposables.size(); i++){
             this.disposables.get(i).dispose();
+        }
+
+        try{
+            context.unregisterReceiver(textInputBroadcastReceiver);
+        }catch (Exception e){
+            Log.e(TAG, "Unable to unsubscribe broadcast receiver.");
         }
     }
 

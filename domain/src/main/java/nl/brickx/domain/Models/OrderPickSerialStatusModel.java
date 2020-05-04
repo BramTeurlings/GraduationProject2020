@@ -4,13 +4,15 @@ public class OrderPickSerialStatusModel {
 
     String serialnumber;
     Boolean isAvailible;
+    int productId;
 
     public OrderPickSerialStatusModel() {
     }
 
-    public OrderPickSerialStatusModel(String serialnumber, Boolean isAvailible) {
+    public OrderPickSerialStatusModel(String serialnumber, Boolean isAvailible, int productId) {
         this.serialnumber = serialnumber;
         this.isAvailible = isAvailible;
+        this.productId = productId;
     }
 
     public String getSerialnumber() {
@@ -27,5 +29,13 @@ public class OrderPickSerialStatusModel {
 
     public void setAvailible(Boolean availible) {
         isAvailible = availible;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

@@ -2,11 +2,15 @@ package nl.brickx.domain.Models;
 
 import android.graphics.drawable.BitmapDrawable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderPickPickListModel implements Serializable {
 
+    private String pickslipNumber;
     private int Id;
     private int quantityRequired;
     private int quantityPicked = 0;
@@ -24,8 +28,10 @@ public class OrderPickPickListModel implements Serializable {
     private String locationTag;
     private String warehouseName;
     private String scannedSerialNumber;
+    @JsonIgnore
     private BitmapDrawable image;
-    private List<String> openSerialnumbers;
+    private List<String> openSerialnumbers = new ArrayList<>();
+    private List<String> scannedSerialNumbers = new ArrayList<>();
 
     public OrderPickPickListModel() {
     }
@@ -194,5 +200,21 @@ public class OrderPickPickListModel implements Serializable {
 
     public void setOpenSerialnumbers(List<String> openSerialnumbers) {
         this.openSerialnumbers = openSerialnumbers;
+    }
+
+    public List<String> getScannedSerialNumbers() {
+        return scannedSerialNumbers;
+    }
+
+    public void setScannedSerialNumbers(List<String> scannedSerialNumbers) {
+        this.scannedSerialNumbers = scannedSerialNumbers;
+    }
+
+    public String getPickslipNumber() {
+        return pickslipNumber;
+    }
+
+    public void setPickslipNumber(String pickslipNumber) {
+        this.pickslipNumber = pickslipNumber;
     }
 }

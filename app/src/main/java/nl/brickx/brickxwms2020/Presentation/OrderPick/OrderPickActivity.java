@@ -76,7 +76,8 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
         imm = (InputMethodManager)this.getSystemService(Activity.INPUT_METHOD_SERVICE);
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickOverviewFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickFragment).hide(orderPickFragment).commit();
-        presenter.getDataForFragments(orderName);
+        presenter.getLocalSaveData();
+        //presenter.getDataForFragments(orderName);
         bottomNavigationView.getMenu().findItem(R.id.navigation_end).setChecked(true);
     }
 
@@ -93,9 +94,18 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
 
     @Override
     public void changeLoadingState(Boolean isLoading) {
-        //Todo: Change state for presenters
-        orderPickOverviewFragment.changeLoadingState(isLoading);
-        orderPickFragment.changeLoadingState(isLoading);
+        new Thread() {
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Todo: Change state for presenters
+                        orderPickOverviewFragment.changeLoadingState(isLoading);
+                        orderPickFragment.changeLoadingState(isLoading);
+                    }
+                });
+            }
+        }.start();
     }
 
     @Override
@@ -175,11 +185,48 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
         }.start();
     }
 
+    public void runOrderUpdateOnUiThread(List<OrderPickPickListModel> orders){
+        new Thread() {
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        onPickListInfoReceived(orders);
+                    }
+                });
+            }
+        }.start();
+    }
+
     public OrderPickActivityPresenter getPresenter() {
         return presenter;
     }
 
     public static String getOrderName() {
         return orderName;
+    }
+
+    @Override
+    public void onDestroy(){
+        //Todo: Save order list
+        if(bottomNavigationView.getSelectedItemId() == R.id.navigation_main){
+            presenter.saveLocalSaveData(orderPickFragment.data);
+        }else{
+            presenter.saveLocalSaveData(orderPickOverviewFragment.data);
+        }
+
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause(){
+        //Todo: Save order list
+        if(bottomNavigationView.getSelectedItemId() == R.id.navigation_main){
+            presenter.saveLocalSaveData(orderPickFragment.data);
+        }else{
+            presenter.saveLocalSaveData(orderPickOverviewFragment.data);
+        }
+
+        super.onPause();
     }
 }
