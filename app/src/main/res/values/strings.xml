@@ -71,7 +71,8 @@
     <string name="order_pick_end_product_name_content">Product naam</string>
     <string name="order_pick_end_title">Overzicht</string>
     <string name="order_pick_end_items_left_content">0 / 0 Artikelen</string>
-    <string name="order_pick_end_button">Orderpick Afronden</string>
+    <string name="order_pick_end_button_end">Orderpick Afronden</string>
+    <string name="order_pick_end_button_start">Orderpick Starten</string>
     <string name="order_pick_status_free">Vrij</string>
     <string name="order_pick_status_busy">Bezig</string>
     <string name="order_pick_status_on_hold">In de wacht</string>

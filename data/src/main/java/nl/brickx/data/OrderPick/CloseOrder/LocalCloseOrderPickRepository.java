@@ -9,8 +9,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import nl.brickx.data.Dagger.DataContext;
-import nl.brickx.domain.Models.CloseOrderPickModel;
-import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
+import nl.brickx.domain.Models.SavePickSlipDto;
 import nl.brickx.domain.OrderPick.Main.Data.OrderPickRepository;
 import retrofit2.Retrofit;
 
@@ -33,8 +32,8 @@ public class LocalCloseOrderPickRepository implements OrderPickRepository.CloseO
     }
 
     @Override
-    public Observable<Boolean> closeOrderPick(CloseOrderPickModel model) {
-        Observable<Boolean> holder = localCloseOrderPickService.closeOrderPick(model).subscribeOn(Schedulers.computation()).observeOn(Schedulers.io());
+    public Observable<Boolean> closeOrderPick(SavePickSlipDto model, String apikey) {
+        Observable<Boolean> holder = localCloseOrderPickService.closeOrderPick(model, apikey).subscribeOn(Schedulers.computation()).observeOn(Schedulers.io());
 
         return holder;
     }

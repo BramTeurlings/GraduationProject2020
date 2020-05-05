@@ -26,6 +26,7 @@ public class OrderPickFragmentPresenter implements OrderPickFragmentContract.Pre
     public void removeSerialnumber(OrderPickSerialStatusModel serialStatusModel) {
         try{
             view.getData().get(view.getCurrentViewPagerIndex()).getScannedSerialNumbers().remove(serialStatusModel.getSerialnumber());
+            view.getData().get(view.getCurrentViewPagerIndex()).setQuantityPicked(view.getData().get(view.getCurrentViewPagerIndex()).getQuantityPicked() - 1);
             view.updateSerialnumbers(view.getData());
         }catch(Exception e){
             Log.i(TAG, "Unable to remove serialnumber.");

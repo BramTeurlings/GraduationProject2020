@@ -9,11 +9,7 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import nl.brickx.data.Dagger.DataContext;
-import nl.brickx.data.OrderPick.ProductImage.LocalOrderPickProductImageService;
-import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingService;
-import nl.brickx.domain.Models.Gson.OrderPickLanding.OrderPickLanding;
 import nl.brickx.domain.Models.Gson.Orderpick.OrderPickSlip;
-import nl.brickx.domain.OrderPick.Landing.Data.OrderPickLandingRepository;
 import nl.brickx.domain.OrderPick.Main.Data.OrderPickRepository;
 import retrofit2.Retrofit;
 

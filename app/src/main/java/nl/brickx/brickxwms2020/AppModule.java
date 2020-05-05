@@ -17,6 +17,8 @@ import nl.brickx.data.Authentication.LocalAuthenticationRepositoryService;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.data.LocationInfo.LocalLocationInfoRepository;
 import nl.brickx.data.LocationInfo.LocalLocationRepositoryService;
+import nl.brickx.data.OrderPick.CloseOrder.LocalCloseOrderPickRepository;
+import nl.brickx.data.OrderPick.CloseOrder.LocalCloseOrderPickService;
 import nl.brickx.data.OrderPick.PickSlip.LocalOrderPickPickSlipRepository;
 import nl.brickx.data.OrderPick.PickSlip.LocalOrderPickPickSlipService;
 import nl.brickx.data.OrderPick.ProductImage.LocalOrderPickProductImageRepository;
@@ -128,6 +130,11 @@ class AppModule {
     }
 
     @Provides
+    LocalCloseOrderPickService localCloseOrderPickService(){
+        return retrofit.create(LocalCloseOrderPickService.class);
+    }
+
+    @Provides
     @DataContext
     Context provideDataContext(BaseApplication application){
         return application;
@@ -177,5 +184,8 @@ class AppModule {
 
         @Binds
         OrderPickRepository.SaveOrderPickProgress bindOrderPickSaveOrderPicksLocallyRepository(LocalSaveOrderPickRepository localSaveOrderPickRepository);
+
+        @Binds
+        OrderPickRepository.CloseOrderPick bindOrderPickCloseOrderPickRepository(LocalCloseOrderPickRepository localCloseOrderPickRepository);
     }
 }

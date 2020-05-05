@@ -11,7 +11,9 @@ import java.util.List;
 public class OrderPickPickListModel implements Serializable {
 
     private String pickslipNumber;
-    private int Id;
+    private int pickSlipId;
+    private int picklistId;
+    private int pickSlipLineId;
     private int quantityRequired;
     private int quantityPicked = 0;
     private String productSku;
@@ -28,8 +30,10 @@ public class OrderPickPickListModel implements Serializable {
     private String locationTag;
     private String warehouseName;
     private String scannedSerialNumber;
+
     @JsonIgnore
-    private BitmapDrawable image;
+    private transient BitmapDrawable image;
+
     private List<String> openSerialnumbers = new ArrayList<>();
     private List<String> scannedSerialNumbers = new ArrayList<>();
 
@@ -37,7 +41,7 @@ public class OrderPickPickListModel implements Serializable {
     }
 
     public OrderPickPickListModel(int id, int quantityRequired, int quantityPicked, String productSku, int productId, String productName, Boolean isSerialNumberRequired, Boolean isLocationScanned, String productLocation, String locationTag, String warehouseName) {
-        Id = id;
+        picklistId = id;
         this.quantityRequired = quantityRequired;
         this.quantityPicked = quantityPicked;
         this.productSku = productSku;
@@ -50,12 +54,12 @@ public class OrderPickPickListModel implements Serializable {
         this.warehouseName = warehouseName;
     }
 
-    public int getId() {
-        return Id;
+    public int getPicklistId() {
+        return picklistId;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setPicklistId(int picklistId) {
+        this.picklistId = picklistId;
     }
 
     public int getQuantityRequired() {
@@ -216,5 +220,21 @@ public class OrderPickPickListModel implements Serializable {
 
     public void setPickslipNumber(String pickslipNumber) {
         this.pickslipNumber = pickslipNumber;
+    }
+
+    public int getPickSlipId() {
+        return pickSlipId;
+    }
+
+    public void setPickSlipId(int pickSlipId) {
+        this.pickSlipId = pickSlipId;
+    }
+
+    public int getPickSlipLineId() {
+        return pickSlipLineId;
+    }
+
+    public void setPickSlipLineId(int pickSlipLineId) {
+        this.pickSlipLineId = pickSlipLineId;
     }
 }

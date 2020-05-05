@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import nl.brickx.domain.Models.Gson.Orderpick.OrderPickSlip;
 import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.OrderPick.Main.Data.OrderPickRepository;
 

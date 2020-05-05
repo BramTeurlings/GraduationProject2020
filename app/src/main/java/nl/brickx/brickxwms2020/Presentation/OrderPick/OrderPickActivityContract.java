@@ -22,6 +22,7 @@ public interface OrderPickActivityContract {
     interface Navigator {
 
         void navigateToOrder(int index);
+        void navigateToOrderPickLanding();
         //Todo: Navigate to screens.
     }
     interface View {

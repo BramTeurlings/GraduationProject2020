@@ -1,12 +1,9 @@
 package nl.brickx.domain.OrderPick.Main;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import nl.brickx.domain.Models.CloseOrderPickModel;
-import nl.brickx.domain.Models.OrderPickPickListModel;
+import nl.brickx.domain.Models.SavePickSlipDto;
 import nl.brickx.domain.OrderPick.Main.Data.OrderPickRepository;
 
 public class CloseOrderPick {
@@ -18,7 +15,7 @@ public class CloseOrderPick {
         this.closeOrderPick = closeOrderPick;
     }
 
-    public Observable<Boolean> invoke(CloseOrderPickModel orders) {
-        return closeOrderPick.closeOrderPick(orders);
+    public Observable<Boolean> invoke(SavePickSlipDto orders, String apikey) {
+        return closeOrderPick.closeOrderPick(orders, apikey);
     }
 }

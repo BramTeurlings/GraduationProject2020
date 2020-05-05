@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import dagger.android.support.DaggerFragment;
 
 @Module
 public interface OrderPickOverviewFragmentModule {
@@ -22,13 +23,13 @@ public interface OrderPickOverviewFragmentModule {
     interface Bindings {
 
         @Binds
+        DaggerFragment bindOrderPickActivity(OrderPickOverviewFragment orderPickActivity);
+
+        @Binds
         OrderPickOverviewFragmentContract.Presenter bindOrderPickOverviewPresenter(OrderPickOverviewFragmentPresenter orderPickOverviewFragmentPresenter);
 
         @Binds
         OrderPickOverviewFragmentContract.View bindOrderPickOverviewView(OrderPickOverviewFragment orderPickOverviewFragment);
-
-        @Binds
-        Fragment bindOrderPickOverviewFragment(OrderPickOverviewFragment orderPickOverviewFragment);
 
     }
 }

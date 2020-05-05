@@ -15,6 +15,9 @@ public class PickList {
     @SerializedName("Id")
     @Expose
     private Integer id;
+    @SerializedName("PickSlipLineId")
+    @Expose
+    private Integer pickSlipLineId;
     @SerializedName("ProductInfo")
     @Expose
     private ProductInfo productInfo;
@@ -50,6 +53,14 @@ public class PickList {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getPickSlipLineId() {
+        return pickSlipLineId;
+    }
+
+    public void setPickSlipLineId(Integer pickSlipLineId) {
+        this.pickSlipLineId = pickSlipLineId;
     }
 
     public ProductInfo getProductInfo() {

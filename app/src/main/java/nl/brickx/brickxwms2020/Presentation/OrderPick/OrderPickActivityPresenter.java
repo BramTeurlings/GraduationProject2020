@@ -180,13 +180,33 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
             }
 
             try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getId() != null){
+                    tempModel.setPickSlipId(pickSlips.get(0).getGetPickslipByNumberResult().getId());
+                }else{
+                    printErrorMessage("Pickslip Id");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Pickslip Id");
+            }
+
+            try{
                 if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getId() != null){
-                    tempModel.setId(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getId());
+                    tempModel.setPicklistId(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getId());
                 }else{
                     printErrorMessage("Picklist Id");
                 }
             }catch(NullPointerException | IndexOutOfBoundsException e){
                 printErrorMessage("Picklist Id");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getPickSlipLineId() != null){
+                    tempModel.setPickSlipLineId(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getPickSlipLineId());
+                }else{
+                    printErrorMessage("Pickslipline Id");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Pickslipline Id");
             }
 
             try{

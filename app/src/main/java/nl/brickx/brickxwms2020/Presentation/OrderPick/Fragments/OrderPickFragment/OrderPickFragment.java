@@ -355,6 +355,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
                 plusPickedAmount();
             }else if(!data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().contains(scan) && data.get(imageViewPager.getCurrentItem()).getOpenSerialnumbers().contains(scan)){
                 data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().add(scan);
+                data.get(imageViewPager.getCurrentItem()).setQuantityPicked(data.get(imageViewPager.getCurrentItem()).getQuantityPicked()+1);
                 updateButtonToolBar();
                 checkIfEnoughSerialNumbersScanned();
             }

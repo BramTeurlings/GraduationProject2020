@@ -5,31 +5,32 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.List;
-
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragment;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragment;
+import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingActivity;
 import nl.brickx.brickxwms2020.R;
-import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
 import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 
 public class OrderPickActivity extends DaggerAppCompatActivity implements OrderPickActivityContract.View, OrderPickActivityContract.Navigator {
 
+    private static final String TAG = "Order pick activity: ";
+
     @Inject
     OrderPickActivityPresenter presenter;
+
+    @Inject
+    Activity activity;
 
     BottomNavigationView bottomNavigationView;
     final OrderPickFragment orderPickFragment = new OrderPickFragment(this);
@@ -55,6 +56,7 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                                 if (view == null) {
                                     view = new View(getApplicationContext());
                                 }
+                                orderPickOverviewFragment.updateBottomButtonText();
                                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                                 break;
                         }
@@ -153,9 +155,18 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
 
     @Override
     public void navigateToOrder(int index) {
-        transferOverviewDataToMainPage();
-        orderPickFragment.setActivePage(index);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+        try{
+            transferOverviewDataToMainPage();
+            orderPickFragment.setActivePage(index);
+            bottomNavigationView.setSelectedItemId(R.id.navigation_main);
+        }catch (Exception e){
+            Log.i(TAG, "Unable to navigate to order. List might be empty?");
+        }
+    }
+
+    @Override
+    public void navigateToOrderPickLanding() {
+        activity.startActivity(OrderPickLandingActivity.createIntent(getBaseContext()));
     }
 
     private void transferMainPageDataToOverview(){
