@@ -17,6 +17,9 @@ public class OrderPickPickListModel implements Serializable {
     private int quantityRequired;
     private int quantityPicked = 0;
     private String productSku;
+    private String productEAN;
+    private String productUPC;
+    private String productCustomBarcode;
     private int ProductId;
     private int StockLocationId;
     private String productName;
@@ -236,5 +239,29 @@ public class OrderPickPickListModel implements Serializable {
 
     public void setPickSlipLineId(int pickSlipLineId) {
         this.pickSlipLineId = pickSlipLineId;
+    }
+
+    public String getProductEAN() {
+        return productEAN;
+    }
+
+    public void setProductEAN(String productEAN) {
+        this.productEAN = productEAN;
+    }
+
+    public String getProductUPC() {
+        return productUPC;
+    }
+
+    public void setProductUPC(String productUPC) {
+        this.productUPC = productUPC;
+    }
+
+    public String getProductCustomBarcode() {
+        return productCustomBarcode;
+    }
+
+    public void setProductCustomBarcode(String productCustomBarcode) {
+        this.productCustomBarcode = productCustomBarcode;
     }
 }

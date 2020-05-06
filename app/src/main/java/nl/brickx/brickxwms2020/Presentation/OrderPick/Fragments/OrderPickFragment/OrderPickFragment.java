@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -48,6 +49,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
     private OrderPickActivity parent;
     private Boolean expansionToggle = false;
+    private String[] strings;
     public List<OrderPickPickListModel> data;
     public List<OrderPickSerialStatusModel> serialNumbers = new ArrayList<>();
     RecyclerView statusSerialNumberRecycler;
@@ -63,6 +65,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     FloatingActionButton completedButton;
     ProgressBar progressBar;
     TextView outOfPickedTotalNeededTextView;
+    TextView serialNumbersCountedText;
     TextInputEditText amountPickedText;
     ConstraintLayout statusBar;
     ConstraintLayout statusBarSerialNumbers;
@@ -138,6 +141,10 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
         if(statusBarSerialNumbers == null){
             statusBarSerialNumbers = view.findViewById(R.id.order_pick_status_serial_numbers);
+        }
+
+        if(serialNumbersCountedText == null){
+            serialNumbersCountedText = view.findViewById(R.id.order_pick_status_item_serial_number_title);
         }
 
         if(viewFlipper == null){
@@ -301,6 +308,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
                 for(int i = 0; i < data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().size(); i++){
                     serialNumbers.add(new OrderPickSerialStatusModel(data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().get(i), true, data.get(imageViewPager.getCurrentItem()).getProductId()));
                 }
+                serialNumbersCountedText.setText(String.valueOf(getContext().getString(R.string.Order_pick_serial_number_hint) + " " + data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().size()));
                 serialNumberAdapter.setData(serialNumbers);
                 serialNumberAdapter.notifyDataSetChanged();
                 viewFlipper.setDisplayedChild(1);
@@ -351,13 +359,19 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     @Override
     public void handleScan(String scan) {
         if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
-            if(scan.equals(data.get(imageViewPager.getCurrentItem()).getProductSku())){
+            //Todo: Add check for other barcodes here.
+            if(Objects.equals(scan, data.get(imageViewPager.getCurrentItem()).getProductSku()) || Objects.equals(scan, data.get(imageViewPager.getCurrentItem()).getProductEAN()) || Objects.equals(scan, data.get(imageViewPager.getCurrentItem()).getProductUPC()) || Objects.equals(scan, data.get(imageViewPager.getCurrentItem()).getProductCustomBarcode())){
                 plusPickedAmount();
-            }else if(!data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().contains(scan) && data.get(imageViewPager.getCurrentItem()).getOpenSerialnumbers().contains(scan)){
-                data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().add(scan);
-                data.get(imageViewPager.getCurrentItem()).setQuantityPicked(data.get(imageViewPager.getCurrentItem()).getQuantityPicked()+1);
-                updateButtonToolBar();
-                checkIfEnoughSerialNumbersScanned();
+            }else{
+                strings = scan.replaceAll("\\s+","").split(";");
+                for(int i = 0; i < strings.length; i++){
+                    if(!data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().contains(strings[i]) && data.get(imageViewPager.getCurrentItem()).getOpenSerialnumbers().contains(strings[i])){
+                        data.get(imageViewPager.getCurrentItem()).getScannedSerialNumbers().add(strings[i]);
+                        data.get(imageViewPager.getCurrentItem()).setQuantityPicked(data.get(imageViewPager.getCurrentItem()).getQuantityPicked()+1);
+                        updateButtonToolBar();
+                        checkIfEnoughSerialNumbersScanned();
+                    }
+                }
             }
         }else if(scan.equals(data.get(imageViewPager.getCurrentItem()).getLocationTag())){
                 onEqualsClicked();

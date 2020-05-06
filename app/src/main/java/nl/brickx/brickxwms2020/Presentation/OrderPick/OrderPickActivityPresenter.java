@@ -230,6 +230,36 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
             }
 
             try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getEan13() != null){
+                    tempModel.setProductEAN((String) pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getEan13());
+                }else{
+                    printErrorMessage("EAN");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("EAN");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getUpcBarCode() != null){
+                    tempModel.setProductUPC((String) pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getUpcBarCode());
+                }else{
+                    printErrorMessage("UPC");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("UPC");
+            }
+
+            try{
+                if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getCustomBarCode() != null){
+                    tempModel.setProductCustomBarcode((String) pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getCustomBarCode());
+                }else{
+                    printErrorMessage("Custom Barcode");
+                }
+            }catch(NullPointerException | IndexOutOfBoundsException e){
+                printErrorMessage("Custom Barcode");
+            }
+
+            try{
                 if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getId() != null){
                     tempModel.setProductId(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getId());
                 }else{
