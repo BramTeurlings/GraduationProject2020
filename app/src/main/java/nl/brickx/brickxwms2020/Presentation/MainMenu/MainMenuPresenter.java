@@ -26,6 +26,7 @@ public class MainMenuPresenter implements MainMenuContract.Presenter {
 
     @Override
     public List<MainMenuRecyclerModel> getMenuContentByCategory(List<Permission> permissions, MenuCategory category) {
+        //Todo: Do proper RXjava without blocking.
         return getMenuItemsByPermissionsAndCategory.invoke(permissions, category).blockingFirst();
     }
 

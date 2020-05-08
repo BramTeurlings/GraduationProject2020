@@ -38,6 +38,22 @@
                 android:value=".Presentation.OrderPickLanding.OrderPickLandingActivity"/>
         </activity>
         <activity
+            android:name=".Presentation.StockTransfer.StockTransferActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+            android:parentActivityName=".Presentation.StockTransfer.StockTransferActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.MainMenu.MainMenuActivity"/>
+        </activity>
+        <activity
+            android:name=".Presentation.StockTransferMain.StockTransferMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+            android:parentActivityName=".Presentation.StockTransferMain.StockTransferMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.StockTransfer.StockTransferActivity"/>
+        </activity>
+        <activity
             android:name=".Presentation.OrderPickLanding.OrderPickLandingActivity"
             android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
             android:parentActivityName=".Presentation.OrderPickLanding.OrderPickLandingActivity">

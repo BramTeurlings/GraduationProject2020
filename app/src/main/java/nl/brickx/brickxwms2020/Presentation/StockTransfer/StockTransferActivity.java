@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.ProductInfo;
+package nl.brickx.brickxwms2020.Presentation.StockTransfer;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
@@ -16,26 +16,31 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import java.util.ArrayList;
+
 import javax.inject.Inject;
+
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoAdapter;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.ProductInfoHolder;
 
-public class ProductInfoActivity extends DaggerAppCompatActivity implements ProductInfoContract.View {
+public class StockTransferActivity extends DaggerAppCompatActivity implements StockTransferContract.View {
 
     @Inject
-    ProductInfoPresenter infoPresenter;
+    StockTransferPresenter infoPresenter;
 
-    private final String TAG = "ProductInfoActivity: ";
+    private final String TAG = "StockTransfer: ";
 
     SpannableStringBuilder stringBuilder;
     ConstraintLayout barcodesGroup;
@@ -63,19 +68,19 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
     Boolean barcodeExpansionToggle = true;
     Boolean detailsExpansionToggle = true;
     Boolean propertiesExpansionToggle = true;
-    ProductInfoAdapter productInfoAdapter;
+    StockTransferAdapter productInfoAdapter;
     RecyclerView productInfoRecyclerView;
     RecyclerView locationInfoRecyclerView;
-    LocationInfoAdapter locationInfoAdapter;
+    StockTransferLocationAdapter locationInfoAdapter;
 
     public static Intent createIntent(Context context){
-        return new Intent(context, ProductInfoActivity.class);
+        return new Intent(context, StockTransferActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.combined_info_and_location_page);
+        setContentView(R.layout.combined_info_and_location_stock_transfer_page);
 
         eanTextView = findViewById(R.id.combined_codes_ean_content);
         upcTextView = findViewById(R.id.combined_codes_upc_content);
@@ -165,12 +170,12 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
 
     public void initRecyclerViews(){
         //Productinfo
-        productInfoAdapter = new ProductInfoAdapter(new ArrayList<>());
+        productInfoAdapter = new StockTransferAdapter(new ArrayList<>());
         productInfoRecyclerView.setAdapter(productInfoAdapter);
         productInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Location:
-        locationInfoAdapter = new LocationInfoAdapter(new ArrayList<>());
+        locationInfoAdapter = new StockTransferLocationAdapter(new ArrayList<>());
         locationInfoRecyclerView.setAdapter(locationInfoAdapter);
         locationInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -228,8 +233,8 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
     }
 
     @Override
-    public void onNewProductInfoReceived(ProductInfoHolder holder) {
-        locationInfoAdapter.setData(holder.getLocations());
+    public void onNewProductInfoReceived(ProductInfoHolder holder, String scan) {
+        locationInfoAdapter.setData(holder.getLocations(), scan);
         productInfoAdapter.setData(holder.getProperties());
         locationInfoAdapter.notifyDataSetChanged();
         productInfoAdapter.notifyDataSetChanged();

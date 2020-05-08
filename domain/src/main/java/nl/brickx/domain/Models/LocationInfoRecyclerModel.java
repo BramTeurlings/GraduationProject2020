@@ -1,11 +1,14 @@
 package nl.brickx.domain.Models;
 
-public class LocationInfoRecyclerModel {
+import java.io.Serializable;
+
+public class LocationInfoRecyclerModel implements Serializable {
 
     private String warehouseName;
     private String location;
     private Integer productStock;
     private String productName;
+    private String locationTag;
 
     public LocationInfoRecyclerModel() {
     }
@@ -57,5 +60,13 @@ public class LocationInfoRecyclerModel {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getLocationTag() {
+        return locationTag;
+    }
+
+    public void setLocationTag(String locationTag) {
+        this.locationTag = locationTag;
     }
 }

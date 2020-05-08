@@ -51,14 +51,17 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
             holder.primaryCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //Todo: Fix injection.
                     System.out.println("CLICK! - " + position);
-                    if(data.get(position).getIdentifier() == MenuItemIdentifier.PRODUCT_INFO_ITEM){
-                        //Todo: Fix injection.
-                        navigator.navigateToProductInfo();
-                    }else if(data.get(position).getIdentifier() == MenuItemIdentifier.LOCATION_INFO_ITEM){
-                        navigator.navigateToLocationInfo();
-                    }else if(data.get(position).getIdentifier() == MenuItemIdentifier.ORDER_PICK_ITEM){
-                        navigator.navigateToOrderPickScreen();
+                    switch(data.get(position).getIdentifier()){
+                        case PRODUCT_INFO_ITEM:
+                            navigator.navigateToProductInfo();
+                        case LOCATION_INFO_ITEM:
+                            navigator.navigateToLocationInfo();
+                        case ORDER_PICK_ITEM:
+                            navigator.navigateToOrderPickScreen();
+                        case STOCK_TRANSFER_ITEM:
+                            navigator.navigateToStockTransfer();
                     }
                 }
             });

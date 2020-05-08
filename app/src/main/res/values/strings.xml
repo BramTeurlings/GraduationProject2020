@@ -86,5 +86,9 @@
     <string name="Order_pick_serial_number_hint">Serienummers:</string>
     <string name="order_pick_status_serial_number_template_text">Serienummer:</string>
 
+    <!--    Stock transfer-->
+    <string name="stock_transfer_landing_location_title">Kies een locatie:</string>
+    <string name="stock_transfer_title">Voorraad transfer</string>
+
 
 </resources>

@@ -91,6 +91,11 @@ public class LoginPresenter implements LoginContract.Presenter {
                     enums.add(Permission.ORDER_PICK);
                 }
             }
+            if(userInfo.getUserInfoResult().getApiUserRights().get(i).getApiRight() == ApiUserRightsEnum.StockTransfer_Post){
+                if(!enums.contains(Permission.STOCK_TRANSFER)){
+                    enums.add(Permission.STOCK_TRANSFER);
+                }
+            }
             if(userInfo.getUserInfoResult().getApiUserRights().get(i).getApiRight() == ApiUserRightsEnum.Stockcount){
                 if(!enums.contains(Permission.STOCK_COUNT)){
                     enums.add(Permission.STOCK_COUNT);

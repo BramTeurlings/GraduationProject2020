@@ -10,6 +10,9 @@ import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivityModule;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityModule;
 import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingActivityModule;
 import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModule;
+import nl.brickx.brickxwms2020.Presentation.StockTransfer.StockTransferActivityModule;
+import nl.brickx.brickxwms2020.Presentation.StockTransferMain.StockTransferMainActivity;
+import nl.brickx.brickxwms2020.Presentation.StockTransferMain.StockTransferMainActivityModule;
 
 
 @Singleton
@@ -22,7 +25,9 @@ import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModul
                 LoginActivityModule.class,
                 ProductInfoActivityModule.class,
                 LocationInfoActivityModule.class,
-                OrderPickLandingActivityModule.class
+                OrderPickLandingActivityModule.class,
+                StockTransferActivityModule.class,
+                StockTransferMainActivityModule.class
         }
 )
 interface AppComponent extends AndroidInjector<BaseApplication> {
