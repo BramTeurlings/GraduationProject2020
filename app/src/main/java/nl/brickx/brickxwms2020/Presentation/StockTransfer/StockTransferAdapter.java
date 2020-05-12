@@ -27,9 +27,6 @@ public class StockTransferAdapter extends RecyclerView.Adapter<StockTransferAdap
     private RecyclerView recyclerView;
     private Context context;
 
-    @Inject
-    StockTransferContract.Navigator navigator;
-
     public StockTransferAdapter(List<ProductInfoRecyclerModel> data) {
         this.data = data;
     }

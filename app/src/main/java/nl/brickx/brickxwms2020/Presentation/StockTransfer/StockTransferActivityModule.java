@@ -29,6 +29,6 @@ public interface StockTransferActivityModule {
         StockTransferContract.View bindProductInfoView(StockTransferActivity productInfoActivity);
 
         @Binds
-        StockTransferContract.Navigator bindNavigator(StockTransferAdapter stockTransferAdapter);
+        StockTransferContract.Navigator bindNavigator(StockTransferNavigator stockTransferNavigator);
     }
 }

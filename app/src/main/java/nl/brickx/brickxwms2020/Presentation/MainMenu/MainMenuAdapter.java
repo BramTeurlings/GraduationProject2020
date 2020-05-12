@@ -9,10 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import nl.brickx.domain.Models.MainMenuRecyclerModel;
-import nl.brickx.domain.Models.MenuItemIdentifier;
-import java.util.List;
 
-import javax.inject.Inject;
+import java.util.List;
 
 import nl.brickx.brickxwms2020.R;
 
@@ -84,7 +82,7 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
             super(infoView);
             textView = infoView.findViewById(R.id.main_menu_item_text);
             imageView = infoView.findViewById(R.id.main_menu_item_image);
-            primaryCard = infoView.findViewById(R.id.main_menu_item_card);
+            primaryCard = infoView.findViewById(R.id.location_recycler_card);
         }
     }
 }

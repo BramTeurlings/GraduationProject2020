@@ -1,47 +1,37 @@
-package nl.brickx.brickxwms2020.Presentation.StockTransfer;
+package nl.brickx.brickxwms2020.Presentation.StockTransferMain;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
-import java.util.Objects;
 
-import javax.inject.Inject;
-
+import nl.brickx.brickxwms2020.Presentation.StockTransfer.StockTransferContract;
 import nl.brickx.brickxwms2020.R;
-import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
 
-public class StockTransferLocationAdapter extends RecyclerView.Adapter<StockTransferLocationAdapter.InfoRecyclerViewholder>{
+public class StockTransferMainLocationFromAdapter extends RecyclerView.Adapter<StockTransferMainLocationFromAdapter.InfoRecyclerViewholder>{
 
     private List<LocationInfoRecyclerModel> data;
     private LocationInfoRecyclerModel tempLocationModel;
     private String productScan;
     private RecyclerView recyclerView;
-    private StockTransferContract.Navigator navigator;
-    private Context context;
 
 
-    public StockTransferLocationAdapter(List<LocationInfoRecyclerModel> items, StockTransferContract.Navigator navigator, Context context) {
+    public StockTransferMainLocationFromAdapter(List<LocationInfoRecyclerModel> items) {
         data = items;
-        this.navigator = navigator;
-        this.context = context;
     }
 
     @Override
-    public StockTransferLocationAdapter.InfoRecyclerViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StockTransferMainLocationFromAdapter.InfoRecyclerViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_info_recycler_item, parent, false);
-        StockTransferLocationAdapter.InfoRecyclerViewholder holder = new StockTransferLocationAdapter.InfoRecyclerViewholder(view);
+        StockTransferMainLocationFromAdapter.InfoRecyclerViewholder holder = new StockTransferMainLocationFromAdapter.InfoRecyclerViewholder(view);
         return holder;
     }
 
@@ -53,7 +43,7 @@ public class StockTransferLocationAdapter extends RecyclerView.Adapter<StockTran
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StockTransferLocationAdapter.InfoRecyclerViewholder holder, int position) {
+    public void onBindViewHolder(@NonNull StockTransferMainLocationFromAdapter.InfoRecyclerViewholder holder, int position) {
         //Todo: Make a good catch and multiple tries.
         try{
             holder.codeTextView.setText(data.get(position).getWarehouseName());
@@ -67,25 +57,6 @@ public class StockTransferLocationAdapter extends RecyclerView.Adapter<StockTran
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(data.get(position).getSerialnumbersRequired()){
-                    if(data.get(position).getAvailibleNumbers().size() > 0){
-                        tempLocationModel = data.get(position);
-                        tempLocationModel.setProductScan(productScan);
-                        navigator.navigateToTransferScreen(tempLocationModel);
-                    }else{
-                        Toast.makeText(context, "Serienummers nog niet geladen, een moment aub.", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    tempLocationModel = data.get(position);
-                    tempLocationModel.setProductScan(productScan);
-                    navigator.navigateToTransferScreen(tempLocationModel);
-                }
-            }
-        });
     }
 
     @Override
@@ -113,14 +84,5 @@ public class StockTransferLocationAdapter extends RecyclerView.Adapter<StockTran
     public void setData(List<LocationInfoRecyclerModel> data, String productScan) {
         this.data = data;
         this.productScan = productScan;
-    }
-
-    public void setSerialnumbers(int productId, int stockLocationId, List<String> serialnumbers){
-        for(int i = 0; i < data.size(); i++){
-            if(Objects.equals(stockLocationId, data.get(i).getStockLocationId())){
-                data.get(i).setAvailibleNumbers(serialnumbers);
-            }
-        }
-        this.notifyDataSetChanged();
     }
 }

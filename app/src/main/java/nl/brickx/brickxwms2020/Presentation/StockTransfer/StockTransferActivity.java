@@ -33,12 +33,16 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoAdapter;
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.ProductInfoHolder;
 
 public class StockTransferActivity extends DaggerAppCompatActivity implements StockTransferContract.View {
 
     @Inject
     StockTransferPresenter infoPresenter;
+
+    @Inject
+    StockTransferContract.Navigator navigator;
 
     private final String TAG = "StockTransfer: ";
 
@@ -175,7 +179,7 @@ public class StockTransferActivity extends DaggerAppCompatActivity implements St
         productInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Location:
-        locationInfoAdapter = new StockTransferLocationAdapter(new ArrayList<>());
+        locationInfoAdapter = new StockTransferLocationAdapter(new ArrayList<>(), navigator, this);
         locationInfoRecyclerView.setAdapter(locationInfoAdapter);
         locationInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -281,5 +285,10 @@ public class StockTransferActivity extends DaggerAppCompatActivity implements St
     @Override
     public void setErrorMessage(String message) {
         combinedInputLayout.setError(message);
+    }
+
+    @Override
+    public void onSerialnumbersFetched(Serialnumbers serialnumbers, int stockLocationId, int productId) {
+        locationInfoAdapter.setSerialnumbers(productId, stockLocationId, serialnumbers.getGetAvailableBatchNumbersResult());
     }
 }

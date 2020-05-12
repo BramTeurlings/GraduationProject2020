@@ -21,8 +21,8 @@ public class StockTransferMainNavigator implements StockTransferMainContract.Nav
         this.context = context;
     }
 
-    @Override
-    public void navigateToTransferScreen(StockTransferDto transferDto) {
-
-    }
+//    @Override
+//    public void navigateToTransferScreen(StockTransferDto transferDto) {
+//
+//    }
 }

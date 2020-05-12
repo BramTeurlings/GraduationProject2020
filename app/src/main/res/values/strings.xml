@@ -89,6 +89,11 @@
     <!--    Stock transfer-->
     <string name="stock_transfer_landing_location_title">Kies een locatie:</string>
     <string name="stock_transfer_title">Voorraad transfer</string>
+    <string name="stock_transfer_main_from_location_title">Van locatie:</string>
+    <string name="stock_transfer_to_location_text">Naar locatie:</string>
+    <string name="stock_transfer_main_button_title">Transfer voorraad</string>
+    <string name="stock_transfer_main_amount_picker_text">Transfer aantal:</string>
+    <string name="stock_transfer_scanned_location_text">Gescande locatie:</string>
 
 
 </resources>

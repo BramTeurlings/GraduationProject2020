@@ -1,5 +1,6 @@
 package nl.brickx.brickxwms2020.Presentation.StockTransfer;
 
+import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
 import nl.brickx.domain.Models.ProductInfoHolder;
 import nl.brickx.domain.Models.StockTransferDto;
@@ -21,6 +22,7 @@ public interface StockTransferContract {
         void clearBarcodeInput();
         void changeLoadingState(Boolean isLoading);
         void setErrorMessage(String message);
+        void onSerialnumbersFetched(Serialnumbers serialnumbers, int stockLocationId, int productId);
     }
 
     interface Navigator {

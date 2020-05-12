@@ -421,10 +421,10 @@
                             android:id="@+id/combined_properties_click_catcher_view"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:clickable="true"
-                            android:focusable="true"
                             android:background="@android:color/transparent"
-                            android:elevation="100dp">
+                            android:clickable="true"
+                            android:elevation="100dp"
+                            android:focusable="true">
 
                         </View>
 
@@ -443,6 +443,13 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/combined_properties_card" />
 
             <View
                 android:id="@+id/combined_location_view"

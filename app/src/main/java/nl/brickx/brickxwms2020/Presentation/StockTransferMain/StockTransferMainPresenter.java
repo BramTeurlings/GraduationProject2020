@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
@@ -18,11 +19,15 @@ import io.reactivex.schedulers.Schedulers;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.Gson.ProductInfo.ProductInformation;
+import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
+import nl.brickx.domain.Models.OrderPickSerialStatusModel;
 import nl.brickx.domain.Models.ProductInfoHolder;
 import nl.brickx.domain.Models.ProductInfoRecyclerModel;
+import nl.brickx.domain.Models.StockTransferDto;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.Product.Info.GetProductInfoByScan;
+import nl.brickx.domain.StockTransfer.PostStockTransfer;
 import nl.brickx.domain.Users.UserDataManager;
 
 import static android.content.ContentValues.TAG;
@@ -33,6 +38,7 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
     private GetProductInfoByScan getProductInfoByScan;
     private ProductInfoRecyclerModel tempProductInfoRecyclerModel = new ProductInfoRecyclerModel();
     private LocationInfoRecyclerModel tempLocationInfoRecyclerModel = new LocationInfoRecyclerModel();
+    private PostStockTransfer postStockTransfer;
     private StockTransferMainContract.View view;
     private List<Disposable> disposables = new ArrayList<>();
     private Context context;
@@ -40,9 +46,10 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
 
 
     @Inject
-    StockTransferMainPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, StockTransferMainContract.View view, @DataContext Context context){
+    StockTransferMainPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, StockTransferMainContract.View view, PostStockTransfer postStockTransfer, @DataContext Context context){
         this.userDataManager = userDataManager;
         this.getProductInfoByScan = getProductInfoByScan;
+        this.postStockTransfer = postStockTransfer;
         this.view = view;
         this.context = context;
 
@@ -66,7 +73,7 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe( s -> result.add(s),
                             t -> onLoginFailed(t),
-                            () -> onProductInfoFetched(result)));
+                            () -> onProductInfoFetched(result, scan)));
         }
     }
 
@@ -84,7 +91,7 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
                 try {
                     //Execute View code.
                     view.clearBarcodeInput();
-                    view.getProductInfoByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
+                    view.onBarcodeScanned(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
                 } catch (Exception e) {
                     Log.i(TAG, "Unable to read data from scanner.");
                 }
@@ -105,7 +112,38 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
         }
     }
 
-    private void onProductInfoFetched(List<ProductInformation> productInformations){
+    @Override
+    public void removeSerialnumber(OrderPickSerialStatusModel serialStatusModel) {
+        try{
+            view.getLocationRecyclerModel().getScannedNumbers().remove(serialStatusModel.getSerialnumber());
+            view.updateSerialNumbers(view.getLocationRecyclerModel());
+        }catch(Exception e){
+            Log.i(TAG, "Unable to remove serialnumber.");
+        }
+    }
+
+    @Override
+    public void completeStockTransfer(StockTransferDto stockTransferDto) {
+        if(!isLoading){
+            onApiRequestStarted();
+            changeLoadingState();
+            final List<Boolean> result = new ArrayList<>();
+            System.out.println(new Date());
+            this.disposables.add(postStockTransfer.invoke(stockTransferDto, getUserData().getApiKey())
+                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe( s -> result.add(s),
+                            t -> onLoginFailed(t),
+                            () -> onStockTransferCompleted(result.get(0))));
+        }
+    }
+
+    private void onStockTransferCompleted(Boolean succeeded){
+
+    }
+
+    private void onProductInfoFetched(List<ProductInformation> productInformations, String scan){
         System.out.println(new Date());
         ProductInfoHolder infoHolder = new ProductInfoHolder();
         ProductInformation result = productInformations.get(0);
@@ -257,7 +295,7 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
 
         onApiRequestCompleted();
         changeLoadingState();
-        view.onNewProductInfoReceived(infoHolder);
+        view.onLocationInfoReceived(infoHolder.getLocations(), scan);
     }
 
     private void onLoginFailed(Throwable throwable){

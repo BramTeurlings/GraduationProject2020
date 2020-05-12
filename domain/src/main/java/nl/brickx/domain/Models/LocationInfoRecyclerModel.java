@@ -1,6 +1,8 @@
 package nl.brickx.domain.Models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LocationInfoRecyclerModel implements Serializable {
 
@@ -8,13 +10,19 @@ public class LocationInfoRecyclerModel implements Serializable {
     private String location;
     private Integer productStock;
     private String productName;
+    private int stockLocationId;
+    private int productId;
     private String locationTag;
+    private String productScan;
+    private Boolean isSerialnumbersRequired = false;
+    private List<String> scannedNumbers = new ArrayList<>();
+    private List<String> availibleNumbers = new ArrayList<>();
 
     public LocationInfoRecyclerModel() {
     }
 
-    public LocationInfoRecyclerModel(String productCode) {
-        this.warehouseName = productCode;
+    public LocationInfoRecyclerModel(String locationTag) {
+        this.locationTag = locationTag;
     }
 
     public LocationInfoRecyclerModel(String productCode, String productName, Integer productStock) {
@@ -68,5 +76,53 @@ public class LocationInfoRecyclerModel implements Serializable {
 
     public void setLocationTag(String locationTag) {
         this.locationTag = locationTag;
+    }
+
+    public String getProductScan() {
+        return productScan;
+    }
+
+    public void setProductScan(String productScan) {
+        this.productScan = productScan;
+    }
+
+    public Boolean getSerialnumbersRequired() {
+        return isSerialnumbersRequired;
+    }
+
+    public void setSerialnumbersRequired(Boolean serialnumbersRequired) {
+        isSerialnumbersRequired = serialnumbersRequired;
+    }
+
+    public List<String> getScannedNumbers() {
+        return scannedNumbers;
+    }
+
+    public void setScannedNumbers(List<String> scannedNumbers) {
+        this.scannedNumbers = scannedNumbers;
+    }
+
+    public List<String> getAvailibleNumbers() {
+        return availibleNumbers;
+    }
+
+    public void setAvailibleNumbers(List<String> availibleNumbers) {
+        this.availibleNumbers = availibleNumbers;
+    }
+
+    public int getStockLocationId() {
+        return stockLocationId;
+    }
+
+    public void setStockLocationId(int stockLocationId) {
+        this.stockLocationId = stockLocationId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

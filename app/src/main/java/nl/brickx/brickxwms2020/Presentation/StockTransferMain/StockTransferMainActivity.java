@@ -1,49 +1,64 @@
 package nl.brickx.brickxwms2020.Presentation.StockTransferMain;
 
-import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
-import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoAdapter;
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.domain.Models.BatchNumberSelectionModelDto;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
+import nl.brickx.domain.Models.OrderPickSerialStatusModel;
 import nl.brickx.domain.Models.ProductInfoHolder;
+import nl.brickx.domain.Models.StockTransferDto;
 
 public class StockTransferMainActivity extends DaggerAppCompatActivity implements StockTransferMainContract.View {
 
     @Inject
-    StockTransferMainPresenter infoPresenter;
+    StockTransferMainPresenter presenter;
 
     private LocationInfoRecyclerModel fromItemLocationData;
+    private Boolean expansionToggle = false;
+    private MaterialButton transferButton;
     private LocationInfoRecyclerModel toItemLocationData;
+    private StockTransferMainLocationFromAdapter fromAdapter;
+    private StockTransferMainLocationToAdapter toAdapter;
+    public List<OrderPickSerialStatusModel> serialNumbers = new ArrayList<>();
+    private List<LocationInfoRecyclerModel> tempLocationInfoModelList = new ArrayList<>();
+    private String[] strings;
+    private StockTransferMainStatusSerialNumbersAdapter serialNumbersAdapter;
+    private ImageView statusExpander;
+    private ViewGroup.LayoutParams tempParams;
+    TextView amountOfSerialNumbersScanned;
+    RecyclerView statusSerialNumberRecycler;
+    ViewFlipper viewFlipper;
+    RecyclerView fromRecycler;
+    RecyclerView toRecycler;
     TextInputEditText barcodeInput;
+    TextInputEditText amountInput;
     ProgressBar loadingProgressBar;
     TextInputLayout combinedInputLayout;
 
@@ -57,16 +72,50 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.combined_info_and_location_page);
+        setContentView(R.layout.combined_info_and_location_stock_transfer_main_page);
 
         //Get data from previous activity.
         fromItemLocationData = (LocationInfoRecyclerModel)getIntent().getSerializableExtra("locationInfo");
+        tempLocationInfoModelList.clear();
+        tempLocationInfoModelList.add(fromItemLocationData);
 
+        amountInput = findViewById(R.id.stock_transfer_amount_textInputEditText);
         barcodeInput = findViewById(R.id.combined_info_textinputEditText);
+        fromRecycler = findViewById(R.id.stock_transfer_from_recycler);
+        toRecycler = findViewById(R.id.stock_transfer_to_recycler);
+        statusSerialNumberRecycler = findViewById(R.id.order_pick_status_item_serial_number_recycler);
+        amountOfSerialNumbersScanned = findViewById(R.id.order_pick_status_item_serial_number_title);
+        transferButton = findViewById(R.id.stock_transfer_confirm_button);
 
-        //Todo: Remove mock code.
-        ProductInfoHolder holder = new ProductInfoHolder();
+        viewFlipper = findViewById(R.id.stock_transfer_status_view_flipper);
+        if(fromItemLocationData.getSerialnumbersRequired()){
+            viewFlipper.setDisplayedChild(1);
+        }else{
+            viewFlipper.setDisplayedChild(0);
+        }
+
         initRecyclerViews();
+
+        statusExpander = findViewById(R.id.order_pick_serial_numbers_arrow_image);
+        statusExpander.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Todo: Expand Menu toggle
+                if(!expansionToggle){
+                    tempParams = statusSerialNumberRecycler.getLayoutParams();
+                    tempParams.height = tempParams.height*2;
+                    statusSerialNumberRecycler.setLayoutParams(tempParams);
+                    expansionToggle = true;
+                    statusExpander.setImageDrawable(getDrawable(R.drawable.ic_keyboard_arrow_up_black_24dp));
+                }else{
+                    tempParams = statusSerialNumberRecycler.getLayoutParams();
+                    tempParams.height = tempParams.height/2;
+                    statusSerialNumberRecycler.setLayoutParams(tempParams);
+                    expansionToggle = false;
+                    statusExpander.setImageDrawable(getDrawable(R.drawable.ic_keyboard_arrow_down_black_24dp));
+                }
+            }
+        });
 
         barcodeInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -75,36 +124,104 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(barcodeInput.getWindowToken(), 0);
-                    onBarcodeScanned();
+                    onBarcodeScanned(barcodeInput.getText().toString());
                     return true;
                 }
                 return false;
+            }
+        });
+
+        transferButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double quantity = 0;
+                List<BatchNumberSelectionModelDto> serialNumbers = new ArrayList<>();
+                if(fromItemLocationData.getSerialnumbersRequired()){
+                    quantity = serialNumbersAdapter.getItemCount();
+                    for(int i = 0; i < fromItemLocationData.getScannedNumbers().size(); i++){
+                        serialNumbers.add(new BatchNumberSelectionModelDto(fromItemLocationData.getScannedNumbers().get(i)));
+                    }
+                }else{
+                    try{
+                        quantity = Double.parseDouble(amountInput.getText().toString());
+                    }catch (Exception e){
+                        Log.i(TAG, "Unable to parse input of quantity field.");
+                    }
+                }
+
+                presenter.completeStockTransfer(new StockTransferDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), toItemLocationData.getLocationTag(), quantity, serialNumbers));
             }
         });
     }
 
 
     public void initRecyclerViews(){
+        //From adapter
+        fromAdapter = new StockTransferMainLocationFromAdapter(tempLocationInfoModelList);
+        fromRecycler.setAdapter(fromAdapter);
+        fromRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-    }
+        //To adapter:
+        toAdapter = new StockTransferMainLocationToAdapter(new ArrayList<>());
+        toRecycler.setAdapter(toAdapter);
+        toRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-    public void onBarcodeScanned(){
-//        try{
-//            getProductInfoByScan(barcodeInput.getText().toString());
-//        }catch (NullPointerException e){
-//            setErrorMessage(getString(R.string.product_error_message));
-//        }
+        //Serialnumbers:
+        serialNumbersAdapter = new StockTransferMainStatusSerialNumbersAdapter(new ArrayList<>());
+        serialNumbersAdapter.setPresenter(presenter);
+        statusSerialNumberRecycler.setAdapter(serialNumbersAdapter);
+        statusSerialNumberRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
-    public void onLocationInfoReceived(LocationInfoRecyclerModel holder) {
+    public void onBarcodeScanned(String scan){
+        if(toItemLocationData == null || toAdapter.getItemCount() < 1){
+            toItemLocationData = new LocationInfoRecyclerModel(scan);
+            toAdapter.addItem(toItemLocationData);
+        }else{
+            if(fromItemLocationData.getSerialnumbersRequired()){
+                //Todo: See if serial number is valid.
+                strings = scan.replaceAll("\\s+","").split(";");
+                for(int i = 0; i < strings.length; i++){
+                    if(!fromItemLocationData.getScannedNumbers().contains(strings[i]) && fromItemLocationData.getAvailibleNumbers().contains(strings[i])){
+                        fromItemLocationData.getScannedNumbers().add(strings[i]);
+                    }
+                }
+                refreshSerialNumberData();
+                amountOfSerialNumbersScanned.setText(String.valueOf(getString(R.string.Order_pick_serial_number_hint) + " " + fromItemLocationData.getScannedNumbers().size()));
+            }
+        }
+    }
+
+    public void refreshSerialNumberData(){
+        serialNumbers.clear();
+        for(int i = 0; i < fromItemLocationData.getScannedNumbers().size(); i++){
+            serialNumbers.add(new OrderPickSerialStatusModel(fromItemLocationData.getScannedNumbers().get(i), true, fromItemLocationData.getProductId()));
+        }
+        serialNumbersAdapter.setData(serialNumbers);
+        serialNumbersAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public LocationInfoRecyclerModel getLocationRecyclerModel() {
+        return fromItemLocationData;
+    }
+
+    @Override
+    public void updateSerialNumbers(LocationInfoRecyclerModel model) {
+        fromItemLocationData = model;
+        refreshSerialNumberData();
+    }
+
+    @Override
+    public void onLocationInfoReceived(List<LocationInfoRecyclerModel> holder, String scan) {
 
     }
 
     @Override
     public void getProductInfoByScan(String scannedCode){
         setErrorMessage(null);
-        infoPresenter.getProductInfoByScan(scannedCode);
+        presenter.getProductInfoByScan(scannedCode);
     }
 
     @Override
@@ -114,7 +231,7 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
 
     @Override
     public void onDestroy(){
-        infoPresenter.dispose();
+        presenter.dispose();
         super.onDestroy();
     }
 

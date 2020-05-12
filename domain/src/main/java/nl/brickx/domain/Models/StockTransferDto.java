@@ -19,6 +19,14 @@ public class StockTransferDto implements Serializable {
     public StockTransferDto() {
     }
 
+    public StockTransferDto(String productScan, String fromLocationScanTag, String toLocationScanTag, Double quantity, List<BatchNumberSelectionModelDto> selectedSerialNumbers) {
+        ProductScan = productScan;
+        FromLocationScanTag = fromLocationScanTag;
+        ToLocationScanTag = toLocationScanTag;
+        Quantity = quantity;
+        SelectedSerialNumbers = selectedSerialNumbers;
+    }
+
     public String getProductScan() {
         return ProductScan;
     }

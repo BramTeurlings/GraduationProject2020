@@ -37,5 +37,6 @@ public class StockTransferNavigator implements StockTransferContract.Navigator {
     public void navigateToTransferScreen(LocationInfoRecyclerModel locationInfoRecyclerModel) {
         stockTransferMainIntent = StockTransferMainActivity.createIntent(context);
         stockTransferMainIntent.putExtra("locationInfo", locationInfoRecyclerModel);
+        activity.startActivity(stockTransferMainIntent);
     }
 }

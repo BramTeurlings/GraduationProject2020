@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/main_menu_item_card"
+        android:id="@+id/location_recycler_card"
         style="@style/WhiteMaterialCardView"
         android:clickable="true"
         android:focusable="true"
