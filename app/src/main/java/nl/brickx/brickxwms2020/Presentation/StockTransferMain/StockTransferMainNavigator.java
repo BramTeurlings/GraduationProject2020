@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import javax.inject.Inject;
 
+import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivity;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.StockTransferDto;
 
@@ -21,8 +22,10 @@ public class StockTransferMainNavigator implements StockTransferMainContract.Nav
         this.context = context;
     }
 
-//    @Override
-//    public void navigateToTransferScreen(StockTransferDto transferDto) {
-//
-//    }
+    @Override
+    public void navigateToMainMenu() {
+        Intent intent = MainMenuActivity.createIntent(context);
+        intent.putExtra("message", "Voorraad getransferd.");
+        activity.startActivity(intent);
+    }
 }

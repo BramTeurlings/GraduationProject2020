@@ -267,9 +267,21 @@ public class StockMutationActivity extends DaggerAppCompatActivity implements St
     }
 
     @Override
+    public void onPause(){
+        infoPresenter.dispose();
+        super.onPause();
+    }
+
+    @Override
     public void onDestroy(){
         infoPresenter.dispose();
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume(){
+        infoPresenter.registerDatawedgeReceiver();
+        super.onResume();
     }
 
     @Override

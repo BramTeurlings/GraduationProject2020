@@ -42,15 +42,17 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
     private List<Disposable> disposables = new ArrayList<>();
     private Context context;
     private Boolean isLoading = false;
+    private StockTransferMainContract.Navigator navigator;
 
 
     @Inject
-    StockTransferMainPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, StockTransferMainContract.View view, PostStockTransfer postStockTransfer, @DataContext Context context){
+    StockTransferMainPresenter(UserDataManager userDataManager, StockTransferMainContract.Navigator navigator, GetProductInfoByScan getProductInfoByScan, StockTransferMainContract.View view, PostStockTransfer postStockTransfer, @DataContext Context context){
         this.userDataManager = userDataManager;
         this.getProductInfoByScan = getProductInfoByScan;
         this.postStockTransfer = postStockTransfer;
         this.view = view;
         this.context = context;
+        this.navigator = navigator;
 
         //Datawedge
         IntentFilter filter = new IntentFilter();
@@ -141,8 +143,11 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
     private void onStockTransferCompleted(Boolean succeeded){
         onApiRequestCompleted();
         changeLoadingState();
-        Toast.makeText(context, "Voorraad gemuteerd.", Toast.LENGTH_SHORT).show();
-        //Todo: Navigate back?
+        if(succeeded){
+            navigator.navigateToMainMenu();
+        }else{
+            Toast.makeText(context, "Er is een fout opgetreden tijdens het muteren van de voorraad.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations, String scan){

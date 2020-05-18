@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +37,7 @@ public class StockTransferPresenter implements StockTransferContract.Presenter {
     private ProductInfoRecyclerModel tempProductInfoRecyclerModel = new ProductInfoRecyclerModel();
     private LocationInfoRecyclerModel tempLocationInfoRecyclerModel = new LocationInfoRecyclerModel();
     private StockTransferContract.View view;
+    private BroadcastReceiver textInputBroadcastReceiver;
     private List<Disposable> disposables = new ArrayList<>();
     private Context context;
     private Boolean isLoading = false;
@@ -47,7 +50,26 @@ public class StockTransferPresenter implements StockTransferContract.Presenter {
         this.view = view;
         this.context = context;
         this.getSerialnumberByStockLocationIdAndProductId = getSerialnumberByStockLocationIdAndProductId;
+    }
 
+    @Override
+    public void registerDatawedgeReceiver() {
+        textInputBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals(context.getResources().getString(R.string.datawedge_intent_filter_action))) {
+                    //  Received a barcode scan
+                    try {
+                        //Execute View code.
+                        view.clearBarcodeInput();
+                        view.getProductInfoByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
+                    } catch (Exception e) {
+                        Log.i(TAG, "Unable to read data from scanner.");
+                    }
+                }
+            }
+        };
         //Datawedge
         IntentFilter filter = new IntentFilter();
         filter.addCategory(Intent.CATEGORY_DEFAULT);
@@ -76,23 +98,6 @@ public class StockTransferPresenter implements StockTransferContract.Presenter {
     public User getUserData() {
         return userDataManager.GetUserData();
     }
-
-    private BroadcastReceiver textInputBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(context.getResources().getString(R.string.datawedge_intent_filter_action))) {
-                //  Received a barcode scan
-                try {
-                    //Execute View code.
-                    view.clearBarcodeInput();
-                    view.getProductInfoByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
-                } catch (Exception e) {
-                    Log.i(TAG, "Unable to read data from scanner.");
-                }
-            }
-        }
-    };
 
     @Override
     public void dispose() {
@@ -299,6 +304,9 @@ public class StockTransferPresenter implements StockTransferContract.Presenter {
 
         onApiRequestCompleted();
         changeLoadingState();
+        if(infoHolder.getLocations().size() < 1){
+            Toast.makeText(context, "Geen locaties gevonden.", Toast.LENGTH_SHORT).show();
+        }
         view.onNewProductInfoReceived(infoHolder, scan);
     }
 

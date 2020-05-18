@@ -27,5 +27,8 @@ public interface StockMutationMainActivityModule {
 
         @Binds
         StockMutationMainContract.View bindProductInfoView(StockMutationMainActivity productInfoActivity);
+
+        @Binds
+        StockMutationMainContract.Navigator bindNavigator(StockMutationMainNavigator stockMutationMainNavigator);
     }
 }

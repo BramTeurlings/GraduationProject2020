@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu_page);
+        readIntentExtra(getIntent());
 
         activityHeaderText = this.findViewById(R.id.main_menu_activities_text);
         infoHeaderText = this.findViewById(R.id.main_menu_info_text);
@@ -57,6 +61,16 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
 
         usernameText.setText(presenter.getUserData().getUsername());
         initRecyclerViews();
+    }
+
+    public static Intent createIntent(Context context){
+        return new Intent(context, MainMenuActivity.class);
+    }
+
+    private void readIntentExtra(Intent intent){
+        if(intent.getStringExtra("message") != null){
+            Toast.makeText(getApplicationContext(), intent.getStringExtra("message"), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initRecyclerViews(){

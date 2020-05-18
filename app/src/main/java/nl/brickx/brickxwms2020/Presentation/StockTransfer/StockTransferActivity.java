@@ -273,6 +273,18 @@ public class StockTransferActivity extends DaggerAppCompatActivity implements St
     }
 
     @Override
+    public void onPause(){
+        infoPresenter.dispose();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        infoPresenter.registerDatawedgeReceiver();
+        super.onResume();
+    }
+
+    @Override
     public void changeLoadingState(Boolean isLoading) {
         if(isLoading){
             loadingProgressBar.setVisibility(View.VISIBLE);

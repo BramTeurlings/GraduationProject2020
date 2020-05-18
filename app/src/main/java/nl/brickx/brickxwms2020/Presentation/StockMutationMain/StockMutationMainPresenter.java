@@ -42,21 +42,28 @@ public class StockMutationMainPresenter implements StockMutationMainContract.Pre
     private List<Disposable> disposables = new ArrayList<>();
     private Context context;
     private Boolean isLoading = false;
+    private StockMutationMainContract.Navigator navigator;
 
 
     @Inject
-    StockMutationMainPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, StockMutationMainContract.View view, PostStockMutation postStockMutation, @DataContext Context context){
+    StockMutationMainPresenter(UserDataManager userDataManager, StockMutationMainContract.Navigator navigator, GetProductInfoByScan getProductInfoByScan, StockMutationMainContract.View view, PostStockMutation postStockMutation, @DataContext Context context){
         this.userDataManager = userDataManager;
         this.getProductInfoByScan = getProductInfoByScan;
         this.postStockMutation = postStockMutation;
         this.view = view;
         this.context = context;
+        this.navigator = navigator;
 
         //Datawedge
         IntentFilter filter = new IntentFilter();
         filter.addCategory(Intent.CATEGORY_DEFAULT);
         filter.addAction(context.getString(R.string.datawedge_intent_filter_action));
         context.registerReceiver(textInputBroadcastReceiver, filter);
+    }
+
+    @Override
+    public void updateSerialAmountText() {
+        view.updateSerialAmountText();
     }
 
     @Override
@@ -142,10 +149,10 @@ public class StockMutationMainPresenter implements StockMutationMainContract.Pre
         changeLoadingState();
         if(succeeded){
             Toast.makeText(context, "Voorraad gemuteerd.", Toast.LENGTH_SHORT).show();
+            navigator.navigateToMainMenu();
         }else{
             Toast.makeText(context, "Er is een fout opgetreden tijdens het muteren van de voorraad.", Toast.LENGTH_LONG).show();
         }
-        //Todo: Navigate back?
     }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations, String scan){

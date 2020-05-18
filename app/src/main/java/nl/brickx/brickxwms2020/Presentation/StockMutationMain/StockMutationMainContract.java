@@ -11,6 +11,7 @@ public interface StockMutationMainContract {
 
     interface Presenter{
 
+        void updateSerialAmountText();
         void getProductInfoByScan(String scan);
         User getUserData();
         void dispose();
@@ -20,6 +21,7 @@ public interface StockMutationMainContract {
 
     interface View {
 
+        void updateSerialAmountText();
         void clearFocus();
         void onBarcodeScanned(String scan);
         LocationInfoRecyclerModel getLocationRecyclerModel();
@@ -31,7 +33,7 @@ public interface StockMutationMainContract {
     }
 
     interface Navigator {
-
+        void navigateToMainMenu();
 
     }
 }

@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.brickxwms2020.Support.KeyboardHider;
 import nl.brickx.domain.Models.BatchNumberSelectionModelDto;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
 import nl.brickx.domain.Models.OrderPickSerialStatusModel;
@@ -77,7 +79,6 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
         tempLocationInfoModelList.clear();
         tempLocationInfoModelList.add(fromItemLocationData);
 
-        amountInput = findViewById(R.id.stock_transfer_amount_textInputEditText);
         barcodeInput = findViewById(R.id.combined_info_textinputEditText);
         fromRecycler = findViewById(R.id.stock_transfer_from_recycler);
         toRecycler = findViewById(R.id.stock_transfer_to_recycler);
@@ -94,6 +95,25 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
         }
 
         initRecyclerViews();
+
+        amountInput = findViewById(R.id.stock_transfer_amount_textInputEditText);
+        amountInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        actionId == EditorInfo.IME_ACTION_DONE ||
+                        event != null &&
+                                event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                    if (event == null || !event.isShiftPressed()) {
+                        // the user is done typing.
+                        hideKeyboard();
+                        clearFocus();
+                    }
+                }
+                return true;
+            }
+        });
 
         statusExpander = findViewById(R.id.order_pick_serial_numbers_arrow_image);
         statusExpander.setOnClickListener(new View.OnClickListener() {
@@ -150,17 +170,24 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
                                 Log.i(TAG, "Unable to parse input of quantity field.");
                             }
                         }
-                        presenter.completeStockTransfer(new StockTransferDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), toItemLocationData.getLocationTag(), quantity, serialNumbers));
+                        if((quantity > 0 || quantity < 0) && Math.abs(fromItemLocationData.getProductStock()) - quantity >= 0){
+                            presenter.completeStockTransfer(new StockTransferDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), toItemLocationData.getLocationTag(), quantity, serialNumbers));
 
+                        }else{
+                            makeErrorToast("Foutief aantal opgegeven.");
+                        }
+
+                    }else{
+                        makeErrorToast("Vul alle velden volledig in. Vergeet niet een 'naar' locatie te scannen.");
                     }
                 }catch (Exception e){
                     Log.i(TAG, "Unable to parse data required for stock transfer.");
+                    makeErrorToast("Vul alle velden volledig in. Vergeet niet een 'naar' locatie te scannen.");
                     e.printStackTrace();
                 }
             }
         });
     }
-
 
     public void initRecyclerViews(){
         //From adapter
@@ -207,6 +234,23 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
         }
         serialNumbersAdapter.setData(serialNumbers);
         serialNumbersAdapter.notifyDataSetChanged();
+    }
+
+    private void makeErrorToast(String text){
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+    }
+
+    private void hideKeyboard(){
+        KeyboardHider.hideKeyboard(this);
+    }
+
+    @Override
+    public void clearFocus() {
+        amountInput.setFocusableInTouchMode(false);
+        amountInput.setFocusable(false);
+        viewFlipper.clearFocus();
+        amountInput.setFocusableInTouchMode(true);
+        amountInput.setFocusable(true);
     }
 
     @Override

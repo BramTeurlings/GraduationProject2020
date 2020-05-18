@@ -55,6 +55,7 @@
         </activity>
         <activity
             android:name=".Presentation.StockMutationMain.StockMutationMainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
             android:parentActivityName=".Presentation.StockMutationMain.StockMutationMainActivity">
             <meta-data
@@ -63,6 +64,7 @@
         </activity>
         <activity
             android:name=".Presentation.StockTransferMain.StockTransferMainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
             android:parentActivityName=".Presentation.StockTransferMain.StockTransferMainActivity">
             <meta-data

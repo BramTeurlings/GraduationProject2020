@@ -20,6 +20,7 @@ public interface StockTransferMainContract {
 
     interface View {
 
+        void clearFocus();
         void onBarcodeScanned(String scan);
         LocationInfoRecyclerModel getLocationRecyclerModel();
         void updateSerialNumbers(LocationInfoRecyclerModel model);
@@ -31,7 +32,7 @@ public interface StockTransferMainContract {
     }
 
     interface Navigator {
-
+        void navigateToMainMenu();
 
     }
 }

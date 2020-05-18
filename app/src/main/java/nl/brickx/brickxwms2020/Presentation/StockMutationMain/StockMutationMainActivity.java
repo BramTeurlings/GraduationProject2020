@@ -30,6 +30,7 @@ import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.R;
+import nl.brickx.brickxwms2020.Support.KeyboardHider;
 import nl.brickx.domain.Models.BatchNumberSelectionModelDto;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
 import nl.brickx.domain.Models.OrderPickSerialStatusModel;
@@ -92,21 +93,25 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
         loadingProgressBar = findViewById(R.id.loadingIcon);
 
         reasonInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                                                  @Override
-                                                  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                                                      if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                                                              actionId == EditorInfo.IME_ACTION_DONE ||
-                                                              event != null &&
-                                                                      event.getAction() == KeyEvent.ACTION_DOWN &&
-                                                                      event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                                                          if (event == null || !event.isShiftPressed()) {
-                                                              // the user is done typing.
-                                                              clearFocus();
-                                                          }
-                                                      }
-                                                      return true;
-                                                  }
-                                              });
+              @Override
+              public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                  if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                          actionId == EditorInfo.IME_ACTION_DONE ||
+                          actionId == EditorInfo.IME_ACTION_NEXT ||
+                          actionId == EditorInfo.IME_ACTION_SEND ||
+                          actionId == EditorInfo.IME_ACTION_GO ||
+                          event != null &&
+                                  event.getAction() == KeyEvent.ACTION_DOWN &&
+                                  event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                      if (event == null || !event.isShiftPressed()) {
+                          // the user is done typing.
+                          hideKeyboard();
+                          clearFocus();
+                      }
+                  }
+                  return true;
+              }
+          });
 
                 viewFlipper = findViewById(R.id.stock_mutation_status_view_flipper);
         if(fromItemLocationData.getSerialnumbersRequired()){
@@ -171,7 +176,7 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
                                 Log.i(TAG, "Unable to parse input of quantity field.");
                             }
                         }
-                        if(serialNumbers.size() > 0 && quantity != 0 || !fromItemLocationData.getSerialnumbersRequired()){
+                        if((serialNumbers.size() > 0 && quantity != 0 || !fromItemLocationData.getSerialnumbersRequired()) && Math.abs(fromItemLocationData.getProductStock()) + quantity >= 0){
                             presenter.completeStockMutation(new StockMutationDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), quantity, reasonInput.getText().toString(), serialNumbers));
                         }else{
                             if(quantity > 0 && fromItemLocationData.getSerialnumbersRequired()){
@@ -179,7 +184,7 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
                             }else if(quantity < 0 && fromItemLocationData.getSerialnumbersRequired()){
                                 Toast.makeText(getApplicationContext(), "Niet genoeg of ongeldige serienummers ingevoerd. Let op dat je alleen al geregistreerde serienummers inscant.", Toast.LENGTH_LONG).show();
                             }else{
-                                Toast.makeText(getApplicationContext(), "Geen aantal producten opgegeven.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Foutief aantal producten opgegeven.", Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -223,6 +228,10 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
         statusSerialNumberRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    private void hideKeyboard(){
+        KeyboardHider.hideKeyboard(this);
+    }
+
     @Override
     public void clearFocus() {
         reasonInput.setFocusableInTouchMode(false);
@@ -238,12 +247,12 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
             //Todo: See if serial number is valid.
             strings = scan.replaceAll("\\s+","").split(";");
             for(int i = 0; i < strings.length; i++){
-                if(!fromItemLocationData.getScannedNumbers().contains(strings[i])){
+                if(!fromItemLocationData.getScannedNumbers().contains(strings[i]) && fromItemLocationData.getAvailibleNumbers().contains(strings[i])){
                     fromItemLocationData.getScannedNumbers().add(strings[i]);
                 }
             }
             refreshSerialNumberData();
-            amountOfSerialNumbersScanned.setText(String.valueOf(getString(R.string.Order_pick_serial_number_hint) + " " + fromItemLocationData.getScannedNumbers().size()));
+            updateSerialAmountText();
         }
     }
 
@@ -254,6 +263,11 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
         }
         serialNumbersAdapter.setData(serialNumbers);
         serialNumbersAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void updateSerialAmountText(){
+        amountOfSerialNumbersScanned.setText(String.valueOf(getString(R.string.Order_pick_serial_number_hint) + " " + fromItemLocationData.getScannedNumbers().size()));
     }
 
     @Override

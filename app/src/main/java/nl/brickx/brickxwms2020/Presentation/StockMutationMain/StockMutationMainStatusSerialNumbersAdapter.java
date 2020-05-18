@@ -57,6 +57,7 @@ public class StockMutationMainStatusSerialNumbersAdapter extends RecyclerView.Ad
                 public void onClick(View v) {
                     if(presenter != null) {
                         presenter.removeSerialnumber(data.get(position));
+                        presenter.updateSerialAmountText();
                     }
                 }
             });

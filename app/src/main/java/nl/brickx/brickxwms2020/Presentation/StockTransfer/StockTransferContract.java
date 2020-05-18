@@ -10,6 +10,7 @@ public interface StockTransferContract {
 
     interface Presenter{
 
+        void registerDatawedgeReceiver();
         void getProductInfoByScan(String scan);
         User getUserData();
         void dispose();

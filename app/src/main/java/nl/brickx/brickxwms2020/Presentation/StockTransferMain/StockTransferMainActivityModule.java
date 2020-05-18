@@ -20,12 +20,15 @@ public interface StockTransferMainActivityModule {
     interface Bindings {
 
         @Binds
-        Activity bindProductInfoActivity(StockTransferMainActivity productInfoActivity);
+        Activity bindProductInfoActivity(StockTransferMainActivity stockTransferMainActivity);
 
         @Binds
-        StockTransferMainContract.Presenter bindProductInfoPresenter(StockTransferMainPresenter productInfoPresenter);
+        StockTransferMainContract.Presenter bindProductInfoPresenter(StockTransferMainPresenter stockTransferMainPresenter);
 
         @Binds
-        StockTransferMainContract.View bindProductInfoView(StockTransferMainActivity productInfoActivity);
+        StockTransferMainContract.View bindProductInfoView(StockTransferMainActivity stockTransferMainActivity);
+
+        @Binds
+        StockTransferMainContract.Navigator bindNavigator(StockTransferMainNavigator stockTransferMainNavigator);
     }
 }
