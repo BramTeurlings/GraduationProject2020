@@ -95,5 +95,18 @@
     <string name="stock_transfer_main_amount_picker_text">Transfer aantal:</string>
     <string name="stock_transfer_scanned_location_text">Gescande locatie:</string>
 
+    <!--    Stock mutation-->
+    <string name="stock_mutation_amount_status_text">Mutatie aantal:</string>
+    <string name="stock_mutation_product_text">Product:</string>
+    <string name="stock_mutation_sku_text">SKU:</string>
+    <string name="stock_mutation_title">Voorraad mutatie</string>
+    <string name="stock_mutation_button_text">Muteer voorraad</string>
+    <string name="stock_mutation_input_hint">Zoek hier een product</string>
+    <string name="stock_mutation_reason_title">Reden voor mutatie:</string>
+    <string name="stock_mutation_reason_long">Mutatie reden</string>
+    <string name="stock_mutation_plusminus_title">Plus of min:</string>
+    <string name="stock_mutation_min_button_text">MIN</string>
+    <string name="stock_mutation_plus_button_text">PLUS</string>
+
 
 </resources>

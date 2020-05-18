@@ -1,4 +1,4 @@
-package nl.brickx.data.StockTransfer;
+package nl.brickx.data.StockMutation;
 
 import android.content.Context;
 
@@ -9,11 +9,12 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.BoolResultDto;
+import nl.brickx.domain.Models.StockMutationDto;
 import nl.brickx.domain.Models.StockTransferDto;
-import nl.brickx.domain.StockTransfer.Data.StockTransferRepository;
+import nl.brickx.domain.StockMutation.Data.StockMutationRepository;
 import retrofit2.Retrofit;
 
-public class LocalStockTransferRepository implements StockTransferRepository.StockTransfer {
+public class LocalStockMutationRepository implements StockMutationRepository.StockMutation {
 
     @Inject
     Gson gson;
@@ -22,18 +23,18 @@ public class LocalStockTransferRepository implements StockTransferRepository.Sto
     Retrofit retrofit;
 
     @Inject
-    LocalStockTransferService localStockTransferService;
+    LocalStockMutationService localStockMutationService;
 
     Context context;
 
     @Inject
-    LocalStockTransferRepository(@DataContext Context context){
+    LocalStockMutationRepository(@DataContext Context context){
         this.context = context;
     }
 
     @Override
-    public Observable<Boolean> doStockTransfer(StockTransferDto stockTransferDto, String key) {
-        Observable<BoolResultDto> holder = localStockTransferService.doStockTransfer(stockTransferDto, key);
+    public Observable<Boolean> doStockMutation(StockMutationDto stockMutationDto, String key) {
+        Observable<BoolResultDto> holder = localStockMutationService.doStockMutation(stockMutationDto, key);
 
         //Todo: Fix to return the BoolResultDto
         return Observable.just(holder.blockingFirst().getResult());

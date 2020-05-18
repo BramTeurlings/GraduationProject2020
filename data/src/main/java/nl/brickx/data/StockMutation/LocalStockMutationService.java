@@ -1,15 +1,16 @@
-package nl.brickx.data.StockTransfer;
+package nl.brickx.data.StockMutation;
 
 import io.reactivex.Observable;
 import nl.brickx.domain.Models.BoolResultDto;
+import nl.brickx.domain.Models.StockMutationDto;
 import nl.brickx.domain.Models.StockTransferDto;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-public interface LocalStockTransferService {
+public interface LocalStockMutationService {
 
-    @POST("stock/makestocktransfer")
-    Observable<BoolResultDto> doStockTransfer(@Body StockTransferDto stockTransferDto,
+    @POST("stock/makestockmutation")
+    Observable<BoolResultDto> doStockMutation(@Body StockMutationDto stockMutationDto,
                                               @Query("apikey") String apikey);
 }

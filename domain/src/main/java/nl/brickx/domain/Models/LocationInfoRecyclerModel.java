@@ -10,6 +10,7 @@ public class LocationInfoRecyclerModel implements Serializable {
     private String location;
     private Integer productStock;
     private String productName;
+    private String productSKU;
     private int stockLocationId;
     private int productId;
     private String locationTag;
@@ -124,5 +125,13 @@ public class LocationInfoRecyclerModel implements Serializable {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public String getProductSKU() {
+        return productSKU;
+    }
+
+    public void setProductSKU(String productSKU) {
+        this.productSKU = productSKU;
     }
 }

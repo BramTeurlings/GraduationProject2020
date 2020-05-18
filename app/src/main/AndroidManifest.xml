@@ -46,6 +46,22 @@
                 android:value=".Presentation.MainMenu.MainMenuActivity"/>
         </activity>
         <activity
+            android:name=".Presentation.StockMutation.StockMutationActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+            android:parentActivityName=".Presentation.StockMutation.StockMutationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.MainMenu.MainMenuActivity"/>
+        </activity>
+        <activity
+            android:name=".Presentation.StockMutationMain.StockMutationMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+            android:parentActivityName=".Presentation.StockMutationMain.StockMutationMainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Presentation.StockMutation.StockMutationActivity"/>
+        </activity>
+        <activity
             android:name=".Presentation.StockTransferMain.StockTransferMainActivity"
             android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
             android:parentActivityName=".Presentation.StockTransferMain.StockTransferMainActivity">

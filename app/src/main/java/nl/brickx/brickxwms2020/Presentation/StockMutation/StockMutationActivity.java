@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.StockTransfer;
+package nl.brickx.brickxwms2020.Presentation.StockMutation;
 
 import android.animation.LayoutTransition;
 import android.content.Context;
@@ -35,15 +35,15 @@ import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.ProductInfoHolder;
 
-public class StockTransferActivity extends DaggerAppCompatActivity implements StockTransferContract.View {
+public class StockMutationActivity extends DaggerAppCompatActivity implements StockMutationContract.View {
 
     @Inject
-    StockTransferPresenter infoPresenter;
+    StockMutationPresenter infoPresenter;
 
     @Inject
-    StockTransferContract.Navigator navigator;
+    StockMutationContract.Navigator navigator;
 
-    private final String TAG = "StockTransfer: ";
+    private final String TAG = "StockMutation: ";
 
     SpannableStringBuilder stringBuilder;
     ConstraintLayout barcodesGroup;
@@ -71,19 +71,19 @@ public class StockTransferActivity extends DaggerAppCompatActivity implements St
     Boolean barcodeExpansionToggle = true;
     Boolean detailsExpansionToggle = true;
     Boolean propertiesExpansionToggle = true;
-    StockTransferAdapter productInfoAdapter;
+    StockMutationAdapter productInfoAdapter;
     RecyclerView productInfoRecyclerView;
     RecyclerView locationInfoRecyclerView;
-    StockTransferLocationAdapter locationInfoAdapter;
+    StockMutationLocationAdapter locationInfoAdapter;
 
     public static Intent createIntent(Context context){
-        return new Intent(context, StockTransferActivity.class);
+        return new Intent(context, StockMutationActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stock_transfer_page);
+        setContentView(R.layout.stock_mutation_page);
 
         eanTextView = findViewById(R.id.combined_codes_ean_content);
         upcTextView = findViewById(R.id.combined_codes_upc_content);
@@ -173,12 +173,12 @@ public class StockTransferActivity extends DaggerAppCompatActivity implements St
 
     public void initRecyclerViews(){
         //Productinfo
-        productInfoAdapter = new StockTransferAdapter(new ArrayList<>());
+        productInfoAdapter = new StockMutationAdapter(new ArrayList<>());
         productInfoRecyclerView.setAdapter(productInfoAdapter);
         productInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //Location:
-        locationInfoAdapter = new StockTransferLocationAdapter(new ArrayList<>(), navigator, this);
+        locationInfoAdapter = new StockMutationLocationAdapter(new ArrayList<>(), navigator, this);
         locationInfoRecyclerView.setAdapter(locationInfoAdapter);
         locationInfoRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

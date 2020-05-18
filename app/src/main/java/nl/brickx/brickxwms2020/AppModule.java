@@ -30,12 +30,18 @@ import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingRepository;
 import nl.brickx.data.OrderPickLanding.LocalOrderPickLandingService;
 import nl.brickx.data.ProductInfo.LocalProductInfoRepository;
 import nl.brickx.data.ProductInfo.LocalProductRepositoryService;
+import nl.brickx.data.StockMutation.LocalStockMutationRepository;
+import nl.brickx.data.StockMutation.LocalStockMutationService;
+import nl.brickx.data.StockTransfer.LocalStockTransferRepository;
+import nl.brickx.data.StockTransfer.LocalStockTransferService;
 import nl.brickx.data.User.LocalUserRepository;
 import nl.brickx.data.User.LocalUserRepositoryService;
 import nl.brickx.domain.Location.Info.Data.LocationRepository;
 import nl.brickx.domain.OrderPick.Landing.Data.OrderPickLandingRepository;
 import nl.brickx.domain.OrderPick.Main.Data.OrderPickRepository;
 import nl.brickx.domain.Product.Info.Data.ProductRepository;
+import nl.brickx.domain.StockMutation.Data.StockMutationRepository;
+import nl.brickx.domain.StockTransfer.Data.StockTransferRepository;
 import nl.brickx.domain.Users.Data.AuthenticationRepository;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -135,6 +141,16 @@ class AppModule {
     }
 
     @Provides
+    LocalStockTransferService localStockTransferService(){
+        return retrofit.create(LocalStockTransferService.class);
+    }
+
+    @Provides
+    LocalStockMutationService localStockMutationService(){
+        return retrofit.create(LocalStockMutationService.class);
+    }
+
+    @Provides
     @DataContext
     Context provideDataContext(BaseApplication application){
         return application;
@@ -187,5 +203,11 @@ class AppModule {
 
         @Binds
         OrderPickRepository.CloseOrderPick bindOrderPickCloseOrderPickRepository(LocalCloseOrderPickRepository localCloseOrderPickRepository);
+
+        @Binds
+        StockTransferRepository.StockTransfer bindStockTransferRepository(LocalStockTransferRepository localStockTransferRepository);
+
+        @Binds
+        StockMutationRepository.StockMutation bindStockMutationRepository(LocalStockMutationRepository localStockMutationRepository);
     }
 }

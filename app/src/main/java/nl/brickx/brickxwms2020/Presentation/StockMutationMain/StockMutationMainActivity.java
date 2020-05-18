@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.StockTransferMain;
+package nl.brickx.brickxwms2020.Presentation.StockMutationMain;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +8,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import android.widget.ViewFlipper;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,67 +32,88 @@ import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.BatchNumberSelectionModelDto;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
 import nl.brickx.domain.Models.OrderPickSerialStatusModel;
-import nl.brickx.domain.Models.StockTransferDto;
+import nl.brickx.domain.Models.StockMutationDto;
 
-public class StockTransferMainActivity extends DaggerAppCompatActivity implements StockTransferMainContract.View {
+public class StockMutationMainActivity extends DaggerAppCompatActivity implements StockMutationMainContract.View {
 
     @Inject
-    StockTransferMainPresenter presenter;
+    StockMutationMainPresenter presenter;
 
     private LocationInfoRecyclerModel fromItemLocationData;
     private Boolean expansionToggle = false;
-    private MaterialButton transferButton;
-    private LocationInfoRecyclerModel toItemLocationData;
-    private StockTransferMainLocationFromAdapter fromAdapter;
-    private StockTransferMainLocationToAdapter toAdapter;
+    private MaterialButton mutationButton;
+    private StockMutationMainLocationAdapter locationAdapter;
+    private StockMutationMainProductAdapter productAdapter;
     public List<OrderPickSerialStatusModel> serialNumbers = new ArrayList<>();
     private List<LocationInfoRecyclerModel> tempLocationInfoModelList = new ArrayList<>();
     private String[] strings;
-    private StockTransferMainStatusSerialNumbersAdapter serialNumbersAdapter;
+    private StockMutationMainStatusSerialNumbersAdapter serialNumbersAdapter;
     private ImageView statusExpander;
     private ViewGroup.LayoutParams tempParams;
+    ConstraintLayout plusMinusToggleContraint;
+    ToggleButton plusMinusToggle;
     TextView amountOfSerialNumbersScanned;
     RecyclerView statusSerialNumberRecycler;
     ViewFlipper viewFlipper;
     RecyclerView fromRecycler;
     RecyclerView toRecycler;
-    TextInputEditText barcodeInput;
+    TextInputEditText reasonInput;
     TextInputEditText amountInput;
     ProgressBar loadingProgressBar;
     TextInputLayout combinedInputLayout;
 
-    private final String TAG = "StockTransferMain: ";
+    private final String TAG = "StockMutationMain: ";
 
 
     public static Intent createIntent(Context context){
-        return new Intent(context, StockTransferMainActivity.class);
+        return new Intent(context, StockMutationMainActivity.class);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.stock_transfer_main_page);
+        setContentView(R.layout.stock_mutation_main_page);
 
         //Get data from previous activity.
         fromItemLocationData = (LocationInfoRecyclerModel)getIntent().getSerializableExtra("locationInfo");
         tempLocationInfoModelList.clear();
         tempLocationInfoModelList.add(fromItemLocationData);
 
+        plusMinusToggleContraint = findViewById(R.id.stock_mutation_plusminus_toggle);
+        plusMinusToggle = findViewById(R.id.stock_mutation_plus_minus_toggle);
         amountInput = findViewById(R.id.stock_transfer_amount_textInputEditText);
-        barcodeInput = findViewById(R.id.combined_info_textinputEditText);
-        fromRecycler = findViewById(R.id.stock_transfer_from_recycler);
-        toRecycler = findViewById(R.id.stock_transfer_to_recycler);
+        fromRecycler = findViewById(R.id.stock_mutation_from_recycler);
+        toRecycler = findViewById(R.id.stock_mutation_to_recycler);
         statusSerialNumberRecycler = findViewById(R.id.order_pick_status_item_serial_number_recycler);
         amountOfSerialNumbersScanned = findViewById(R.id.order_pick_status_item_serial_number_title);
-        transferButton = findViewById(R.id.stock_transfer_confirm_button);
+        mutationButton = findViewById(R.id.stock_mutation_confirm_button);
+        reasonInput = findViewById(R.id.stock_mutation_reason_textInputEditText);
 
-        viewFlipper = findViewById(R.id.stock_transfer_status_view_flipper);
+        reasonInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                                                  @Override
+                                                  public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                                                      if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                                                              actionId == EditorInfo.IME_ACTION_DONE ||
+                                                              event != null &&
+                                                                      event.getAction() == KeyEvent.ACTION_DOWN &&
+                                                                      event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                                                          if (event == null || !event.isShiftPressed()) {
+                                                              // the user is done typing.
+                                                              clearFocus();
+                                                          }
+                                                      }
+                                                      return true;
+                                                  }
+                                              });
+
+                viewFlipper = findViewById(R.id.stock_mutation_status_view_flipper);
         if(fromItemLocationData.getSerialnumbersRequired()){
             viewFlipper.setDisplayedChild(1);
         }else{
             viewFlipper.setDisplayedChild(0);
         }
 
+        togglePlusMinus();
         initRecyclerViews();
 
         statusExpander = findViewById(R.id.order_pick_serial_numbers_arrow_image);
@@ -115,30 +137,19 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
             }
         });
 
-        barcodeInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(barcodeInput.getWindowToken(), 0);
-                    onBarcodeScanned(barcodeInput.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        transferButton.setOnClickListener(new View.OnClickListener() {
+        mutationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try{
                     //Todo: Verify please
-                    if(!toItemLocationData.getLocationTag().equals("") && toItemLocationData.getLocationTag() != null && (!amountInput.getText().toString().equals("") || serialNumbersAdapter.getItemCount() > 0)){
+                    if(!fromItemLocationData.getLocationTag().equals("") && fromItemLocationData.getLocationTag() != null && (!amountInput.getText().toString().equals("") || serialNumbersAdapter.getItemCount() > 0)){
                         double quantity = 0;
                         List<BatchNumberSelectionModelDto> serialNumbers = new ArrayList<>();
                         if(fromItemLocationData.getSerialnumbersRequired()){
                             quantity = serialNumbersAdapter.getItemCount();
+                            if(plusMinusToggle.isChecked()){
+                                quantity = quantity * -1;
+                            }
                             for(int i = 0; i < fromItemLocationData.getScannedNumbers().size(); i++){
                                 serialNumbers.add(new BatchNumberSelectionModelDto(fromItemLocationData.getScannedNumbers().get(i)));
                             }
@@ -149,7 +160,7 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
                                 Log.i(TAG, "Unable to parse input of quantity field.");
                             }
                         }
-                        presenter.completeStockTransfer(new StockTransferDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), toItemLocationData.getLocationTag(), quantity, serialNumbers));
+                        presenter.completeStockMutation(new StockMutationDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), quantity, reasonInput.getText().toString(), serialNumbers));
 
                     }
                 }catch (Exception e){
@@ -160,42 +171,56 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
         });
     }
 
+    private void togglePlusMinus(){
+        for(int i = 0; i < tempLocationInfoModelList.size(); i++){
+            if(tempLocationInfoModelList.get(i).getSerialnumbersRequired()){
+                plusMinusToggleContraint.setVisibility(View.VISIBLE);
+                break;
+            }else{
+                plusMinusToggleContraint.setVisibility(View.GONE);
+            }
+        }
+    }
 
     public void initRecyclerViews(){
-        //From adapter
-        fromAdapter = new StockTransferMainLocationFromAdapter(tempLocationInfoModelList);
-        fromRecycler.setAdapter(fromAdapter);
+        //Location adapter
+        locationAdapter = new StockMutationMainLocationAdapter(tempLocationInfoModelList);
+        fromRecycler.setAdapter(locationAdapter);
         fromRecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        //To adapter:
-        toAdapter = new StockTransferMainLocationToAdapter(new ArrayList<>());
-        toRecycler.setAdapter(toAdapter);
+        //Product adapter:
+        productAdapter = new StockMutationMainProductAdapter(tempLocationInfoModelList);
+        toRecycler.setAdapter(productAdapter);
         toRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         //Serialnumbers:
-        serialNumbersAdapter = new StockTransferMainStatusSerialNumbersAdapter(new ArrayList<>());
+        serialNumbersAdapter = new StockMutationMainStatusSerialNumbersAdapter(new ArrayList<>());
         serialNumbersAdapter.setPresenter(presenter);
         statusSerialNumberRecycler.setAdapter(serialNumbersAdapter);
         statusSerialNumberRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
+    public void clearFocus() {
+        reasonInput.setFocusableInTouchMode(false);
+        reasonInput.setFocusable(false);
+        viewFlipper.clearFocus();
+        reasonInput.setFocusableInTouchMode(true);
+        reasonInput.setFocusable(true);
+    }
+
+    @Override
     public void onBarcodeScanned(String scan){
-        if(toItemLocationData == null || toAdapter.getItemCount() < 1){
-            toItemLocationData = new LocationInfoRecyclerModel(scan);
-            toAdapter.addItem(toItemLocationData);
-        }else{
-            if(fromItemLocationData.getSerialnumbersRequired()){
-                //Todo: See if serial number is valid.
-                strings = scan.replaceAll("\\s+","").split(";");
-                for(int i = 0; i < strings.length; i++){
-                    if(!fromItemLocationData.getScannedNumbers().contains(strings[i]) && fromItemLocationData.getAvailibleNumbers().contains(strings[i])){
-                        fromItemLocationData.getScannedNumbers().add(strings[i]);
-                    }
+        if(fromItemLocationData.getSerialnumbersRequired()){
+            //Todo: See if serial number is valid.
+            strings = scan.replaceAll("\\s+","").split(";");
+            for(int i = 0; i < strings.length; i++){
+                if(!fromItemLocationData.getScannedNumbers().contains(strings[i]) && fromItemLocationData.getAvailibleNumbers().contains(strings[i])){
+                    fromItemLocationData.getScannedNumbers().add(strings[i]);
                 }
-                refreshSerialNumberData();
-                amountOfSerialNumbersScanned.setText(String.valueOf(getString(R.string.Order_pick_serial_number_hint) + " " + fromItemLocationData.getScannedNumbers().size()));
             }
+            refreshSerialNumberData();
+            amountOfSerialNumbersScanned.setText(String.valueOf(getString(R.string.Order_pick_serial_number_hint) + " " + fromItemLocationData.getScannedNumbers().size()));
         }
     }
 
@@ -228,11 +253,6 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
     public void getProductInfoByScan(String scannedCode){
         setErrorMessage(null);
         presenter.getProductInfoByScan(scannedCode);
-    }
-
-    @Override
-    public void clearBarcodeInput(){
-        barcodeInput.setText("");
     }
 
     @Override

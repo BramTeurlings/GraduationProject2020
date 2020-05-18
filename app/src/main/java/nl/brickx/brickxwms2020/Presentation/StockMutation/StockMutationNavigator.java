@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.StockTransfer;
+package nl.brickx.brickxwms2020.Presentation.StockMutation;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,32 +6,27 @@ import android.content.Intent;
 
 import javax.inject.Inject;
 
+import nl.brickx.brickxwms2020.Presentation.StockMutationMain.StockMutationMainActivity;
 import nl.brickx.brickxwms2020.Presentation.StockTransferMain.StockTransferMainActivity;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
-import nl.brickx.domain.Models.StockTransferDto;
 
-public class StockTransferNavigator implements StockTransferContract.Navigator {
+public class StockMutationNavigator implements StockMutationContract.Navigator {
 
     private Activity activity;
     private Context context;
     Intent stockTransferMainIntent;
 
     @Inject
-    StockTransferNavigator(Activity activity, @DataContext Context context){
+    StockMutationNavigator(Activity activity, @DataContext Context context){
         this.activity = activity;
         this.context = context;
     }
 
-//    @Override
-//    public void navigateToProductInfo() {
-//        activity.startActivity(ProductInfoActivity.createIntent(context));
-//    }
-
 
     @Override
     public void navigateToTransferScreen(LocationInfoRecyclerModel locationInfoRecyclerModel) {
-        stockTransferMainIntent = StockTransferMainActivity.createIntent(context);
+        stockTransferMainIntent = StockMutationMainActivity.createIntent(context);
         stockTransferMainIntent.putExtra("locationInfo", locationInfoRecyclerModel);
         activity.startActivity(stockTransferMainIntent);
     }

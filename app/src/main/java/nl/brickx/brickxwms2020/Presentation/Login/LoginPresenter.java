@@ -95,6 +95,9 @@ public class LoginPresenter implements LoginContract.Presenter {
                 if(!enums.contains(Permission.STOCK_TRANSFER)){
                     enums.add(Permission.STOCK_TRANSFER);
                 }
+                if(!enums.contains(Permission.STOCK_MUTATION)){
+                    enums.add(Permission.STOCK_MUTATION);
+                }
             }
             if(userInfo.getUserInfoResult().getApiUserRights().get(i).getApiRight() == ApiUserRightsEnum.Stockcount){
                 if(!enums.contains(Permission.STOCK_COUNT)){

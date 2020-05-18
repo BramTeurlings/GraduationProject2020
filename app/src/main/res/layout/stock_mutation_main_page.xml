@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/combined_info_and_location_contraint"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/mutation_main_stock_title"
+        style="@style/TextAppearance.AppTheme.h5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_2"
+        android:layout_marginTop="@dimen/grid_1"
+        android:text="@string/stock_mutation_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/product_info_loadingIcon"
+        layout="@layout/loading_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/loading_icon_offset"
+        android:elevation="7dp" />
+
+    <View
+        android:id="@+id/combined_info_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/grid_2"
+        android:layout_marginTop="@dimen/grid_1"
+        android:layout_marginEnd="@dimen/grid_2"
+        android:background="@color/colorTextDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mutation_main_stock_title">
+
+    </View>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/combined_nested_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/grid_2"
+        android:fillViewport="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toTopOf="@+id/stock_mutation_status_view_flipper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mutation_main_stock_title"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_height="0dp">
+
+            <TextView
+                android:id="@+id/stock_mutation_from_location_text"
+                style="@style/TextAppearance.AppTheme.h6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:text="@string/stock_mutation_product_text"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/stock_mutation_to_location_text"
+                style="@style/TextAppearance.AppTheme.h6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:text="Product locatie:"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stock_mutation_from_recycler" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/stock_mutation_from_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="@dimen/grid_1"
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stock_mutation_from_location_text"
+                tools:listitem="@layout/stock_mutation_product_recycler_item" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/stock_mutation_to_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="@dimen/grid_1"
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stock_mutation_to_location_text"
+                tools:listitem="@layout/location_info_recycler_item" />
+
+            <TextView
+                android:id="@+id/stock_mutation_reason"
+                style="@style/TextAppearance.AppTheme.h6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_2"
+                android:layout_marginTop="@dimen/grid_1"
+                android:text="@string/stock_mutation_reason_title"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stock_mutation_to_recycler" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/stock_mutation_reason_textInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/grid_1"
+                android:layout_marginTop="@dimen/grid_1"
+                android:layout_marginEnd="@dimen/grid_1"
+                android:hint="@string/stock_mutation_reason_long"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stock_mutation_reason">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/stock_mutation_reason_textInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/grid_1"
+                    android:layout_marginTop="@dimen/grid_1"
+                    android:layout_marginEnd="@dimen/grid_1"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/stock_mutation_reason" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/stock_mutation_plusminus_toggle"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/grid_1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/stock_mutation_reason_textInputLayout">
+
+                <TextView
+                    android:id="@+id/stock_mutation_plus_or_minus"
+                    style="@style/TextAppearance.AppTheme.h6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/grid_2"
+                    android:text="@string/stock_mutation_plusminus_title"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ToggleButton
+                    android:id="@+id/stock_mutation_plus_minus_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="@dimen/grid_1"
+                    android:textOff="@string/stock_mutation_plus_button_text"
+                    android:textOn="@string/stock_mutation_min_button_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/stock_mutation_plus_or_minus" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/stock_mutation_confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_1"
+        android:layout_marginEnd="@dimen/grid_1"
+        android:text="@string/stock_mutation_button_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ViewFlipper
+        android:id="@+id/stock_mutation_status_view_flipper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_0_5"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:measureAllChildren="false"
+        app:layout_constraintBottom_toTopOf="@+id/stock_mutation_confirm_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <include
+            android:id="@+id/stock_mutation_status"
+            layout="@layout/stock_mutation_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <include
+            android:id="@+id/stock_mutation_status_serial_numbers"
+            layout="@layout/order_pick_main_product_pick_status_item_serial_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </ViewFlipper>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

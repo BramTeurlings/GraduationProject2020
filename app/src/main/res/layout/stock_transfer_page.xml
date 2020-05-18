@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/transfer_stock_title"
-        style="@style/TextAppearance.AppTheme.h6"
+        style="@style/TextAppearance.AppTheme.h5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"

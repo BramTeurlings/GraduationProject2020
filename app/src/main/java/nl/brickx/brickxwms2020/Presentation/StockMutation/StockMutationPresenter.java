@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.StockTransferMain;
+package nl.brickx.brickxwms2020.Presentation.StockMutation;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
 
@@ -18,38 +19,37 @@ import io.reactivex.schedulers.Schedulers;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.Gson.ProductInfo.ProductInformation;
+import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
-import nl.brickx.domain.Models.OrderPickSerialStatusModel;
 import nl.brickx.domain.Models.ProductInfoHolder;
 import nl.brickx.domain.Models.ProductInfoRecyclerModel;
-import nl.brickx.domain.Models.StockTransferDto;
 import nl.brickx.domain.Models.User;
+import nl.brickx.domain.OrderPick.Main.GetSerialnumberByStockLocationIdAndProductId;
 import nl.brickx.domain.Product.Info.GetProductInfoByScan;
-import nl.brickx.domain.StockTransfer.PostStockTransfer;
 import nl.brickx.domain.Users.UserDataManager;
 
 import static android.content.ContentValues.TAG;
 
-public class StockTransferMainPresenter implements StockTransferMainContract.Presenter {
+public class StockMutationPresenter implements StockMutationContract.Presenter {
 
     private UserDataManager userDataManager;
     private GetProductInfoByScan getProductInfoByScan;
+    private GetSerialnumberByStockLocationIdAndProductId getSerialnumberByStockLocationIdAndProductId;
     private ProductInfoRecyclerModel tempProductInfoRecyclerModel = new ProductInfoRecyclerModel();
     private LocationInfoRecyclerModel tempLocationInfoRecyclerModel = new LocationInfoRecyclerModel();
-    private PostStockTransfer postStockTransfer;
-    private StockTransferMainContract.View view;
+    private StockMutationContract.View view;
     private List<Disposable> disposables = new ArrayList<>();
     private Context context;
     private Boolean isLoading = false;
 
 
     @Inject
-    StockTransferMainPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, StockTransferMainContract.View view, PostStockTransfer postStockTransfer, @DataContext Context context){
+    StockMutationPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, StockMutationContract.View view, @DataContext Context context, GetSerialnumberByStockLocationIdAndProductId getSerialnumberByStockLocationIdAndProductId){
         this.userDataManager = userDataManager;
         this.getProductInfoByScan = getProductInfoByScan;
-        this.postStockTransfer = postStockTransfer;
         this.view = view;
         this.context = context;
+        this.getSerialnumberByStockLocationIdAndProductId = getSerialnumberByStockLocationIdAndProductId;
 
         //Datawedge
         IntentFilter filter = new IntentFilter();
@@ -70,7 +70,7 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe( s -> result.add(s),
-                            t -> onLoginFailed(t),
+                            t -> onGetApiDataFailed(t),
                             () -> onProductInfoFetched(result, scan)));
         }
     }
@@ -89,7 +89,7 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
                 try {
                     //Execute View code.
                     view.clearBarcodeInput();
-                    view.onBarcodeScanned(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
+                    view.getProductInfoByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
                 } catch (Exception e) {
                     Log.i(TAG, "Unable to read data from scanner.");
                 }
@@ -108,37 +108,6 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
         }catch (Exception e){
             Log.e(TAG, "Unable to unsubscribe broadcast receiver.");
         }
-    }
-
-    @Override
-    public void removeSerialnumber(OrderPickSerialStatusModel serialStatusModel) {
-        try{
-            view.getLocationRecyclerModel().getScannedNumbers().remove(serialStatusModel.getSerialnumber());
-            view.updateSerialNumbers(view.getLocationRecyclerModel());
-        }catch(Exception e){
-            Log.i(TAG, "Unable to remove serialnumber.");
-        }
-    }
-
-    @Override
-    public void completeStockTransfer(StockTransferDto stockTransferDto) {
-        if(!isLoading){
-            onApiRequestStarted();
-            changeLoadingState();
-            final List<Boolean> result = new ArrayList<>();
-            System.out.println(new Date());
-            this.disposables.add(postStockTransfer.invoke(stockTransferDto, getUserData().getApiKey())
-                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe( s -> result.add(s),
-                            t -> onLoginFailed(t),
-                            () -> onStockTransferCompleted(result.get(0))));
-        }
-    }
-
-    private void onStockTransferCompleted(Boolean succeeded){
-
     }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations, String scan){
@@ -275,11 +244,26 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
                         if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getCurrentStock() != null){
                             tempLocationInfoRecyclerModel.setProductStock(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getCurrentStock().intValue());
                         }
+                        if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseLocation().getScanLocationTag() != null){
+                            tempLocationInfoRecyclerModel.setLocationTag(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseLocation().getScanLocationTag());
+                        }
                         if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseLocation().getLocationName() != null){
                             tempLocationInfoRecyclerModel.setLocation(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseLocation().getLocationName());
                         }
                         if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseName() != null){
                             tempLocationInfoRecyclerModel.setWarehouseName(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getWareHouseName());
+                        }
+                        if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getId() != null){
+                            tempLocationInfoRecyclerModel.setStockLocationId(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getStockLocation().get(i).getId());
+                        }
+                        if(result.getGetProductsCompleteByScanCodeResult().getId() != null){
+                            tempLocationInfoRecyclerModel.setProductId(result.getGetProductsCompleteByScanCodeResult().getId());
+                        }
+                        if(result.getGetProductsCompleteByScanCodeResult().getCode() != null){
+                            tempLocationInfoRecyclerModel.setProductSKU(result.getGetProductsCompleteByScanCodeResult().getCode());
+                        }
+                        if(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getName() != null){
+                            tempLocationInfoRecyclerModel.setProductName(result.getGetProductsCompleteByScanCodeResult().getCurrentStock().get(0).getName());
                         }
                         infoHolder.getLocations().add(tempLocationInfoRecyclerModel);
                     }
@@ -291,12 +275,47 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
             printErrorMessage("Location");
         }
 
+        try{
+            if(result.getGetProductsCompleteByScanCodeResult().getUniqueBatchNumbers() != null){
+                for(int i = 0; i < infoHolder.getLocations().size(); i++){
+                    infoHolder.getLocations().get(i).setSerialnumbersRequired(result.getGetProductsCompleteByScanCodeResult().getUniqueBatchNumbers());
+                    if(infoHolder.getLocations().get(0).getSerialnumbersRequired()){
+                        //Todo: Get serialnumbers
+                        try{
+                            AtomicReference<Serialnumbers> serialnumbersResult = new AtomicReference<>();
+                            int id = result.getGetProductsCompleteByScanCodeResult().getId();
+                            int stockLocationId = infoHolder.getLocations().get(i).getStockLocationId();
+                            this.disposables.add(getSerialnumberByStockLocationIdAndProductId.invoke(infoHolder.getLocations().get(i).getStockLocationId(), id, getUserData().getApiKey())
+                                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(serialnumbersResult::set,
+                                            this::onGetApiDataFailed,
+                                            () -> onSerialnumbersFetched(serialnumbersResult.get(), stockLocationId, id)));
+                        }catch (Exception e){
+                            //Todo: Raise a visible error here so that orderpickers don't get stuck.
+                            e.printStackTrace();
+                            printErrorMessage("Failed to get serialnumbers");
+                        }
+                    }
+                }
+            }else{
+                printErrorMessage("Is Serialnumber Required");
+            }
+        }catch(NullPointerException | IndexOutOfBoundsException e){
+            printErrorMessage("Is Serialnumber Required");
+        }
+
         onApiRequestCompleted();
         changeLoadingState();
-        view.onLocationInfoReceived(infoHolder.getLocations(), scan);
+        view.onNewProductInfoReceived(infoHolder, scan);
     }
 
-    private void onLoginFailed(Throwable throwable){
+    private void onSerialnumbersFetched(Serialnumbers serialnumbers, int stocklocationId, int productId){
+        view.onSerialnumbersFetched(serialnumbers, stocklocationId, productId);
+    }
+
+    private void onGetApiDataFailed(Throwable throwable){
         throwable.printStackTrace();
         onApiRequestCompleted();
         changeLoadingState();

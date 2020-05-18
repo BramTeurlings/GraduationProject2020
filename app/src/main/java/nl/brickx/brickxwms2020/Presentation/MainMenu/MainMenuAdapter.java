@@ -60,6 +60,8 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
                             navigator.navigateToOrderPickScreen();
                         case STOCK_TRANSFER_ITEM:
                             navigator.navigateToStockTransfer();
+                        case STOCK_MUTATION_ITEM:
+                            navigator.navigateToStockMutation();
                     }
                 }
             });

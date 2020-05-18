@@ -9,6 +9,7 @@ import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingActivity;
 import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivity;
+import nl.brickx.brickxwms2020.Presentation.StockMutation.StockMutationActivity;
 import nl.brickx.brickxwms2020.Presentation.StockTransfer.StockTransferActivity;
 import nl.brickx.data.Dagger.DataContext;
 
@@ -41,6 +42,11 @@ public class MainMenuNavigator implements MainMenuContract.Navigator {
     @Override
     public void navigateToStockTransfer() {
         activity.startActivity(StockTransferActivity.createIntent(context));
+    }
+
+    @Override
+    public void navigateToStockMutation() {
+        activity.startActivity(StockMutationActivity.createIntent(context));
     }
 
 

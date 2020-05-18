@@ -21,5 +21,6 @@ public interface MainMenuContract {
         void navigateToLocationInfo();
         void navigateToOrderPickScreen();
         void navigateToStockTransfer();
+        void navigateToStockMutation();
     }
 }

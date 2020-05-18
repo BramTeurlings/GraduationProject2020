@@ -1,4 +1,4 @@
-package nl.brickx.brickxwms2020.Presentation.StockTransferMain;
+package nl.brickx.brickxwms2020.Presentation.StockMutationMain;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,32 +22,34 @@ import nl.brickx.domain.Models.LocationInfoRecyclerModel;
 import nl.brickx.domain.Models.OrderPickSerialStatusModel;
 import nl.brickx.domain.Models.ProductInfoHolder;
 import nl.brickx.domain.Models.ProductInfoRecyclerModel;
+import nl.brickx.domain.Models.StockMutationDto;
 import nl.brickx.domain.Models.StockTransferDto;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.Product.Info.GetProductInfoByScan;
+import nl.brickx.domain.StockMutation.PostStockMutation;
 import nl.brickx.domain.StockTransfer.PostStockTransfer;
 import nl.brickx.domain.Users.UserDataManager;
 
 import static android.content.ContentValues.TAG;
 
-public class StockTransferMainPresenter implements StockTransferMainContract.Presenter {
+public class StockMutationMainPresenter implements StockMutationMainContract.Presenter {
 
     private UserDataManager userDataManager;
     private GetProductInfoByScan getProductInfoByScan;
     private ProductInfoRecyclerModel tempProductInfoRecyclerModel = new ProductInfoRecyclerModel();
     private LocationInfoRecyclerModel tempLocationInfoRecyclerModel = new LocationInfoRecyclerModel();
-    private PostStockTransfer postStockTransfer;
-    private StockTransferMainContract.View view;
+    private PostStockMutation postStockMutation;
+    private StockMutationMainContract.View view;
     private List<Disposable> disposables = new ArrayList<>();
     private Context context;
     private Boolean isLoading = false;
 
 
     @Inject
-    StockTransferMainPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, StockTransferMainContract.View view, PostStockTransfer postStockTransfer, @DataContext Context context){
+    StockMutationMainPresenter(UserDataManager userDataManager, GetProductInfoByScan getProductInfoByScan, StockMutationMainContract.View view, PostStockMutation postStockMutation, @DataContext Context context){
         this.userDataManager = userDataManager;
         this.getProductInfoByScan = getProductInfoByScan;
-        this.postStockTransfer = postStockTransfer;
+        this.postStockMutation = postStockMutation;
         this.view = view;
         this.context = context;
 
@@ -88,7 +90,6 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
                 //  Received a barcode scan
                 try {
                     //Execute View code.
-                    view.clearBarcodeInput();
                     view.onBarcodeScanned(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
                 } catch (Exception e) {
                     Log.i(TAG, "Unable to read data from scanner.");
@@ -121,13 +122,13 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
     }
 
     @Override
-    public void completeStockTransfer(StockTransferDto stockTransferDto) {
+    public void completeStockMutation(StockMutationDto stockMutationDto) {
         if(!isLoading){
             onApiRequestStarted();
             changeLoadingState();
             final List<Boolean> result = new ArrayList<>();
             System.out.println(new Date());
-            this.disposables.add(postStockTransfer.invoke(stockTransferDto, getUserData().getApiKey())
+            this.disposables.add(postStockMutation.invoke(stockMutationDto, getUserData().getApiKey())
                     .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

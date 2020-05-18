@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/transfer_main_stock_title"
-        style="@style/TextAppearance.AppTheme.h6"
+        style="@style/TextAppearance.AppTheme.h5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/grid_2"
@@ -79,7 +79,7 @@
         android:fillViewport="true"
         android:focusable="false"
         android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/stock_transfer_status_view_flipper"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,57 +138,55 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/stock_transfer_to_location_text"
-                tools:listitem="@layout/location_info_recycler_item" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/stock_transfer_confirm_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/grid_1"
-                android:layout_marginEnd="@dimen/grid_1"
-                android:text="@string/stock_transfer_main_button_title"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ViewFlipper
-                android:id="@+id/stock_transfer_status_view_flipper"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/grid_1"
-                android:measureAllChildren="false"
-                app:layout_constraintBottom_toTopOf="@+id/stock_transfer_confirm_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <include
-                    android:id="@+id/stock_transfer_status"
-                    layout="@layout/stock_transfer_standard_status"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="7dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <include
-                    android:id="@+id/stock_transfer_status_serial_numbers"
-                    layout="@layout/order_pick_main_product_pick_status_item_serial_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="7dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-
-            </ViewFlipper>
-
+                tools:listitem="@layout/stock_transfer_to_location_recycler_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/stock_transfer_confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/grid_1"
+        android:layout_marginEnd="@dimen/grid_1"
+        android:text="@string/stock_transfer_main_button_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ViewFlipper
+        android:id="@+id/stock_transfer_status_view_flipper"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/grid_1"
+        android:measureAllChildren="false"
+        app:layout_constraintBottom_toTopOf="@+id/stock_transfer_confirm_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <include
+            android:id="@+id/stock_transfer_status"
+            layout="@layout/stock_transfer_standard_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <include
+            android:id="@+id/stock_transfer_status_serial_numbers"
+            layout="@layout/order_pick_main_product_pick_status_item_serial_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </ViewFlipper>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
