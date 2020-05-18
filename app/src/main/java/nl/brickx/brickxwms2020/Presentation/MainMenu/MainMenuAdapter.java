@@ -54,14 +54,19 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
                     switch(data.get(position).getIdentifier()){
                         case PRODUCT_INFO_ITEM:
                             navigator.navigateToProductInfo();
+                            break;
                         case LOCATION_INFO_ITEM:
                             navigator.navigateToLocationInfo();
+                            break;
                         case ORDER_PICK_ITEM:
                             navigator.navigateToOrderPickScreen();
+                            break;
                         case STOCK_TRANSFER_ITEM:
                             navigator.navigateToStockTransfer();
+                            break;
                         case STOCK_MUTATION_ITEM:
                             navigator.navigateToStockMutation();
+                            break;
                     }
                 }
             });

@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.BoolResultDto;
 import nl.brickx.domain.Models.StockMutationDto;
@@ -34,7 +35,7 @@ public class LocalStockMutationRepository implements StockMutationRepository.Sto
 
     @Override
     public Observable<Boolean> doStockMutation(StockMutationDto stockMutationDto, String key) {
-        Observable<BoolResultDto> holder = localStockMutationService.doStockMutation(stockMutationDto, key);
+        Observable<BoolResultDto> holder = localStockMutationService.doStockMutation(stockMutationDto, key).subscribeOn(Schedulers.computation()).observeOn(Schedulers.io());
 
         //Todo: Fix to return the BoolResultDto
         return Observable.just(holder.blockingFirst().getResult());

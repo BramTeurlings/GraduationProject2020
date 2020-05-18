@@ -18,6 +18,7 @@ public class LocationInfoRecyclerModel implements Serializable {
     private Boolean isSerialnumbersRequired = false;
     private List<String> scannedNumbers = new ArrayList<>();
     private List<String> availibleNumbers = new ArrayList<>();
+    private List<String> allLocationAvailibleSerialnumbers = new ArrayList<>();
 
     public LocationInfoRecyclerModel() {
     }
@@ -109,6 +110,14 @@ public class LocationInfoRecyclerModel implements Serializable {
 
     public void setAvailibleNumbers(List<String> availibleNumbers) {
         this.availibleNumbers = availibleNumbers;
+    }
+
+    public List<String> getAllLocationAvailibleSerialnumbers() {
+        return allLocationAvailibleSerialnumbers;
+    }
+
+    public void setAllLocationAvailibleSerialnumbers(List<String> allLocationAvailibleSerialnumbers) {
+        this.allLocationAvailibleSerialnumbers = allLocationAvailibleSerialnumbers;
     }
 
     public int getStockLocationId() {

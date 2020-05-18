@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.widget.ViewFlipper;
 
@@ -88,6 +89,7 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
         amountOfSerialNumbersScanned = findViewById(R.id.order_pick_status_item_serial_number_title);
         mutationButton = findViewById(R.id.stock_mutation_confirm_button);
         reasonInput = findViewById(R.id.stock_mutation_reason_textInputEditText);
+        loadingProgressBar = findViewById(R.id.loadingIcon);
 
         reasonInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                                                   @Override
@@ -151,7 +153,16 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
                                 quantity = quantity * -1;
                             }
                             for(int i = 0; i < fromItemLocationData.getScannedNumbers().size(); i++){
-                                serialNumbers.add(new BatchNumberSelectionModelDto(fromItemLocationData.getScannedNumbers().get(i)));
+                                if(quantity > 0){
+                                    if(!fromItemLocationData.getAllLocationAvailibleSerialnumbers().contains(fromItemLocationData.getScannedNumbers().get(i))){
+                                        serialNumbers.add(new BatchNumberSelectionModelDto(fromItemLocationData.getScannedNumbers().get(i)));
+                                    }
+                                }else{
+                                    if(fromItemLocationData.getAvailibleNumbers().contains(fromItemLocationData.getScannedNumbers().get(i))){
+                                        serialNumbers.add(new BatchNumberSelectionModelDto(fromItemLocationData.getScannedNumbers().get(i)));
+                                    }
+                                }
+
                             }
                         }else{
                             try{
@@ -160,7 +171,19 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
                                 Log.i(TAG, "Unable to parse input of quantity field.");
                             }
                         }
-                        presenter.completeStockMutation(new StockMutationDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), quantity, reasonInput.getText().toString(), serialNumbers));
+                        if(serialNumbers.size() > 0 && fromItemLocationData.getSerialnumbersRequired() && quantity != 0){
+                            presenter.completeStockMutation(new StockMutationDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), quantity, reasonInput.getText().toString(), serialNumbers));
+                        }else{
+                            if(quantity > 0 && fromItemLocationData.getSerialnumbersRequired()){
+                                Toast.makeText(getApplicationContext(), "Niet genoeg of ongeldige serienummers ingevoerd. Let op dat je niet al geregistreerde serienummers inscant.", Toast.LENGTH_LONG).show();
+                            }else if(quantity < 0 && fromItemLocationData.getSerialnumbersRequired()){
+                                Toast.makeText(getApplicationContext(), "Niet genoeg of ongeldige serienummers ingevoerd. Let op dat je alleen al geregistreerde serienummers inscant.", Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(), "Geen aantal producten opgegeven.", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
 
                     }
                 }catch (Exception e){
@@ -215,7 +238,7 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
             //Todo: See if serial number is valid.
             strings = scan.replaceAll("\\s+","").split(";");
             for(int i = 0; i < strings.length; i++){
-                if(!fromItemLocationData.getScannedNumbers().contains(strings[i]) && fromItemLocationData.getAvailibleNumbers().contains(strings[i])){
+                if(!fromItemLocationData.getScannedNumbers().contains(strings[i])){
                     fromItemLocationData.getScannedNumbers().add(strings[i]);
                 }
             }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -138,7 +139,10 @@ public class StockTransferMainPresenter implements StockTransferMainContract.Pre
     }
 
     private void onStockTransferCompleted(Boolean succeeded){
-
+        onApiRequestCompleted();
+        changeLoadingState();
+        Toast.makeText(context, "Voorraad gemuteerd.", Toast.LENGTH_SHORT).show();
+        //Todo: Navigate back?
     }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations, String scan){

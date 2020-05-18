@@ -84,6 +84,7 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
         statusSerialNumberRecycler = findViewById(R.id.order_pick_status_item_serial_number_recycler);
         amountOfSerialNumbersScanned = findViewById(R.id.order_pick_status_item_serial_number_title);
         transferButton = findViewById(R.id.stock_transfer_confirm_button);
+        loadingProgressBar = findViewById(R.id.loadingIcon);
 
         viewFlipper = findViewById(R.id.stock_transfer_status_view_flipper);
         if(fromItemLocationData.getSerialnumbersRequired()){

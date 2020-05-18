@@ -26,6 +26,6 @@ public interface StockMutationContract {
 
     interface Navigator {
 
-        void navigateToTransferScreen(LocationInfoRecyclerModel locationInfoRecyclerModel);
+        void navigateToMutationScreen(LocationInfoRecyclerModel locationInfoRecyclerModel);
     }
 }

@@ -3,6 +3,7 @@ package nl.brickx.domain.StockTransfer;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 import nl.brickx.domain.Models.StockTransferDto;
 import nl.brickx.domain.StockTransfer.Data.StockTransferRepository;
 
@@ -16,6 +17,6 @@ public class PostStockTransfer {
     }
 
     public Observable<Boolean> invoke(StockTransferDto stockTransferDto, String apikey) {
-        return stockTransfer.doStockTransfer(stockTransferDto, apikey);
+        return stockTransfer.doStockTransfer(stockTransferDto, apikey).subscribeOn(Schedulers.io()).observeOn(Schedulers.io());
     }
 }

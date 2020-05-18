@@ -25,7 +25,7 @@ public class StockMutationNavigator implements StockMutationContract.Navigator {
 
 
     @Override
-    public void navigateToTransferScreen(LocationInfoRecyclerModel locationInfoRecyclerModel) {
+    public void navigateToMutationScreen(LocationInfoRecyclerModel locationInfoRecyclerModel) {
         stockTransferMainIntent = StockMutationMainActivity.createIntent(context);
         stockTransferMainIntent.putExtra("locationInfo", locationInfoRecyclerModel);
         activity.startActivity(stockTransferMainIntent);

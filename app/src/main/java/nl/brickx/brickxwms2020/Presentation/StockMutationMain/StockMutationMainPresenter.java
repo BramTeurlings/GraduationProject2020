@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -139,7 +140,14 @@ public class StockMutationMainPresenter implements StockMutationMainContract.Pre
     }
 
     private void onStockTransferCompleted(Boolean succeeded){
-
+        onApiRequestCompleted();
+        changeLoadingState();
+        if(succeeded){
+            Toast.makeText(context, "Voorraad gemuteerd.", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "Er is een fout opgetreden tijdens het muteren van de voorraad.", Toast.LENGTH_LONG).show();
+        }
+        //Todo: Navigate back?
     }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations, String scan){

@@ -47,12 +47,7 @@ public class StockMutationMainLocationAdapter extends RecyclerView.Adapter<Stock
         try{
             holder.codeTextView.setText(data.get(position).getWarehouseName());
             holder.stockAmountTextView.setText(data.get(position).getProductStock().toString());
-            if(data.get(position).getProductName() != null){
-                holder.locationTextView.setText(R.string.location_info_product_text);
-                holder.descriptionTextView.setText(data.get(position).getProductName());
-            }else{
-                holder.descriptionTextView.setText(data.get(position).getLocation());
-            }
+            holder.descriptionTextView.setText(data.get(position).getLocation());
         }catch (Exception e){
             e.printStackTrace();
         }

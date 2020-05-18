@@ -67,13 +67,17 @@ public class StockMutationLocationAdapter extends RecyclerView.Adapter<StockMuta
                 if(data.get(position).getSerialnumbersRequired()){
                     if(data.get(position).getAvailibleNumbers().size() > 0){
                         tempLocationModel = data.get(position);
-                        navigator.navigateToTransferScreen(tempLocationModel);
+                        tempLocationModel.setProductScan(productScan);
+                        for(int i = 0; i < data.size(); i++){
+                            tempLocationModel.getAllLocationAvailibleSerialnumbers().addAll(data.get(i).getAvailibleNumbers());
+                        }
+                        navigator.navigateToMutationScreen(tempLocationModel);
                     }else{
                         Toast.makeText(context, "Serienummers nog niet geladen, een moment aub.", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     tempLocationModel = data.get(position);
-                    navigator.navigateToTransferScreen(tempLocationModel);
+                    navigator.navigateToMutationScreen(tempLocationModel);
                 }
             }
         });
