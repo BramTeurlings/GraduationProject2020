@@ -171,7 +171,7 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
                                 Log.i(TAG, "Unable to parse input of quantity field.");
                             }
                         }
-                        if(serialNumbers.size() > 0 && fromItemLocationData.getSerialnumbersRequired() && quantity != 0){
+                        if(serialNumbers.size() > 0 && quantity != 0 || !fromItemLocationData.getSerialnumbersRequired()){
                             presenter.completeStockMutation(new StockMutationDto(fromItemLocationData.getProductScan(), fromItemLocationData.getLocationTag(), quantity, reasonInput.getText().toString(), serialNumbers));
                         }else{
                             if(quantity > 0 && fromItemLocationData.getSerialnumbersRequired()){

@@ -43,7 +43,7 @@
                 android:layout_marginStart="@dimen/grid_1_5"
                 android:layout_marginEnd="@dimen/grid_1_5"
                 android:layout_marginBottom="@dimen/grid_0_5"
-                android:hint="Bijv. -5 of 5"
+                android:hint="@string/stock_mutation_main_status_input_hint"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView"
@@ -53,7 +53,7 @@
                     android:id="@+id/stock_transfer_amount_textInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="number|numberSigned"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>

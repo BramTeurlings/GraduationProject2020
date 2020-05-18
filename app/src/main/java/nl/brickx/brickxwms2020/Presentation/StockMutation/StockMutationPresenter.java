@@ -271,7 +271,7 @@ public class StockMutationPresenter implements StockMutationContract.Presenter {
             }else{
                 printErrorMessage("Location");
             }
-        }catch (NullPointerException e){
+        }catch (Exception e){
             printErrorMessage("Location");
         }
 

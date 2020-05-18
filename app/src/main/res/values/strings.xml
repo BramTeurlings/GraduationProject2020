@@ -108,6 +108,7 @@
     <string name="stock_mutation_min_button_text">MIN</string>
     <string name="stock_mutation_plus_button_text">PLUS</string>
     <string name="stock_transfer_main_input_tooltip">Vul een locatie in</string>
+    <string name="stock_mutation_main_status_input_hint">Bijv. -5 of 5</string>
 
 
 </resources>

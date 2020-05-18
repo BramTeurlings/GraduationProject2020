@@ -24,11 +24,9 @@ import nl.brickx.domain.Models.OrderPickSerialStatusModel;
 import nl.brickx.domain.Models.ProductInfoHolder;
 import nl.brickx.domain.Models.ProductInfoRecyclerModel;
 import nl.brickx.domain.Models.StockMutationDto;
-import nl.brickx.domain.Models.StockTransferDto;
 import nl.brickx.domain.Models.User;
 import nl.brickx.domain.Product.Info.GetProductInfoByScan;
 import nl.brickx.domain.StockMutation.PostStockMutation;
-import nl.brickx.domain.StockTransfer.PostStockTransfer;
 import nl.brickx.domain.Users.UserDataManager;
 
 import static android.content.ContentValues.TAG;
@@ -135,11 +133,11 @@ public class StockMutationMainPresenter implements StockMutationMainContract.Pre
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe( s -> result.add(s),
                             t -> onLoginFailed(t),
-                            () -> onStockTransferCompleted(result.get(0))));
+                            () -> onStockMutationCompleted(result.get(0))));
         }
     }
 
-    private void onStockTransferCompleted(Boolean succeeded){
+    private void onStockMutationCompleted(Boolean succeeded){
         onApiRequestCompleted();
         changeLoadingState();
         if(succeeded){

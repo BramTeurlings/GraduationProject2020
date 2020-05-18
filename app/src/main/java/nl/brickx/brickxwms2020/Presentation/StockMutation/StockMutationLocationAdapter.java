@@ -77,6 +77,7 @@ public class StockMutationLocationAdapter extends RecyclerView.Adapter<StockMuta
                     }
                 }else{
                     tempLocationModel = data.get(position);
+                    tempLocationModel.setProductScan(productScan);
                     navigator.navigateToMutationScreen(tempLocationModel);
                 }
             }
