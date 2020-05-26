@@ -1,0 +1,8 @@
+
+‰
+java:S1488&"nImmediately return this expression instead of assigning it to the temporary variable "locationInfoObservable".(‹“±Þøÿÿÿÿ
+s
+java:S1128"XRemove this unused import 'nl.brickx.domain.Models.Gson.ProductInfo.ProductInformation'.(è»ªÐúÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(Å‰Šž
+k
+java:S1128"URemove this unused import 'nl.brickx.data.ProductInfo.LocalProductRepositoryService'.(±¤ËÐ

@@ -1,7 +1,5 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment;
 
-import android.content.Context;
-
 import java.util.List;
 
 import nl.brickx.domain.Models.OrderPickPickListModel;

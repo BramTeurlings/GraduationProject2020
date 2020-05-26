@@ -1,0 +1,14 @@
+
+F
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ
+F
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
+M
+java:S1128"2Remove this unused import 'io.reactivex.Flowable'.(©ˆ”çýÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¢ƒŸè
+a
+java:S1128"KRemove this unused import 'nl.brickx.domain.Models.Gson.ApiUserRightsEnum'.(œ¡»€
+Z
+java:S1128"?Remove this unused import 'nl.brickx.domain.Models.Permission'.(¢ÃŒÀüÿÿÿÿ
+d
+java:S1128"IRemove this unused import 'nl.brickx.domain.Models.AuthenticationResult'.(•‹ƒ´ûÿÿÿÿ

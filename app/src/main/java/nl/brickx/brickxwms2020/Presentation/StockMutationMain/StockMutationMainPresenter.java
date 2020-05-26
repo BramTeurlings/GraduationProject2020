@@ -311,7 +311,7 @@ public class StockMutationMainPresenter implements StockMutationMainContract.Pre
     }
 
     private void onLoginFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, throwable.getLocalizedMessage());
         onApiRequestCompleted();
         changeLoadingState();
         view.setErrorMessage(context.getString(R.string.product_error_message));

@@ -79,7 +79,6 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickOverviewFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.order_pick_fragment_container, orderPickFragment).hide(orderPickFragment).commit();
         presenter.getLocalSaveData();
-        //presenter.getDataForFragments(orderName);
         bottomNavigationView.getMenu().findItem(R.id.navigation_end).setChecked(true);
     }
 
@@ -101,7 +100,6 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //Todo: Change state for presenters
                         orderPickOverviewFragment.changeLoadingState(isLoading);
                         orderPickFragment.changeLoadingState(isLoading);
                     }
@@ -148,7 +146,6 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
                 orderPickOverviewFragment.data.get(i).setOpenSerialnumbers(serialnumbers.getGetAvailableBatchNumbersResult());
             }
         }
-        //Todo: Could be removed later after some testing.
         orderPickFragment.updateFragmentData();
         orderPickOverviewFragment.updateAdapterData();
     }
@@ -219,7 +216,6 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
 
     @Override
     public void onDestroy(){
-        //Todo: Save order list
         if(bottomNavigationView.getSelectedItemId() == R.id.navigation_main){
             presenter.saveLocalSaveData(orderPickFragment.data);
         }else{
@@ -231,7 +227,6 @@ public class OrderPickActivity extends DaggerAppCompatActivity implements OrderP
 
     @Override
     public void onPause(){
-        //Todo: Save order list
         if(bottomNavigationView.getSelectedItemId() == R.id.navigation_main){
             presenter.saveLocalSaveData(orderPickFragment.data);
         }else{

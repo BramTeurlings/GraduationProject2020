@@ -10,7 +10,6 @@ public interface OrderPickFragmentContract {
     interface Presenter {
 
         void removeSerialnumber(OrderPickSerialStatusModel serialStatusModel);
-        void startPresenting();
     }
 
     interface View {

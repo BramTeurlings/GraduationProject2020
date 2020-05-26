@@ -1,0 +1,15 @@
+
+P
+java:S1068"5Remove this unused "tempLocationModel" private field.(¯£ºÚùÿÿÿÿ
+H
+java:S1135/"2Complete the task associated to this TODO comment.(Ã—²ú
+y
+java:S1488""^Immediately return this expression instead of assigning it to the temporary variable "holder".(´¬® þÿÿÿÿ
+E
+java:S1068"/Remove this unused "productScan" private field.(«ŸÎÂ
+p
+java:S1450"ZRemove the "productScan" field and declare it as a local variable in the relevant methods.(«ŸÎÂ
+K
+java:S1068"0Remove this unused "recyclerView" private field.(¿á© ýÿÿÿÿ
+v
+java:S1450"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ýÿÿÿÿ

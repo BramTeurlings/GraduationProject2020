@@ -1,0 +1,11 @@
+
+<
+java:S1170"!Make this final field static too.(Š·»”øÿÿÿÿ
+@
+java:S1068"+Remove this unused "context" private field.(êÝç
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¹ÁãÒ
+V
+java:S1068"@Remove this unused "tempProductInfoRecyclerModel" private field.(„òƒà
+h	java:S116"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Š·»”øÿÿÿÿ
+B
+java:S1068"'Remove this unused "TAG" private field.(Š·»”øÿÿÿÿ

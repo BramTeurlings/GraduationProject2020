@@ -1,0 +1,13 @@
+
+T
+java:S18546">Remove this useless assignment to local variable "amountText".(­‘ÜÎ
+v
+java:S1450"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ýÿÿÿÿ
+M
+java:S1135B"2Complete the task associated to this TODO comment.(âƒ¾ãüÿÿÿÿ
+A
+java:S1068"+Remove this unused "handler" private field.(Æ¶Ø…
+E
+java:S54119"*Use the primitive boolean expression here.(ÓÀ¶–ýÿÿÿÿ
+K
+java:S1068"0Remove this unused "recyclerView" private field.(¿á© ýÿÿÿÿ

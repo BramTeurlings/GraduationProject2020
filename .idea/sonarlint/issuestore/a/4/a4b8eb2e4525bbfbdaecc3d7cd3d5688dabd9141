@@ -1,0 +1,5 @@
+
+g	java:S116"MRename this field "Id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(á³À¬úÿÿÿÿ
+	java:S116
+"eRename this field "SaveReservationLocationDto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ÙŒÏþÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ðÉÌÒúÿÿÿÿ

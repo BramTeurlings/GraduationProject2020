@@ -2,10 +2,12 @@ package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOvervi
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -28,8 +30,8 @@ import static android.content.ContentValues.TAG;
 
 public class OrderPickOverviewFragmentPresenter implements OrderPickOverviewFragmentContract.Presenter {
 
-    Context context;
-    Boolean isLoading = false;
+    private Context context;
+    private Boolean isLoading = false;
     private List<Disposable> disposables = new ArrayList<>();
     private CloseOrderPick closeOrderPick;
     private UserDataManager userDataManager;
@@ -85,13 +87,15 @@ public class OrderPickOverviewFragmentPresenter implements OrderPickOverviewFrag
                             this::onGetApiDataFailed,
                             () -> onOrderPickClosed(result.get())));
         }else{
-            //Todo: Alert that order pick is empty.
+            Toast.makeText(context, "Order pick is leeg.", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     private void onOrderPickClosed(Boolean result){
-
+        if(result){
+            Toast.makeText(context, "Orderpick afgerond.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void onApiRequestStarted(){
@@ -103,15 +107,14 @@ public class OrderPickOverviewFragmentPresenter implements OrderPickOverviewFrag
     }
 
     private void changeLoadingState(){
-        //view.changeLoadingState(isLoading);
+        Log.i(TAG, "changeLoadingState is not needed yet so it is not yet implemented.");
     }
 
     private void onGetApiDataFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, Objects.requireNonNull(throwable.getLocalizedMessage()));
         onApiRequestCompleted();
         changeLoadingState();
-        //Todo: Display error message.
-        //view.setErrorMessage(context.getString(R.string.product_error_message));
+        Toast.makeText(context, "Er is een probleem opgetreden tijdens het ophalen van API data. Probeer het opnieuw.", Toast.LENGTH_LONG).show();
     }
 
     @Override

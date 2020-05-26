@@ -14,7 +14,6 @@ import nl.brickx.domain.Models.OrderPickPickListModel;
 
 public class ViewPagerFragmentAdapter extends FragmentStatePagerAdapter {
 
-    //Todo: Insert data list here
     public List<OrderPickPickListModel> data = new ArrayList<>();
     private OrderPickProductFragment orderPickProductFragment;
 
@@ -44,7 +43,6 @@ public class ViewPagerFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        //Todo: Count data list
         return data.size();
     }
 }

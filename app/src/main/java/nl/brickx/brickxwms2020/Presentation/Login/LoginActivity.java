@@ -4,23 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
-
-import androidx.lifecycle.Observer;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivity;
-import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.brickxwms2020.R;
-import nl.brickx.domain.Models.Gson.ApiUserRightsEnum;
-import nl.brickx.domain.Models.Permission;
+import nl.brickx.domain.Models.AuthenticationResult;
 import nl.brickx.domain.Models.User;
 
 public class LoginActivity extends DaggerAppCompatActivity implements LoginContract.View {
@@ -50,7 +40,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginContr
     /**
      * Brings user to next screen once authentication is completed.
      */
-    public void AuthenticationCompleted(){
+    public void authenticationCompleted(){
         Intent intent = new Intent(this, MainMenuActivity.class);
         startActivity(intent);
     }
@@ -63,7 +53,7 @@ public class LoginActivity extends DaggerAppCompatActivity implements LoginContr
     @Override
     public void onAuthenticationDataReceived(AuthenticationResult result) {
         if(result.getAuthenticated()){
-            AuthenticationCompleted();
+            authenticationCompleted();
         }
     }
 

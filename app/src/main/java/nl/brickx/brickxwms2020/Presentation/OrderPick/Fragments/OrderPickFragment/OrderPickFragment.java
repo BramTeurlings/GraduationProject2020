@@ -2,8 +2,6 @@ package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragme
 
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,30 +12,23 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import javax.inject.Inject;
-
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickProductsFragments.ViewPagerFragmentAdapter;
-import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewAdapter;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivity;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.OrderPickPickListModel;
@@ -51,7 +42,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     private Boolean expansionToggle = false;
     private String[] strings;
     public List<OrderPickPickListModel> data;
-    public List<OrderPickSerialStatusModel> serialNumbers = new ArrayList<>();
+    private List<OrderPickSerialStatusModel> serialNumbers = new ArrayList<>();
     private RecyclerView statusSerialNumberRecycler;
     private ImageView statusExpander;
     private ConstraintLayout statusSerialNumbersConstraint;
@@ -256,7 +247,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
         amountPickedText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(amountPickedText.getText().equals("0")){
+                if(amountPickedText.getText().toString().equals("0")){
                     amountPickedText.setText(String.valueOf(""));
                 }
                 amountPickedText.setSelection(amountPickedText.getText().length());
@@ -288,7 +279,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
                         data.get(imageViewPager.getCurrentItem()).setQuantityPicked(Integer.parseInt(amountPickedText.getText().toString()));
                     }
                 } catch (Exception e){
-                    e.printStackTrace();
+                    Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
                     data.get(imageViewPager.getCurrentItem()).setQuantityMet(false);
                     completedButton.setBackgroundTintList(ColorStateList.valueOf(getContext().getResources().getColor(R.color.colorPrimary)));
                 }
@@ -339,13 +330,13 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
         try{
             amountPickedText.setText(String.valueOf(data.get(imageViewPager.getCurrentItem()).getQuantityPicked()));
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
             Log.i(TAG, "Edit text not visible on screen.");
         }
     }
 
     private void onLocationScanned(){
-        //Todo: Change color of textfields on ViewPager.
+        Log.i(TAG, "OnLocationScanned method not yet implemented.");
     }
 
     public void onPickListDataReceived(List<OrderPickPickListModel> data){
@@ -358,7 +349,6 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
     @Override
     public void handleScan(String scan) {
         if(data.get(imageViewPager.getCurrentItem()).getLocationScanned()){
-            //Todo: Add check for other barcodes here.
             if(Objects.equals(scan, data.get(imageViewPager.getCurrentItem()).getProductSku()) || Objects.equals(scan, data.get(imageViewPager.getCurrentItem()).getProductEAN()) || Objects.equals(scan, data.get(imageViewPager.getCurrentItem()).getProductUPC()) || Objects.equals(scan, data.get(imageViewPager.getCurrentItem()).getProductCustomBarcode())){
                 plusPickedAmount();
             }else{
@@ -390,7 +380,7 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
 
     @Override
     public void setErrorMessage(String message) {
-        Snackbar.make(this.getView(), message, Snackbar.LENGTH_LONG)
+        Snackbar.make(Objects.requireNonNull(this.getView()), message, Snackbar.LENGTH_LONG)
                 .setAction("Retry", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -459,7 +449,9 @@ public class OrderPickFragment extends DaggerFragment implements OrderPickFragme
             int currentAmount = -1;
             try{
                 currentAmount = Integer.parseInt(amountPickedText.getText().toString());
-            }catch (Exception e){}
+            }catch (Exception e){
+                Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
+            }
 
             if(currentAmount > 0){
                 currentAmount--;

@@ -1,0 +1,20 @@
+
+†
+java:S1450("kRemove the "tempProductInfoRecyclerModel" field and declare it as a local variable in the relevant methods.(îÆ¼ªüÿÿÿÿ
+m
+java:S3776x"RRefactor this method to reduce its Cognitive Complexity from 97 to the 15 allowed.(Â»Éâùÿÿÿÿ
+I
+java:S1135®"2Complete the task associated to this TODO comment.(İŒÖ½
+Z
+java:S1155½">Use isEmpty() to check whether the collection is empty or not.(ØÜµÜüÿÿÿÿ
+T	java:S106§"9Replace this use of System.out or System.err by a logger.(ã¬Ó­ÿÿÿÿÿ
+Q
+java:S1141¢"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+@
+java:S5411U"*Use the primitive boolean expression here.(ÏÍÏŒ
+H
+java:S1135}"2Complete the task associated to this TODO comment.(Êâ¬
+‚
+java:S1450)"lRemove the "tempLocationInfoRecyclerModel" field and declare it as a local variable in the relevant methods.(Ü€¹Ç
+A
+java:S5411¡"*Use the primitive boolean expression here.(ÈÅí†

@@ -5,9 +5,6 @@ import android.app.Activity;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuContract;
-import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuPresenter;
-import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivity;
 
 @Module
 public interface LocationInfoActivityModule {

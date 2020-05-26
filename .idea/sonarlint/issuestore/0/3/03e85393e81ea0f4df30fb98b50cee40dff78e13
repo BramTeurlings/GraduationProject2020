@@ -1,0 +1,6 @@
+
+s	java:S1316"YComplete cases by adding the missing enum constants or add a default case to this switch.(¹ô¹õúÿÿÿÿ
+v
+java:S1450"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ýÿÿÿÿ
+K
+java:S1068"0Remove this unused "recyclerView" private field.(¿á© ýÿÿÿÿ

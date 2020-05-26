@@ -1,9 +1,6 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickProductsFragments;
 
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.transition.Visibility;
 import androidx.viewpager.widget.ViewPager;
 
 import nl.brickx.brickxwms2020.R;
@@ -23,16 +19,16 @@ import nl.brickx.domain.Models.OrderPickPickListModel;
 public class OrderPickProductFragment extends Fragment {
     ViewPagerFragmentAdapter adapter;
     ViewPager viewPager;
-    TextView productNameText;
-    TextView productNameTitleText;
-    TextView locationText;
-    TextView warehouseText;
-    TextView warehouseTitleText;
-    TextView amountToPickText;
-    TextView amountToPickTitleText;
-    TextView orderInfoTitle;
-    ImageView imageView;
-    ProgressBar loadingIcon;
+    private TextView productNameText;
+    private TextView productNameTitleText;
+    private TextView locationText;
+    private TextView warehouseText;
+    private TextView warehouseTitleText;
+    private TextView amountToPickText;
+    private TextView amountToPickTitleText;
+    private TextView orderInfoTitle;
+    private ImageView imageView;
+    private ProgressBar loadingIcon;
 
     public OrderPickProductFragment() {
 

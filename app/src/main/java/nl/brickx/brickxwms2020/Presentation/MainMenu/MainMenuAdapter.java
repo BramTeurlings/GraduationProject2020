@@ -1,5 +1,6 @@
 package nl.brickx.brickxwms2020.Presentation.MainMenu;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import com.google.android.material.card.MaterialCardView;
 import nl.brickx.domain.Models.MainMenuRecyclerModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import nl.brickx.brickxwms2020.R;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRecyclerViewholder> {
 
@@ -29,8 +33,7 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
     @Override
     public MainMenuAdapter.InfoRecyclerViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_menu_recycler_item, parent, false);
-        InfoRecyclerViewholder holder = new InfoRecyclerViewholder(view);
-        return holder;
+        return new InfoRecyclerViewholder(view);
     }
 
     @Override
@@ -42,15 +45,12 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
 
     @Override
     public void onBindViewHolder(@NonNull InfoRecyclerViewholder holder, int position) {
-        //Todo: Make a good catch and multiple tries.
         try{
             holder.textView.setText(data.get(position).getTitle());
             holder.imageView.setImageDrawable(data.get(position).getImage());
             holder.primaryCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Todo: Fix injection.
-                    System.out.println("CLICK! - " + position);
                     switch(data.get(position).getIdentifier()){
                         case PRODUCT_INFO_ITEM:
                             navigator.navigateToProductInfo();
@@ -71,7 +71,7 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.InfoRe
                 }
             });
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
     }
 

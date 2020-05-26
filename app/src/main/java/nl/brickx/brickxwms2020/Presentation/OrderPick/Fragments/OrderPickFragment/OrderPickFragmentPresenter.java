@@ -2,9 +2,7 @@ package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragme
 
 import android.content.Context;
 import android.util.Log;
-
 import javax.inject.Inject;
-
 import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.OrderPickSerialStatusModel;
 
@@ -31,10 +29,5 @@ public class OrderPickFragmentPresenter implements OrderPickFragmentContract.Pre
         }catch(Exception e){
             Log.i(TAG, "Unable to remove serialnumber.");
         }
-    }
-
-    @Override
-    public void startPresenting() {
-
     }
 }

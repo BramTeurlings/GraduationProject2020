@@ -1,0 +1,40 @@
+
+y
+java:S14500"^Remove the "locationAdapter" field and declare it as a local variable in the relevant methods.(ü°åÊûÿÿÿÿ
+x
+java:S14501"]Remove the "productAdapter" field and declare it as a local variable in the relevant methods.(™í²ÿÿÿÿÿ
+m
+java:S3776L"RRefactor this method to reduce its Cognitive Complexity from 68 to the 15 allowed.(ž¨Œþÿÿÿÿ
+E
+java:S5411v"*Use the primitive boolean expression here.(™÷ßÏýÿÿÿÿ
+F
+java:S5411š"*Use the primitive boolean expression here.(™÷ßÏýÿÿÿÿ
+q
+java:S14504"VRemove the "strings" field and declare it as a local variable in the relevant methods.(„ÛÉîüÿÿÿÿ
+h	java:S116D"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ùµðüýÿÿÿÿ
+Q
+java:S1141¬"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+F
+java:S5411õ"*Use the primitive boolean expression here.(™÷ßÏýÿÿÿÿ
+T
+java:S1155²">Use isEmpty() to check whether the collection is empty or not.(ÂÉÓg
+X
+java:S1117™"ARename "serialNumbers" which hides the field declared at line 50.(øéÀÃ
+J
+java:S1066k"/Merge this if statement with the enclosing one.(Éž´áûÿÿÿÿ
+F
+java:S5411ƒ"*Use the primitive boolean expression here.(µ³Èžùÿÿÿÿ
+A
+java:S5411·"*Use the primitive boolean expression here.(ƒ²‡Û
+F
+java:S5411­"*Use the primitive boolean expression here.(šÈÐùüÿÿÿÿ
+F
+java:S5411Ë"*Use the primitive boolean expression here.(÷ª™Ãÿÿÿÿÿ
+s
+java:S1450/"]Remove the "mutationButton" field and declare it as a local variable in the relevant methods.(ðð³Â
+A
+java:S5411µ"*Use the primitive boolean expression here.(¶í©Ô
+<
+java:S1170D"!Make this final field static too.(Ùµðüýÿÿÿÿ
+n
+java:S11042"YMake serialNumbers a static final constant or non-public and provide accessors if needed.(õŒÍ?

@@ -1,28 +1,24 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPickLanding;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-import javax.inject.Inject;
+import java.util.Objects;
 
 import nl.brickx.brickxwms2020.R;
-import nl.brickx.data.Dagger.DataContext;
-import nl.brickx.domain.Models.LocationInfoRecyclerModel;
-import nl.brickx.domain.Models.MenuItemIdentifier;
 import nl.brickx.domain.Models.OrderPickLandingRecyclerModel;
 import nl.brickx.domain.Models.OrderPickLandingStatus;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class OrderPickLandingAdapter extends RecyclerView.Adapter<OrderPickLandingAdapter.InfoRecyclerViewholder>{
 
@@ -87,7 +83,7 @@ public class OrderPickLandingAdapter extends RecyclerView.Adapter<OrderPickLandi
                 }
             });
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
     }
 

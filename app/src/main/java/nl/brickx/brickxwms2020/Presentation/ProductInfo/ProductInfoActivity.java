@@ -24,6 +24,8 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.Presentation.LocationInfo.LocationInfoAdapter;
@@ -102,7 +104,6 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         combinedInputLayout = findViewById(R.id.combined_info_textInputLayout);
         loadingProgressBar = findViewById(R.id.loadingIcon);
 
-        //Todo: Add listener for recyclerview items to toggle the click.
         barcodeCardView.setOnClickListener(this::onClickBarcodes);
         barcodeCardView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
         detailsCardView.setOnClickListener(this::onClickDetails);
@@ -110,7 +111,6 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
         propertiesCardView.setOnClickListener(this::onClickProperties);
         propertiesCardView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
 
-        //Todo: Make less jank if possible.
         propertiesClickCatcherView.setOnClickListener(this::onClickProperties);
 
         barcodeInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -119,7 +119,7 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
                 // If the event is a key-down event on the "enter" button
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(barcodeInput.getWindowToken(), 0);
+                    Objects.requireNonNull(imm).hideSoftInputFromWindow(barcodeInput.getWindowToken(), 0);
                     onBarcodeScanned();
                     return true;
                 }
@@ -127,7 +127,6 @@ public class ProductInfoActivity extends DaggerAppCompatActivity implements Prod
             }
         });
 
-        //Todo: Remove mock code.
         ProductInfoHolder holder = new ProductInfoHolder();
         setTextViews(holder);
         initRecyclerViews();

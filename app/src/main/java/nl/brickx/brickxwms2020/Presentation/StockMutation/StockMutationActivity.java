@@ -127,6 +127,7 @@ public class StockMutationActivity extends DaggerAppCompatActivity implements St
                 // If the event is a key-down event on the "enter" button
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    assert imm != null;
                     imm.hideSoftInputFromWindow(barcodeInput.getWindowToken(), 0);
                     onBarcodeScanned();
                     return true;
@@ -135,7 +136,6 @@ public class StockMutationActivity extends DaggerAppCompatActivity implements St
             }
         });
 
-        //Todo: Remove mock code.
         ProductInfoHolder holder = new ProductInfoHolder();
         setTextViews(holder);
         initRecyclerViews();

@@ -1,5 +1,6 @@
 package nl.brickx.brickxwms2020.Presentation.StockTransferMain;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
+import java.util.Objects;
 
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class StockTransferMainLocationToAdapter extends RecyclerView.Adapter<StockTransferMainLocationToAdapter.InfoRecyclerViewholder>{
 
@@ -47,7 +51,7 @@ public class StockTransferMainLocationToAdapter extends RecyclerView.Adapter<Sto
         try {
             holder.locationTextView.setText(String.valueOf(data.get(position).getLocationTag()));
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
 
         holder.deleteCard.setOnClickListener(new View.OnClickListener() {

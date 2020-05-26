@@ -1,5 +1,6 @@
 package nl.brickx.brickxwms2020.Presentation.LocationInfo;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,13 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+import java.util.Objects;
+
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapter.InfoRecyclerViewholder>{
 
     private List<LocationInfoRecyclerModel> data;
-    private RecyclerView recyclerView;
 
     public LocationInfoAdapter(List<LocationInfoRecyclerModel> items) {
         data = items;
@@ -22,15 +26,12 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
     @Override
     public LocationInfoAdapter.InfoRecyclerViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_info_recycler_item, parent, false);
-        LocationInfoAdapter.InfoRecyclerViewholder holder = new LocationInfoAdapter.InfoRecyclerViewholder(view);
-        return holder;
+        return new LocationInfoAdapter.InfoRecyclerViewholder(view);
     }
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-
-        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -46,7 +47,7 @@ public class LocationInfoAdapter extends RecyclerView.Adapter<LocationInfoAdapte
                 holder.descriptionTextView.setText(data.get(position).getLocation());
             }
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
     }
 

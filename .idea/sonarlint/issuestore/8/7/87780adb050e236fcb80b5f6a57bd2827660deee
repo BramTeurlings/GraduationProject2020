@@ -1,0 +1,6 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ğÉÌÒúÿÿÿÿ
+g	java:S116"RRename this field "DoPrint" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·‡Š§
+g	java:S116"MRename this field "Id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(á³À¬úÿÿÿÿ
+s	java:S116
+"^Rename this field "SavePickSlipLineDto" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âËÂ

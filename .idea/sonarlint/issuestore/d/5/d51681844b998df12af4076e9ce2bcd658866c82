@@ -1,0 +1,19 @@
+
+d
+java:S1128"NRemove this unused import 'com.google.android.material.button.MaterialButton'.(Õ­íÄ
+E
+java:S5411L"*Use the primitive boolean expression here.(ÑŠåûÿÿÿÿ
+k
+java:S1128"URemove this unused import 'nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers'.(¿¯òÃ
+S
+java:S1155M">Use isEmpty() to check whether the collection is empty or not.(¿¦Ím
+v
+java:S1450!"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ýÿÿÿÿ
+K
+java:S1172x"0Remove this unused method parameter "productId".(€ŸÓ©üÿÿÿÿ
+K
+java:S1068!"0Remove this unused "recyclerView" private field.(¿á© ýÿÿÿÿ
+H
+java:S1135;"2Complete the task associated to this TODO comment.(Ã—²ú
+F
+java:S1128"0Remove this unused import 'javax.inject.Inject'.(ì–íÔ

@@ -1,0 +1,10 @@
+
+q	java:S116
+"\Rename this field "ToLocationScanTag" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åýÐå
+u	java:S116"`Rename this field "SelectedSerialNumbers" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(þÿé‚
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ðÉÌÒúÿÿÿÿ
+h	java:S116"SRename this field "Quantity" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÎÈÏÞ
+M
+java:S1948"7Make "SelectedSerialNumbers" transient or serializable.(þÿé‚
+p	java:S116"VRename this field "ProductScan" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔéÔ±ýÿÿÿÿ
+x	java:S116	"^Rename this field "FromLocationScanTag" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’Ø¦¯øÿÿÿÿ

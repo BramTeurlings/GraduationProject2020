@@ -1,29 +1,26 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment;
 
 import android.content.Context;
-import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
-import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityContract;
+import java.util.Objects;
 import nl.brickx.brickxwms2020.R;
+import static android.content.ContentValues.TAG;
 import nl.brickx.domain.Models.OrderPickSerialStatusModel;
+
 
 public class OrderPickStatusSerialNumbersAdapter extends RecyclerView.Adapter<OrderPickStatusSerialNumbersAdapter.InfoRecyclerViewholder>{
 
     private List<OrderPickSerialStatusModel> data;
-    private RecyclerView recyclerView;
     private Context context;
     private OrderPickFragmentContract.Presenter presenter;
-    private Handler handler;
 
     OrderPickStatusSerialNumbersAdapter(List<OrderPickSerialStatusModel> data) {
         this.data = data;
@@ -40,7 +37,6 @@ public class OrderPickStatusSerialNumbersAdapter extends RecyclerView.Adapter<Or
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -62,7 +58,7 @@ public class OrderPickStatusSerialNumbersAdapter extends RecyclerView.Adapter<Or
                 }
             });
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
     }
 

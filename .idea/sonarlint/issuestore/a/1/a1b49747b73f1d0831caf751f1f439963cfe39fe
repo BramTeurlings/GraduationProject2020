@@ -1,0 +1,9 @@
+
+V	java:S107"AConstructor has 8 parameters, which is greater than 7 authorized.(À´»Ï
+]
+java:S1128"GRemove this unused import 'com.google.gson.annotations.SerializedName'.(äöúõ
+W	java:S1071"BConstructor has 10 parameters, which is greater than 7 authorized.(ÇÖ¹›
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ðÉÌÒúÿÿÿÿ
+Z
+java:S1128"?Remove this unused import 'com.google.gson.annotations.Expose'.(î³ÓÆùÿÿÿÿ
+[	java:S107%"AConstructor has 9 parameters, which is greater than 7 authorized.(Ë‡°•ûÿÿÿÿ

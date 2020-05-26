@@ -8,6 +8,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,9 +27,9 @@ import static android.content.ContentValues.TAG;
 
 public class OrderPickLandingPresenter implements OrderPickLandingContract.Presenter {
 
-    Context context;
-    Boolean isLoading = false;
-    OrderPickLandingContract.View view;
+    private Context context;
+    private Boolean isLoading = false;
+    private OrderPickLandingContract.View view;
     private List<Disposable> disposables = new ArrayList<>();
     private GetOrdersToPickByKey getOrdersToPickByKey;
     private UserDataManager userDataManager;
@@ -49,18 +50,18 @@ public class OrderPickLandingPresenter implements OrderPickLandingContract.Prese
             final List<OrderPickLanding> result = new ArrayList<>();
             System.out.println(new Date());
             this.disposables.add(getOrdersToPickByKey.invoke(getUserData().getApiKey())
-                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .doOnNext(c -> Log.i(TAG,"processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe( s -> result.add(s),
-                            t -> onLoginFailed(t),
+                    .subscribe(result::add,
+                            this::onLoginFailed,
                             () -> onProductInfoFetched(result)));
         }
     }
 
     @Override
     public void getPickslipByNumber(String number) {
-        //Todo:
+        Log.i(TAG, "getPickslipsByNumber not implemented.");
     }
 
     public User getUserData() {
@@ -121,6 +122,7 @@ public class OrderPickLandingPresenter implements OrderPickLandingContract.Prese
                 try {
                     //Execute View code.
                     view.clearBarcodeInput();
+                    //Todo: Implement this.
                     view.getPickslipByScan(intent.getStringExtra(context.getResources().getString(R.string.datawedge_intent_key_data)).replace("\n", ""));
                 } catch (Exception e) {
                     Log.i(TAG, "Unable to read data from scanner.");
@@ -142,7 +144,7 @@ public class OrderPickLandingPresenter implements OrderPickLandingContract.Prese
     }
 
     private void onLoginFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, Objects.requireNonNull(throwable.getLocalizedMessage()));
         onApiRequestCompleted();
         changeLoadingState();
         view.setErrorMessage(context.getString(R.string.product_error_message));

@@ -1,0 +1,17 @@
+
+Q
+java:S1141Ò"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+p
+java:S2293‹"YReplace the type specification in this constructor call with the diamond operator ("<>").(ïüåë
+t
+java:S2293r"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÆáÄüÿÿÿÿ
+>
+java:S1604ø"(Make this anonymous inner class a lambda(ç’ƒL
+i
+java:S3776¨"RRefactor this method to reduce its Cognitive Complexity from 93 to the 15 allowed.(¥‹Ô×
+T	java:S106Ö"9Replace this use of System.out or System.err by a logger.(ã¬Ó­ÿÿÿÿÿ
+q
+java:S1192h"[Define a constant instead of duplicating this literal "processing item on thread " 6 times.(æÂ
+F
+java:S5411Ñ"*Use the primitive boolean expression here.(Ÿç×±üÿÿÿÿ
+[	java:S107<"AConstructor has 8 parameters, which is greater than 7 authorized.(„™İæıÿÿÿÿ

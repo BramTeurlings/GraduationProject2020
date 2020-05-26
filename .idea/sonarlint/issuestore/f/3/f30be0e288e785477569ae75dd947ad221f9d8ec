@@ -1,0 +1,34 @@
+
+J
+java:S1066m"/Merge this if statement with the enclosing one.(É´áûÿÿÿÿ
+q
+java:S14504"VRemove the "strings" field and declare it as a local variable in the relevant methods.(„ÛÉîüÿÿÿÿ
+h	java:S116B"NRename this field "TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È¾‰ºúÿÿÿÿ
+Q
+java:S1141¨"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+E
+java:S5411|"*Use the primitive boolean expression here.(µ³Èùÿÿÿÿ
+m
+java:S3776J"RRefactor this method to reduce its Cognitive Complexity from 40 to the 15 allowed.(¨Œşÿÿÿÿ
+<
+java:S1170B"!Make this final field static too.(È¾‰ºúÿÿÿÿ
+F
+java:S5411Ù"*Use the primitive boolean expression here.(™÷ßÏıÿÿÿÿ
+F
+java:S5411£"*Use the primitive boolean expression here.(šÈĞùüÿÿÿÿ
+X
+java:S1117¡"ARename "serialNumbers" which hides the field declared at line 50.(øéÀÃ
+E
+java:S5411\"*Use the primitive boolean expression here.(™÷ßÏıÿÿÿÿ
+F
+java:S5411¢"*Use the primitive boolean expression here.(™÷ßÏıÿÿÿÿ
+p
+java:S14500"ZRemove the "fromAdapter" field and declare it as a local variable in the relevant methods.(ñıÛ½
+n
+java:S11042"YMake serialNumbers a static final constant or non-public and provide accessors if needed.(õŒÍ?
+N
+java:S1135"2Complete the task associated to this TODO comment.(±Ÿ¿ªøÿÿÿÿ
+M
+java:S1135{"2Complete the task associated to this TODO comment.(äşàüÿÿÿÿ
+x
+java:S1450."]Remove the "transferButton" field and declare it as a local variable in the relevant methods.(ÄòÓÍùÿÿÿÿ

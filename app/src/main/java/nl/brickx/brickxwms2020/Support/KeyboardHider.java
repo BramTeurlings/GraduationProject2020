@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
 
@@ -20,7 +21,7 @@ public class KeyboardHider {
             }
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
             Log.e(TAG, "Unable to close keybaord");
         }
     }

@@ -1,5 +1,6 @@
 package nl.brickx.brickxwms2020.Presentation.StockMutationMain;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
+import java.util.Objects;
 
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.LocationInfoRecyclerModel;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class StockMutationMainLocationAdapter extends RecyclerView.Adapter<StockMutationMainLocationAdapter.InfoRecyclerViewholder>{
 
@@ -49,7 +53,7 @@ public class StockMutationMainLocationAdapter extends RecyclerView.Adapter<Stock
             holder.stockAmountTextView.setText(data.get(position).getProductStock().toString());
             holder.descriptionTextView.setText(data.get(position).getLocation());
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
     }
 

@@ -1,0 +1,28 @@
+
+A
+java:S5411„"*Use the primitive boolean expression here.(ÏÍÏŒ
+T	java:S106Š"9Replace this use of System.out or System.err by a logger.(ã¬Ó­ÿÿÿÿÿ
+S	java:S106K"9Replace this use of System.out or System.err by a logger.(ê–å øÿÿÿÿ
+S	java:S106M"9Replace this use of System.out or System.err by a logger.(ã¬Ó­ÿÿÿÿÿ
+@
+java:S5411–"*Use the primitive boolean expression here.(²˜O
+†
+java:S1450&"kRemove the "tempProductInfoRecyclerModel" field and declare it as a local variable in the relevant methods.(îÆ¼ªüÿÿÿÿ
+T	java:S106Ÿ"9Replace this use of System.out or System.err by a logger.(ê–å øÿÿÿÿ
+G
+java:S1612Q",Replace this lambda with a method reference.(Ÿî¦¯ıÿÿÿÿ
+H
+java:S1612",Replace this lambda with a method reference.(Ÿî¦¯ıÿÿÿÿ
+@
+java:S5411G"*Use the primitive boolean expression here.(ÏÍÏŒ
+G
+java:S1612P",Replace this lambda with a method reference.(à°ä’ûÿÿÿÿ
+T	java:S106ˆ"9Replace this use of System.out or System.err by a logger.(ê–å øÿÿÿÿ
+H
+java:S1612",Replace this lambda with a method reference.(à°ä’ûÿÿÿÿ
+‚
+java:S1450'"lRemove the "tempLocationInfoRecyclerModel" field and declare it as a local variable in the relevant methods.(Ü€¹Ç
+n
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 64 to the 15 allowed.(Â»Éâùÿÿÿÿ
+I
+java:S1135£"2Complete the task associated to this TODO comment.(Êâ¬

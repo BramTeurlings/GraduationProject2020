@@ -1,0 +1,10 @@
+
+M
+java:S1128"2Remove this unused import 'io.reactivex.Flowable'.(©ˆ”çýÿÿÿÿ
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(–‘ÀÇ
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ö°ƒó
+‚
+java:S1488."lImmediately return this expression instead of assigning it to the temporary variable "authenticationSingle".(­ý‡ø
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(›ÌíŠüÿÿÿÿ

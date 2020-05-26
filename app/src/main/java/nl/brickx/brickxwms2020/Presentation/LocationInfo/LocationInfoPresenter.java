@@ -8,12 +8,11 @@ import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -57,11 +56,11 @@ public class LocationInfoPresenter implements LocationInfoContract.Presenter {
             changeLoadingState();
             List<LocationInfo> result = new ArrayList<>();
             disposables.add(getLocationInfoByScan.invoke(locationCode, userDataManager.GetUserData().getApiKey())
-                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .doOnNext(c -> Log.i(TAG, "processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe( s -> result.add(s),
-                            t -> onLoginFailed(t),
+                    .subscribe(result::add,
+                            this::onLoginFailed,
                             () -> onLocationInfoFetched(result)));
         }
     }
@@ -136,7 +135,7 @@ public class LocationInfoPresenter implements LocationInfoContract.Presenter {
     }
 
     private void onLoginFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, Objects.requireNonNull(throwable.getLocalizedMessage()));
         onApiRequestCompleted();
         changeLoadingState();
         view.setErrorMessage(context.getString(R.string.location_error_message));

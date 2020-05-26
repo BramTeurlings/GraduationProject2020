@@ -2,6 +2,7 @@ package nl.brickx.brickxwms2020.Presentation.StockTransferMain;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,13 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.Objects;
 
 import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragmentContract;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.OrderPickSerialStatusModel;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class StockTransferMainStatusSerialNumbersAdapter extends RecyclerView.Adapter<StockTransferMainStatusSerialNumbersAdapter.InfoRecyclerViewholder>{
 
@@ -62,7 +66,7 @@ public class StockTransferMainStatusSerialNumbersAdapter extends RecyclerView.Ad
                 }
             });
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
     }
 

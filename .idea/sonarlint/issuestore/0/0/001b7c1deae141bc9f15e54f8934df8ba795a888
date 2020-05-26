@@ -1,0 +1,20 @@
+
+y
+java:S1488/"^Immediately return this expression instead of assigning it to the temporary variable "holder".(œëİğûÿÿÿÿ
+o
+java:S1128"YRemove this unused import 'nl.brickx.data.OrderPickLanding.LocalOrderPickLandingService'.(È§ÚÏ
+E
+java:S1128"0Remove this unused import 'android.util.Base64'.(ìÔ×[
+[
+java:S1128"ERemove this unused import 'android.graphics.drawable.BitmapDrawable'.(³Ï÷
+z
+java:S1128"_Remove this unused import 'nl.brickx.domain.OrderPick.Landing.Data.OrderPickLandingRepository'.(„æù‘ûÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¼ÉàÑûÿÿÿÿ
+H
+java:S1068&"-Remove this unused "tempImage" private field.(‚¡ÓÌúÿÿÿÿ
+H
+java:S1128"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ
+v
+java:S1128"[Remove this unused import 'nl.brickx.domain.Models.Gson.OrderPickLanding.OrderPickLanding'.(¨õä†ùÿÿÿÿ
+V
+java:S1128";Remove this unused import 'android.graphics.BitmapFactory'.(âàºÍûÿÿÿÿ

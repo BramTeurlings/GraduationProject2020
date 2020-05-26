@@ -1,0 +1,19 @@
+
+H
+java:S1135t"2Complete the task associated to this TODO comment.(žÊâ¬
+I
+java:S1128".Remove this unused import 'android.os.Bundle'.(°þÊóøÿÿÿÿ
+@
+java:S5411="*Use the primitive boolean expression here.(ÏÍÏŒ
+m
+java:S3776o"RRefactor this method to reduce its Cognitive Complexity from 64 to the 15 allowed.(ÌÌ™½þÿÿÿÿ
+S	java:S106C"9Replace this use of System.out or System.err by a logger.(ã¬Ó­ÿÿÿÿÿ
+†
+java:S1450%"kRemove the "tempProductInfoRecyclerModel" field and declare it as a local variable in the relevant methods.(îÆ¼ªüÿÿÿÿ
+S
+java:S1128	"8Remove this unused import 'androidx.lifecycle.LiveData'.(ß„ÝÞþÿÿÿÿ
+‚
+java:S1450&"lRemove the "tempLocationInfoRecyclerModel" field and declare it as a local variable in the relevant methods.(Ü€¹Ç
+[
+java:S1128
+"@Remove this unused import 'androidx.lifecycle.MediatorLiveData'.(ªŠ¿¡ÿÿÿÿÿ

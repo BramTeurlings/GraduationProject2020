@@ -1,27 +1,17 @@
 package nl.brickx.brickxwms2020.Presentation.MainMenu;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerAppCompatActivity;
 import nl.brickx.brickxwms2020.R;
-import nl.brickx.domain.Models.MainMenuRecyclerModel;
 import nl.brickx.domain.Models.MenuCategory;
-import nl.brickx.domain.Models.Permission;
 import nl.brickx.domain.Models.User;
 
 public class MainMenuActivity extends DaggerAppCompatActivity {
@@ -74,23 +64,8 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
     }
 
     private void initRecyclerViews(){
-//        //Todo: Mock premissions
-//        List<Permission> permissions = new ArrayList<>();
-//        permissions.add(Permission.BATCH_PICK);
-//        permissions.add(Permission.GENERATE_LABEL);
-//        permissions.add(Permission.INCOMING_GOODS);
-//        permissions.add(Permission.LOCATION_INFO);
-//        permissions.add(Permission.ORDER_PICK);
-//        permissions.add(Permission.PRODUCT_INFO);
-//        permissions.add(Permission.SSCC);
-//        permissions.add(Permission.REPLENISHMENT);
-//        permissions.add(Permission.STOCK_COUNT);
-//        permissions.add(Permission.STOCK_MUTATION);
-//        permissions.add(Permission.STOCK_TRANSFER);
-
         user = presenter.getUserData();
 
-        //Todo: Get data from domain layer and data layer and bind to the correct adapter.
         activityAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(user.getPermissions(), MenuCategory.ACTIVITIES), navigator);
         infoAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(user.getPermissions(), MenuCategory.INFO), navigator);
         maintenanceAdapter = new MainMenuAdapter(presenter.getMenuContentByCategory(user.getPermissions(), MenuCategory.MAINTENANCE), navigator);
@@ -104,10 +79,10 @@ public class MainMenuActivity extends DaggerAppCompatActivity {
         maintenanceFeatureRecyclerView.setAdapter(maintenanceAdapter);
         maintenanceFeatureRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        ShowCategoryHeaders();
+        showCategoryHeaders();
     }
 
-    public void ShowCategoryHeaders(){
+    public void showCategoryHeaders(){
         if(activityAdapter.getItemCount() < 1){
             activityHeaderText.setVisibility(View.GONE);
         }else{

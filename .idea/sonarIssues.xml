@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="issues">
+    <option name="index">
+      <map>
+        <entry key="$PROJECT_DIR$/app/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/AppComponent.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/LocationInfo/LocationInfoActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/LocationInfo/LocationInfoActivityModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/LocationInfo/LocationInfoAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/LocationInfo/LocationInfoContract.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/LocationInfo/LocationInfoPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/Login/LoginActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/Login/LoginContract.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/Login/LoginPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/MainMenu/MainMenuActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/MainMenu/MainMenuActivityModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/MainMenu/MainMenuAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/MainMenu/MainMenuPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickFragment/OrderPickFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickFragment/OrderPickFragmentContract.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickFragment/OrderPickFragmentModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickFragment/OrderPickFragmentPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickFragment/OrderPickProductsFragments/OrderPickProductFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickFragment/OrderPickProductsFragments/ViewPagerFragmentAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickFragment/OrderPickStatusSerialNumbersAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickOverviewFragment/OrderPickOverviewAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickOverviewFragment/OrderPickOverviewFragment.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickOverviewFragment/OrderPickOverviewFragmentContract.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickOverviewFragment/OrderPickOverviewFragmentModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/Fragments/OrderPickOverviewFragment/OrderPickOverviewFragmentPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/OrderPickActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/OrderPickActivityContract.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/OrderPickActivityModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPick/OrderPickActivityPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPickLanding/OrderPickLandingActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPickLanding/OrderPickLandingActivityModule.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPickLanding/OrderPickLandingAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPickLanding/OrderPickLandingNavigator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/OrderPickLanding/OrderPickLandingPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/ProductInfo/ProductInfoActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/ProductInfo/ProductInfoAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/ProductInfo/ProductInfoPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutation/StockMutationActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutation/StockMutationAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutation/StockMutationLocationAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutation/StockMutationNavigator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutation/StockMutationPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutationMain/StockMutationMainActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutationMain/StockMutationMainLocationAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutationMain/StockMutationMainPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutationMain/StockMutationMainProductAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockMutationMain/StockMutationMainStatusSerialNumbersAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransfer/StockTransferAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransfer/StockTransferLocationAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransfer/StockTransferNavigator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransfer/StockTransferPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransferMain/StockTransferMainActivity.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransferMain/StockTransferMainLocationFromAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransferMain/StockTransferMainLocationToAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransferMain/StockTransferMainNavigator.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransferMain/StockTransferMainPresenter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Presentation/StockTransferMain/StockTransferMainStatusSerialNumbersAdapter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/app/src/main/java/nl/brickx/brickxwms2020/Support/KeyboardHider.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/build.gradle">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/data/src/main/java/nl/brickx/data/OrderPick/SaveOrderData/LocalSaveOrderPickRepository.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/gradle.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

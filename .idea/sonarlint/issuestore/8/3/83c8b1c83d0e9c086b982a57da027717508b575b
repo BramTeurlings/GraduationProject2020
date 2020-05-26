@@ -1,0 +1,8 @@
+
+f	java:S116"QRename this field "Reason" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¹¾œ­
+z	java:S116"`Rename this field "SelectedSerialNumbers" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Õ¼§îüÿÿÿÿ
+p	java:S116"VRename this field "ProductScan" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔéÔ±ýÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ðÉÌÒúÿÿÿÿ
+x	java:S116	"^Rename this field "FromLocationScanTag" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’Ø¦¯øÿÿÿÿ
+h	java:S116
+"SRename this field "Quantity" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãÖ²å

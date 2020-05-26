@@ -13,28 +13,21 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerFragment;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityContract;
-import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingAdapter;
 import nl.brickx.brickxwms2020.R;
-import nl.brickx.data.Dagger.DataContext;
 import nl.brickx.domain.Models.OrderPickPickListModel;
-import nl.brickx.domain.Users.UserDataManager;
 
 public class OrderPickOverviewFragment extends DaggerFragment implements OrderPickOverviewFragmentContract.View {
 
@@ -42,10 +35,10 @@ public class OrderPickOverviewFragment extends DaggerFragment implements OrderPi
     private RecyclerView orderItemRecycler;
     private OrderPickActivity parent;
     private OrderPickActivityContract.Navigator navigator;
-    MaterialButton bottomButton;
-    TextView totalArticlesPickedTextView;
-    ProgressBar progressBar;
-    OrderPickOverviewAdapter adapter;
+    private MaterialButton bottomButton;
+    private TextView totalArticlesPickedTextView;
+    private ProgressBar progressBar;
+    private OrderPickOverviewAdapter adapter;
 
     @Inject
     OrderPickOverviewFragmentContract.Presenter presenter;
@@ -84,7 +77,6 @@ public class OrderPickOverviewFragment extends DaggerFragment implements OrderPi
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        //Todo: Call close order pick.
                         presenter.closeOrderPick(data);
                         navigator.navigateToOrderPickLanding();
                         break;
@@ -102,9 +94,9 @@ public class OrderPickOverviewFragment extends DaggerFragment implements OrderPi
                 Context context = getContext();
                 Window view = ((AlertDialog)dialog).getWindow();
 
-                view.setBackgroundDrawableResource(R.color.true_white);
+                Objects.requireNonNull(view).setBackgroundDrawableResource(R.color.true_white);
                 Button negButton = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_NEGATIVE);
-                negButton.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+                negButton.setBackgroundColor(Objects.requireNonNull(context).getResources().getColor(R.color.colorPrimary));
                 negButton.setTextColor(context.getResources().getColor(R.color.true_white));
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -119,7 +111,6 @@ public class OrderPickOverviewFragment extends DaggerFragment implements OrderPi
         bottomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Handle closing order pick.
                 if(bottomButton.getText().equals(getContext().getString(R.string.order_pick_end_button_end))){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage("Weet je zeker dat je de orderpick wil afronden?").setPositiveButton("Ja", dialogClickListener)
@@ -171,7 +162,7 @@ public class OrderPickOverviewFragment extends DaggerFragment implements OrderPi
 
     @Override
     public void setErrorMessage(String message) {
-        Snackbar.make(this.getView(), message, Snackbar.LENGTH_LONG)
+        Snackbar.make(Objects.requireNonNull(this.getView()), message, Snackbar.LENGTH_LONG)
                 .setAction("Retry", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

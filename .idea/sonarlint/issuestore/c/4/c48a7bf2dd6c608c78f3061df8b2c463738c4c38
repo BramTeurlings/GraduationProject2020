@@ -1,0 +1,11 @@
+
+K
+java:S1068"0Remove this unused "recyclerView" private field.(¿á© ıÿÿÿÿ
+˜
+java:S1128"Remove this unused import 'nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragmentContract'.(éÔÙ
+@
+java:S54116"*Use the primitive boolean expression here.(§îæ
+v
+java:S1450"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ıÿÿÿÿ
+A
+java:S1068"+Remove this unused "handler" private field.(Æ¶Ø…

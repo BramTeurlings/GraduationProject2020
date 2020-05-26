@@ -1,0 +1,17 @@
+
+P
+java:S1141D"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+[
+java:S1124'"EReorder the modifiers to comply with the Java Language Specification.(ö°ƒó
+E
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ
+w
+java:S1450-"\Remove the "tempGetResult" field and declare it as a local variable in the relevant methods.(ìÊ–•øÿÿÿÿ
+s	java:S127G"XRefactor the code in order to not assign to this loop counter from within the loop body.(¨…ÄK8‡Üª‡¥.
+H
+java:S1135@"2Complete the task associated to this TODO comment.(Ïï‰
+Y
+java:S1128
+">Remove this unused import 'com.google.gson.reflect.TypeToken'.(İªıñøÿÿÿÿ
+`
+java:S1124&"EReorder the modifiers to comply with the Java Language Specification.(›éÕíúÿÿÿÿ

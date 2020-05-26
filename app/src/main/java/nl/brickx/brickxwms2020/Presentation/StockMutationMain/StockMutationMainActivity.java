@@ -25,6 +25,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -127,7 +128,6 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
         statusExpander.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Expand Menu toggle
                 if(!expansionToggle){
                     tempParams = statusSerialNumberRecycler.getLayoutParams();
                     tempParams.height = tempParams.height*2;
@@ -148,7 +148,6 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
             @Override
             public void onClick(View v) {
                 try{
-                    //Todo: Verify please
                     if(!fromItemLocationData.getLocationTag().equals("") && fromItemLocationData.getLocationTag() != null && (!amountInput.getText().toString().equals("") || serialNumbersAdapter.getItemCount() > 0)){
                         double quantity = 0;
                         List<BatchNumberSelectionModelDto> serialNumbers = new ArrayList<>();
@@ -193,7 +192,7 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
                     }
                 }catch (Exception e){
                     Log.i(TAG, "Unable to parse data required for stock transfer.");
-                    e.printStackTrace();
+                    Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
                 }
             }
         });
@@ -244,7 +243,6 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
     @Override
     public void onBarcodeScanned(String scan){
         if(fromItemLocationData.getSerialnumbersRequired()){
-            //Todo: See if serial number is valid.
             strings = scan.replaceAll("\\s+","").split(";");
             for(int i = 0; i < strings.length; i++){
                 if(!fromItemLocationData.getScannedNumbers().contains(strings[i]) && fromItemLocationData.getAvailibleNumbers().contains(strings[i])){
@@ -283,7 +281,7 @@ public class StockMutationMainActivity extends DaggerAppCompatActivity implement
 
     @Override
     public void onLocationInfoReceived(List<LocationInfoRecyclerModel> holder, String scan) {
-
+        Log.i(TAG, "onLocationInfoReceived not yet implemented");
     }
 
     @Override

@@ -1,8 +1,6 @@
 package nl.brickx.brickxwms2020.Presentation.MainMenu;
 
 import android.app.Activity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

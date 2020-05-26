@@ -1,6 +1,7 @@
 package nl.brickx.brickxwms2020;
 
 import javax.inject.Singleton;
+
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
@@ -11,10 +12,8 @@ import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityModule;
 import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingActivityModule;
 import nl.brickx.brickxwms2020.Presentation.ProductInfo.ProductInfoActivityModule;
 import nl.brickx.brickxwms2020.Presentation.StockMutation.StockMutationActivityModule;
-import nl.brickx.brickxwms2020.Presentation.StockMutationMain.StockMutationMainActivity;
 import nl.brickx.brickxwms2020.Presentation.StockMutationMain.StockMutationMainActivityModule;
 import nl.brickx.brickxwms2020.Presentation.StockTransfer.StockTransferActivityModule;
-import nl.brickx.brickxwms2020.Presentation.StockTransferMain.StockTransferMainActivity;
 import nl.brickx.brickxwms2020.Presentation.StockTransferMain.StockTransferMainActivityModule;
 
 

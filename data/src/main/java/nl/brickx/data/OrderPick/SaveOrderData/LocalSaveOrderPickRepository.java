@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import io.reactivex.Observable;
@@ -63,13 +64,13 @@ public class LocalSaveOrderPickRepository implements OrderPickRepository.SaveOrd
         //Todo: Go through list and check for doubles
         try{
             for(int i = 0; i < orderPickSaves.size(); i++){
-                for(int i2 = 0; i < orderPickSaves.get(i).getOrders().size(); i2++){
+                for(int i2 = 0; i2 < orderPickSaves.get(i).getOrders().size(); i2++){
                     try{
                         if(orderPickSaves.get(i).getOrders().get(i2).getPickslipNumber().equals(data.get(0).getPickslipNumber())){
                             orderPickSaves.remove(i);
                             i--;
+                            break;
                         }
-                        break;
                     }catch (Exception e){
                         Log.i(TAG, "Order is empty, unable to read pickslip number.");
                     }
@@ -97,7 +98,7 @@ public class LocalSaveOrderPickRepository implements OrderPickRepository.SaveOrd
             tempGetResult = mapper.readValue(jsonOrders, new TypeReference<List<GsonOrderPickPickList>>(){});
             return Observable.just(tempGetResult);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
         return null;
     }

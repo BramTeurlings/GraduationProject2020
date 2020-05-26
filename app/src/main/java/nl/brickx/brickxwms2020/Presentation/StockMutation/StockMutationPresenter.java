@@ -10,6 +10,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -85,13 +86,13 @@ public class StockMutationPresenter implements StockMutationContract.Presenter {
             onApiRequestStarted();
             changeLoadingState();
             final List<ProductInformation> result = new ArrayList<>();
-            System.out.println(new Date());
+            Log.i(TAG, new Date().toString());
             this.disposables.add(getProductInfoByScan.invoke(scan, getUserData().getApiKey())
-                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .doOnNext(c -> Log.i(TAG,"processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe( s -> result.add(s),
-                            t -> onGetApiDataFailed(t),
+                    .subscribe(result::add,
+                            this::onGetApiDataFailed,
                             () -> onProductInfoFetched(result, scan)));
         }
     }
@@ -111,13 +112,13 @@ public class StockMutationPresenter implements StockMutationContract.Presenter {
         try{
             context.unregisterReceiver(textInputBroadcastReceiver);
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
             Log.e(TAG, "Unable to unsubscribe broadcast receiver.");
         }
     }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations, String scan){
-        System.out.println(new Date());
+        Log.i(TAG, new Date().toString());
         ProductInfoHolder infoHolder = new ProductInfoHolder();
         ProductInformation result = productInformations.get(0);
 
@@ -286,7 +287,6 @@ public class StockMutationPresenter implements StockMutationContract.Presenter {
                 for(int i = 0; i < infoHolder.getLocations().size(); i++){
                     infoHolder.getLocations().get(i).setSerialnumbersRequired(result.getGetProductsCompleteByScanCodeResult().getUniqueBatchNumbers());
                     if(infoHolder.getLocations().get(0).getSerialnumbersRequired()){
-                        //Todo: Get serialnumbers
                         try{
                             AtomicReference<Serialnumbers> serialnumbersResult = new AtomicReference<>();
                             int id = result.getGetProductsCompleteByScanCodeResult().getId();
@@ -300,7 +300,7 @@ public class StockMutationPresenter implements StockMutationContract.Presenter {
                                             () -> onSerialnumbersFetched(serialnumbersResult.get(), stockLocationId, id)));
                         }catch (Exception e){
                             //Todo: Raise a visible error here so that orderpickers don't get stuck.
-                            e.printStackTrace();
+                            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
                             printErrorMessage("Failed to get serialnumbers");
                         }
                     }
@@ -325,7 +325,7 @@ public class StockMutationPresenter implements StockMutationContract.Presenter {
     }
 
     private void onGetApiDataFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, Objects.requireNonNull(throwable.getLocalizedMessage()));
         onApiRequestCompleted();
         changeLoadingState();
         view.setErrorMessage(context.getString(R.string.product_error_message));

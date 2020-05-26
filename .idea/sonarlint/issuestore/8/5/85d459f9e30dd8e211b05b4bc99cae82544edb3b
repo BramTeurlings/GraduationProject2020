@@ -1,0 +1,8 @@
+
+K
+java:S1068"0Remove this unused "recyclerView" private field.(Ώα© ύÿÿÿÿ
+v
+java:S1450"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(Ώα© ύÿÿÿÿ
+S	java:S106O"9Replace this use of System.out or System.err by a logger.(χÿυθώÿÿÿÿ
+H
+java:S11353"2Complete the task associated to this TODO comment.(Γ—²ϊ

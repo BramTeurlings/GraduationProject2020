@@ -3,12 +3,9 @@ package nl.brickx.brickxwms2020.Presentation.StockTransferMain;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
 import javax.inject.Inject;
-
 import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuActivity;
 import nl.brickx.data.Dagger.DataContext;
-import nl.brickx.domain.Models.StockTransferDto;
 
 public class StockTransferMainNavigator implements StockTransferMainContract.Navigator {
 

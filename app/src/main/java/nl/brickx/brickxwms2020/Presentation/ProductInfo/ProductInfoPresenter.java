@@ -11,6 +11,8 @@ import androidx.lifecycle.MediatorLiveData;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -60,13 +62,13 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
             onApiRequestStarted();
             changeLoadingState();
             final List<ProductInformation> result = new ArrayList<>();
-            System.out.println(new Date());
+           Log.i(TAG, new Date().toString());
             this.disposables.add(getProductInfoByScan.invoke(scan, getUserData().getApiKey())
                     .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe( s -> result.add(s),
-                            t -> onLoginFailed(t),
+                    .subscribe(result::add,
+                            this::onLoginFailed,
                             () -> onProductInfoFetched(result)));
         }
     }
@@ -107,7 +109,7 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
     }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations){
-        System.out.println(new Date());
+        Log.i(TAG, new Date().toString());
         ProductInfoHolder infoHolder = new ProductInfoHolder();
         ProductInformation result = productInformations.get(0);
 
@@ -262,7 +264,7 @@ public class ProductInfoPresenter implements ProductInfoContract.Presenter {
     }
 
     private void onLoginFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, Objects.requireNonNull(throwable.getLocalizedMessage()));
         onApiRequestCompleted();
         changeLoadingState();
         view.setErrorMessage(context.getString(R.string.product_error_message));

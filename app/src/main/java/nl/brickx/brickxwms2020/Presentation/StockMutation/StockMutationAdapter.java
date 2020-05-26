@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
+import java.util.Objects;
 
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.ProductInfoRecyclerModel;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class StockMutationAdapter extends RecyclerView.Adapter<StockMutationAdapter.InfoRecyclerViewholder> {
 
@@ -58,7 +62,7 @@ public class StockMutationAdapter extends RecyclerView.Adapter<StockMutationAdap
             stringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), 0, context.getText(R.string.combined_property_value_content).length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             holder.valueTextView.setText(stringBuilder);
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
     }
 

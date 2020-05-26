@@ -10,10 +10,12 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.inject.Inject;
@@ -40,10 +42,10 @@ import static android.content.ContentValues.TAG;
 
 public class OrderPickActivityPresenter implements OrderPickActivityContract.Presenter {
 
-    Context context;
-    Boolean isLoading = false;
+    private Context context;
+    private Boolean isLoading = false;
     private List<Disposable> disposables = new ArrayList<>();
-    OrderPickActivityContract.View view;
+    private OrderPickActivityContract.View view;
     private UserDataManager userDataManager;
     private GetPickSlipByOrderNumber getPickSlipByOrderNumber;
     private GetProductImageByNumber getProductImageByNumber;
@@ -97,9 +99,9 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
         onApiRequestStarted();
         changeLoadingState();
         final List<OrderPickSlip> result = new ArrayList<>();
-        System.out.println(new Date());
+        Log.i(TAG, new Date().toString());
         this.disposables.add(getPickSlipByOrderNumber.invoke(orderNumber, getUserData().getApiKey())
-                .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                .doOnNext(c -> Log.i(TAG, "processing item on thread " + Thread.currentThread().getName()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result::add,
@@ -112,10 +114,10 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
         AtomicReference<ProductImage> result = new AtomicReference<ProductImage>(new ProductImage());
 
         for(int i = 0; i < data.size(); i++){
-            System.out.println(new Date());
+            Log.i(TAG, new Date().toString());
             int index = i;
             this.disposables.add(getProductImageByNumber.invoke(String.valueOf(data.get(i).getProductId()), getUserData().getApiKey())
-                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .doOnNext(c -> Log.i(TAG, "processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
                     .subscribe(result::set,
                             this::onGetApiDataFailed,
@@ -126,7 +128,7 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
     @Override
     public void getLocalSaveData() {
         this.disposables.add(getOrderPickData.invoke()
-                .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                .doOnNext(c -> Log.i(TAG, "processing item on thread " + Thread.currentThread().getName()))
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::readLocalSaveData,
                 this::onGetApiDataFailed));
@@ -137,7 +139,7 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
         AtomicReference<Boolean> result = new AtomicReference<Boolean>();
 
         this.disposables.add(saveOrderPickData.invoke(orders)
-                .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                .doOnNext(c -> Log.i(TAG, "processing item on thread " + Thread.currentThread().getName()))
                 .subscribeOn(Schedulers.io())
                 .subscribe(result::set,
                 this::onGetApiDataFailed));
@@ -333,21 +335,20 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
                 if(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getUniqueBatchNumbers() != null){
                     tempModel.setSerialNumberRequired(pickSlips.get(0).getGetPickslipByNumberResult().getPickList().get(i).getProductInfo().getUniqueBatchNumbers());
                     if(tempModel.getSerialNumberRequired()){
-                        //Todo: Get serialnumbers
                         try{
                             AtomicReference<Serialnumbers> result = new AtomicReference<>();
                             int id = tempModel.getProductId();
-                            getSerialnumberByStockLocationIdAndProductId.invoke(tempModel.getStockLocationId(), tempModel.getProductId(), getUserData().getApiKey())
+                            disposables.add(getSerialnumberByStockLocationIdAndProductId.invoke(tempModel.getStockLocationId(), tempModel.getProductId(), getUserData().getApiKey())
                                     .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(result::set,
                                             this::onGetApiDataFailed,
-                                            () -> onSerialnumbersFetched(result.get(), id));
+                                            () -> onSerialnumbersFetched(result.get(), id)));
                         }catch (Exception e){
-                            //Todo: Raise a visible error here so that orderpickers don't get stuck.
-                            e.printStackTrace();
+                            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
                             printErrorMessage("Failed to get serialnumbers");
+                            Toast.makeText(context, "Kon geen serienummers voor product vinden.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }else{
@@ -370,7 +371,7 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
     }
 
     private void onProductImageFetched(ProductImage productImage, int productId){
-        System.out.println("processing item on thread " + Thread.currentThread().getName());
+        Log.i(TAG, "processing item on thread " + Thread.currentThread().getName());
         handler = new Handler(backgroundHandlerThread.getLooper());
         handler.post(new Runnable() {
             @Override
@@ -403,7 +404,7 @@ public class OrderPickActivityPresenter implements OrderPickActivityContract.Pre
     }
 
     private void onGetApiDataFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, Objects.requireNonNull(throwable.getLocalizedMessage()));
         onApiRequestCompleted();
         changeLoadingState();
         view.setErrorMessage(context.getString(R.string.product_error_message));

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -47,12 +48,12 @@ public class LoginPresenter implements LoginContract.Presenter {
             final List<Authentication> result = new ArrayList<>();
 
             disposables.add(authenticationManager.authenticateUser(returnedUser)
-                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .doOnNext(c -> Log.i(TAG,"processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            s -> result.add(s),
-                            t -> onLoginFailed(t),
+                            result::add,
+                            this::onLoginFailed,
                             () -> getUserData(result.get(0), returnedUser)));
         }
     }
@@ -66,7 +67,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                            s -> userInfo.add(s),
+                            userInfo::add,
                             (Throwable::printStackTrace),
                             () -> processUserData(userInfo.get(0), user.getApiKey())));
         }else{
@@ -111,7 +112,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     private void onLoginFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, Objects.requireNonNull(throwable.getLocalizedMessage()));
         onApiRequestCompleted();
         changeLoadingState();
         view.setErrorMessage(context.getString(R.string.login_error_message));

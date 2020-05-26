@@ -1,0 +1,16 @@
+
+y
+java:S1488%"^Immediately return this expression instead of assigning it to the temporary variable "holder".(ôôÓÏÿÿÿÿÿ
+H
+java:S11352"2Complete the task associated to this TODO comment.(Ã—²ú
+p	java:S116G"VRename this field "SKUTextView" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(†ù´âøÿÿÿÿ
+K
+java:S1068"0Remove this unused "recyclerView" private field.(¿á© ýÿÿÿÿ
+E
+java:S1068"/Remove this unused "productScan" private field.(«ŸÎÂ
+p
+java:S1450"ZRemove the "productScan" field and declare it as a local variable in the relevant methods.(«ŸÎÂ
+P
+java:S1068"5Remove this unused "tempLocationModel" private field.(¯£ºÚùÿÿÿÿ
+v
+java:S1450"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ýÿÿÿÿ

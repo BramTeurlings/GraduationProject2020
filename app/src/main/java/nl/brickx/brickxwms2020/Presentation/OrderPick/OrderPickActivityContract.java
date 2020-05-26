@@ -1,10 +1,7 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick;
 
 import android.graphics.drawable.BitmapDrawable;
-
 import java.util.List;
-
-import nl.brickx.domain.Models.Gson.ProductImage.ProductImage;
 import nl.brickx.domain.Models.Gson.Serialnumbers.Serialnumbers;
 import nl.brickx.domain.Models.OrderPickPickListModel;
 
@@ -23,7 +20,6 @@ public interface OrderPickActivityContract {
 
         void navigateToOrder(int index);
         void navigateToOrderPickLanding();
-        //Todo: Navigate to screens.
     }
     interface View {
 

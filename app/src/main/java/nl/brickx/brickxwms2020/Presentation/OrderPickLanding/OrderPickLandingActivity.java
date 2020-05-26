@@ -3,31 +3,18 @@ package nl.brickx.brickxwms2020.Presentation.OrderPickLanding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerAppCompatActivity;
-import nl.brickx.brickxwms2020.Presentation.MainMenu.MainMenuContract;
-import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragment;
-import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment.OrderPickOverviewFragment;
 import nl.brickx.brickxwms2020.R;
 import nl.brickx.domain.Models.OrderPickLandingRecyclerModel;
-import nl.brickx.domain.Models.OrderPickLandingStatus;
 
 public class OrderPickLandingActivity extends DaggerAppCompatActivity implements OrderPickLandingContract.View {
 
@@ -44,7 +31,6 @@ public class OrderPickLandingActivity extends DaggerAppCompatActivity implements
     @Inject
     OrderPickLandingContract.Navigator navigator;
 
-    //Todo: Allow barcode scan to select an order.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

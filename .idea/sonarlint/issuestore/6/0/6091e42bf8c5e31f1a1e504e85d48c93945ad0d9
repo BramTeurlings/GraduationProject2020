@@ -1,0 +1,15 @@
+
+E
+java:S5411F"*Use the primitive boolean expression here.(ÑŠåûÿÿÿÿ
+K
+java:S1172u"0Remove this unused method parameter "productId".(€ŸÓ©üÿÿÿÿ
+S
+java:S1155G">Use isEmpty() to check whether the collection is empty or not.(¿¦Ím
+v
+java:S1450"[Remove the "recyclerView" field and declare it as a local variable in the relevant methods.(¿á© ýÿÿÿÿ
+K
+java:S1068"0Remove this unused "recyclerView" private field.(¿á© ýÿÿÿÿ
+y
+java:S1488+"^Immediately return this expression instead of assigning it to the temporary variable "holder".(¶Œ’Úþÿÿÿÿ
+H
+java:S11358"2Complete the task associated to this TODO comment.(Ã—²ú

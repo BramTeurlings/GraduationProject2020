@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -183,7 +184,7 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
                 }catch (Exception e){
                     Log.i(TAG, "Unable to parse data required for stock transfer.");
                     makeErrorToast("Vul alle velden volledig in. Vergeet niet een 'naar' locatie te scannen.");
-                    e.printStackTrace();
+                    Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
                 }
             }
         });
@@ -214,7 +215,6 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
             toAdapter.addItem(toItemLocationData);
         }else{
             if(fromItemLocationData.getSerialnumbersRequired()){
-                //Todo: See if serial number is valid.
                 strings = scan.replaceAll("\\s+","").split(";");
                 for(int i = 0; i < strings.length; i++){
                     if(!fromItemLocationData.getScannedNumbers().contains(strings[i]) && fromItemLocationData.getAvailibleNumbers().contains(strings[i])){
@@ -266,7 +266,7 @@ public class StockTransferMainActivity extends DaggerAppCompatActivity implement
 
     @Override
     public void onLocationInfoReceived(List<LocationInfoRecyclerModel> holder, String scan) {
-
+        Log.i(TAG, "onLocationInfoReceived not implemented.");
     }
 
     @Override

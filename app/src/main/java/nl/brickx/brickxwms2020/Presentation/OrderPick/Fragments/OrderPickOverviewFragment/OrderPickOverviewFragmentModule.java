@@ -1,9 +1,5 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment;
 
-import android.app.Activity;
-
-import androidx.fragment.app.Fragment;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

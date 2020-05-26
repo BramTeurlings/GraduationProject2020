@@ -10,6 +10,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.inject.Inject;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -83,13 +84,13 @@ public class StockTransferPresenter implements StockTransferContract.Presenter {
             onApiRequestStarted();
             changeLoadingState();
             final List<ProductInformation> result = new ArrayList<>();
-            System.out.println(new Date());
+            Log.i(TAG, new Date().toString());
             this.disposables.add(getProductInfoByScan.invoke(scan, getUserData().getApiKey())
-                    .doOnNext(c -> System.out.println("processing item on thread " + Thread.currentThread().getName()))
+                    .doOnNext(c -> Log.i(TAG,"processing item on thread " + Thread.currentThread().getName()))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe( s -> result.add(s),
-                            t -> onGetApiDataFailed(t),
+                    .subscribe(result::add,
+                            this::onGetApiDataFailed,
                             () -> onProductInfoFetched(result, scan)));
         }
     }
@@ -113,7 +114,7 @@ public class StockTransferPresenter implements StockTransferContract.Presenter {
     }
 
     private void onProductInfoFetched(List<ProductInformation> productInformations, String scan){
-        System.out.println(new Date());
+        Log.i(TAG, new Date().toString());
         ProductInfoHolder infoHolder = new ProductInfoHolder();
         ProductInformation result = productInformations.get(0);
 
@@ -290,7 +291,7 @@ public class StockTransferPresenter implements StockTransferContract.Presenter {
                                             () -> onSerialnumbersFetched(serialnumbersResult.get(), stockLocationId, id)));
                         }catch (Exception e){
                             //Todo: Raise a visible error here so that orderpickers don't get stuck.
-                            e.printStackTrace();
+                            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
                             printErrorMessage("Failed to get serialnumbers");
                         }
                     }
@@ -315,7 +316,7 @@ public class StockTransferPresenter implements StockTransferContract.Presenter {
     }
 
     private void onGetApiDataFailed(Throwable throwable){
-        throwable.printStackTrace();
+        Log.e(TAG, Objects.requireNonNull(throwable.getLocalizedMessage()));
         onApiRequestCompleted();
         changeLoadingState();
         view.setErrorMessage(context.getString(R.string.product_error_message));

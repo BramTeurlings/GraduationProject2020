@@ -1,11 +1,9 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPickLanding;
 
 import android.app.Activity;
-
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
-import nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickFragment.OrderPickFragmentModule;
 
 @Module
 public interface OrderPickLandingActivityModule {

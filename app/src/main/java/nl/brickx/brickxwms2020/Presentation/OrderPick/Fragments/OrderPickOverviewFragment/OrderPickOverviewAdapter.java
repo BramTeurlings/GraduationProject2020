@@ -1,33 +1,24 @@
 package nl.brickx.brickxwms2020.Presentation.OrderPick.Fragments.OrderPickOverviewFragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Handler;
-import android.os.HandlerThread;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
-import javax.inject.Inject;
-
-import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivity;
 import nl.brickx.brickxwms2020.Presentation.OrderPick.OrderPickActivityContract;
-import nl.brickx.brickxwms2020.Presentation.OrderPickLanding.OrderPickLandingContract;
 import nl.brickx.brickxwms2020.R;
-import nl.brickx.domain.Models.OrderPickLandingRecyclerModel;
-import nl.brickx.domain.Models.OrderPickLandingStatus;
 import nl.brickx.domain.Models.OrderPickPickListModel;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOverviewAdapter.InfoRecyclerViewholder>{
 
@@ -57,7 +48,6 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
 
     @Override
     public void onBindViewHolder(@NonNull OrderPickOverviewAdapter.InfoRecyclerViewholder holder, int position) {
-        //Todo: Make a good catch and multiple tries.
         try{
             holder.orderLineProductNameTextView.setText(data.get(position).getProductName());
             holder.orderLineProductSKUTextView.setText(data.get(position).getProductSku());
@@ -73,7 +63,6 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
             holder.parentCardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("CLICK! - " + position);
                     //Todo: Navigate to main fragment with this item on top. I don't like the way this works yet, execution is slow.
                     if(navigator != null) {
                         navigator.navigateToOrder(position);
@@ -81,7 +70,7 @@ public class OrderPickOverviewAdapter extends RecyclerView.Adapter<OrderPickOver
                 }
             });
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
         }
     }
 

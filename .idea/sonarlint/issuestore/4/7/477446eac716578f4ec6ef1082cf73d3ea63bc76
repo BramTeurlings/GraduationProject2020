@@ -1,0 +1,29 @@
+
+{
+java:S1450"^Remove the "productNameText" field and declare it as a local variable in the relevant methods.(éÚ¤8øğı‡¥.
+E
+java:S5411Y"*Use the primitive boolean expression here.(Î½ò•ùÿÿÿÿ
+x
+java:S1450"[Remove the "locationText" field and declare it as a local variable in the relevant methods.(áÓƒ8›ı‡¥.
+@
+java:S5411Q"*Use the primitive boolean expression here.(Ê±®ú
+y
+java:S1450"\Remove the "warehouseText" field and declare it as a local variable in the relevant methods.( ëú¾8ÙÂş‡¥.
+œ
+java:S1186!"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Èâáİÿÿÿÿÿ
+E
+java:S5411A"*Use the primitive boolean expression here.(õÚøÊûÿÿÿÿ
+|
+java:S1450"_Remove the "amountToPickText" field and declare it as a local variable in the relevant methods.(‚‰è8ÙÂş‡¥.
+u
+java:S1450"XRemove the "imageView" field and declare it as a local variable in the relevant methods.(øû¯8ÙÂş‡¥.
+~
+java:S1450"aRemove the "warehouseTitleText" field and declare it as a local variable in the relevant methods.(ãÛÁ±8ÙÂş‡¥.
+†
+java:S1450"dRemove the "amountToPickTitleText" field and declare it as a local variable in the relevant methods.(¤Óò¶ûÿÿÿÿ8ÙÂş‡¥.
+E
+java:S5411J"*Use the primitive boolean expression here.(Çİˆıúÿÿÿÿ
+€
+java:S1450"cRemove the "productNameTitleText" field and declare it as a local variable in the relevant methods.(ÉìÒ8›ı‡¥.
+|
+java:S1450"ZRemove the "loadingIcon" field and declare it as a local variable in the relevant methods.(‘³×ûÿÿÿÿ8¸Şş‡¥.

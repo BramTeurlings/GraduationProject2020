@@ -1,0 +1,7 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ðÉÌÒúÿÿÿÿ
+g	java:S116	"MRename this field "Id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(á³À¬úÿÿÿÿ
+z	java:S116"`Rename this field "SelectedSerialNumbers" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Õ¼§îüÿÿÿÿ
+h	java:S116"SRename this field "Quantity" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãÖ²å
+Q	java:S125"<This block of commented-out lines of code should be removed.(¯¿Þ±
+P	java:S125"<This block of commented-out lines of code should be removed.(Æ¶Àk

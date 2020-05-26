@@ -1,0 +1,5 @@
+
+t	java:S116"ZRename this field "StockLocationId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–ááúÿÿÿÿ
+i	java:S116"TRename this field "ProductId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×õ³
+\	java:S107."BConstructor has 11 parameters, which is greater than 7 authorized.(Ü‹†ùÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ğÉÌÒúÿÿÿÿ
